@@ -40,7 +40,7 @@ var App = {
     for(var i=0;i<tempfeelings.length;i++){
       $(tempid  + " .feelings").append('<li>'+tempfeelings[i]+'</li>')
     }
-      }
+  }
 }
 /*rChoices =>.main-block #rChoices0
 #rChoices0 => h1 choiceContent
@@ -155,16 +155,20 @@ var DataEntryPane = {
   decisionChoice(choice) {
     if (App.EDIT_MODE) {
       App.UserData[App.edit] = App.UserData[this.pivot][choice];
+      App.EDIT_MODE=false;
+      MainButtons.toggleButton(App.State.CurrentStage,true);
     }
     else {
       App.UserData[App.State.CurrentStage] = App.UserData[this.pivot][choice];
       MainButtons.toggleButton(++App.State.CurrentStage, true);
     }
+    $("#choiceLists .main-block").removeClass("selected");
+    $("#choiceList"+choice).addClass("selected");
     App.showView("preview");
     PreviewPane.refresh();
     $("#iResponse").show();
     $("#SubmitResponse").prop('disabled', false);
-    $("#choiceLists").text("");
+    $("#choiceLists").hide();
 
   },
   SubmitResponse() {
@@ -192,6 +196,7 @@ var DataEntryPane = {
         $("#iResponse").val("");
         PreviewPane.refresh();
         App.showView("preview");
+        MainButtons.toggleButton(App.State.CurrentStage,true);
         return;
       }
       MainButtons.enableNextButton();
@@ -272,8 +277,18 @@ var DataEntryPane = {
     $("#iResponse").hide();
     $("#SubmitResponse").prop('disabled', true);
     for (var i = 0; i < App.UserData[this.pivot].length; i++) {
-      $("#choiceLists").append('<button class="choiceOption" onClick="DataEntryPane.decisionChoice(' + i + ')">' + App.UserData[this.pivot][i] + '</button>');
-      //App.choiceTemplate( "choiceList",i,"notselected" );
+     // $("#choiceLists").append('<button class="choiceOption" onClick="DataEntryPane.decisionChoice(' + i + ')">' + App.UserData[this.pivot][i] + '</button>');
+     if(App.EDIT_MODE){
+     $("#choiceLists").show();
+     }
+     else{
+      App.choiceTemplate( "choiceList",i,"notselected" );
+      $('#choiceList'+ i).attr('onclick', 'DataEntryPane.decisionChoice('+i+')');
+     }
+      // $("#choiceList"+ i).click(function(){
+      //   alert("the not respons");
+      //   DataEntryPane.decisionChoice(i);
+      // });
     }
   },
   prepareForEdit() {
@@ -316,6 +331,7 @@ var PreviewPane = {
     App.edit = button_index;
     DataEntryPane.prepareForEdit();
     App.showView("dataEntry");
+    MainButtons.toggleButton(App.State.CurrentStage,false);
 
   },
   choice(action) {
@@ -384,14 +400,17 @@ var MainButtons = {
 
     }
     $("#rMoreInfo").text(App.UserData[5]);
-    $("#rHelp").text(App.UserData[6]);
+    var tempHelp = App.UserData[6].split("\n")
+    for(var i=0;i<tempHelp.length;i++){
+      $("#rHelp").append('<li>'+tempHelp[i]+'</li>')
+    }
     $("#rAssess").text(App.UserData[8]);
   }
 
 }
 
 $(document).ready(function () {
-//  TestSuite.focusOnDecision();
+  //TestSuite.focusOnSubmit();
   MainButtons.toggleButton(App.State.CurrentStage, true);
   PreviewPane.refresh();
 });

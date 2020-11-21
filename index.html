@@ -63,10 +63,10 @@
 
                     <h3 class="topAlign">CHOICE :</h3>
                     <button class="editbutton" id="e2" onclick="PreviewPane.edit(1)" hidden>edit </button>
+                    <button id="forward" onclick="PreviewPane.choice('forward')">></button>
                     <button id="backward" class="topAlign" onclick="PreviewPane.choice('backward')">
                         <</button>
                             <P class="content multiLine" id="p2">CHOICE </P>
-                            <button id="forward" onclick="PreviewPane.choice('forward')">></button>
                 </div>
                 <div class="out">
                     <h3 class="topAlign" >CONSEQUENCES :</h3>
@@ -110,18 +110,19 @@
             <h1 id="rProblem">Problem of The user </h1>
             <div id = "rChoices"></div>
             <div id = "rEntries">
-                        <h2>Additional Info </h2>
-                        <div id="rMoreInfo">Additional Info</div>
-
-                        <h2>Who Can Help</h2>
-                        <div   id="rHelp">Who can help</div >
-
-                        <h2>Assess Decision</h2>
-                        <div   id="rAssess">Assess Decision</div >
-
+                <div class="main-block">
+                    <h1>Additional info</h1>
+                    <div id="rMoreInfo" class="rEntryData"></div>
+                </div>
+                <div class="main-block">
+                    <h1>Who Can Help</h1>
+                    <ul id="rHelp"></ul>
+                </div>
+                <div class="main-block">
+                    <h1>Assess Decision</h1>
+                    <div id="rAssess" class="rEntryData"></div>
+                </div>        
             </div>
-
-
         </div>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
