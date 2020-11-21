@@ -21,9 +21,32 @@ var App = {
     $(viewmap[this.last_visible_view]).hide();
     this.last_visible_view = viewname;
     $(viewmap[this.last_visible_view]).show();
+  },
+  choiceTemplate(id,index,classChoice){
+    var tempid = id+index;
+    $("#" + id + "s").append('<div class="main-block '+ classChoice +' "  id="'+tempid+'"></div>');
+    tempid = "#" + tempid;
+    $(tempid).append('<h1>'+this.UserData[1][index]+'</h1><div class = "choiceContent"></div>');
+    $(tempid + " .choiceContent").append('<h3>Consequences</h3><ul class = "cons"></ul><h3>Values</h3><ul class = "values"></ul><h3>Feelings</h3><ul class = "feelings"></ul>');
+    var tempconsequences = this.UserData[2][index].split("\n")
+    for(var i=0;i<tempconsequences.length;i++){
+      $(tempid + " .cons").append('<li>'+tempconsequences[i]+'</li>')
+    }
+    var tempvalues = this.UserData[3][index].split("\n")
+    for(var i=0;i<tempvalues.length;i++){
+      $(tempid + " .values").append('<li>'+tempvalues[i]+'</li>')
+    }
+    var tempfeelings = this.UserData[4][index].split("\n")
+    for(var i=0;i<tempfeelings.length;i++){
+      $(tempid  + " .feelings").append('<li>'+tempfeelings[i]+'</li>')
+    }
   }
 }
-
+/*rChoices =>.main-block #rChoices0
+#rChoices0 => h1 choiceContent
+#rChoices0 .choiceContent => h3 tags +ul tags with their class
+#rChoices0 respective class=>li tags
+*/
 var TestSuite =
 {
 
@@ -87,10 +110,10 @@ var TestSuite =
     App.State.CurrentStage = 9;
     App.UserData = [
       "focusOnSubmit",
-      ["choice1", "choice2", "choice3"],
-      ["con1", "con2", "con3"],
-      ["val1", "val2", "val3"],
-      ["feel1", "feel2", "feel3"],
+      ["choice1", "choice2", "choice3","choice4"],
+      ["con1", "con2", "con3","choice3"],
+      ["val1", "val2", "val3","choice3"],
+      ["feel1", "feel2", "feel3","choice3"],
       "gjjvhg",
       "bvjkjkbb",
       "choice2",
@@ -117,6 +140,7 @@ var DataEntryPane = {
   "DependentList": [false, false, true, true, true, false, false, false, false],
   "incr": 0,
   "blankChoice" : 0,
+  "DependentListEntries" :["Consequences","Values","Feelings"],
 
   getResponse() {
     var response = $.trim($("#iResponse").val());
@@ -131,16 +155,20 @@ var DataEntryPane = {
   decisionChoice(choice) {
     if (App.EDIT_MODE) {
       App.UserData[App.edit] = App.UserData[this.pivot][choice];
+      App.EDIT_MODE=false;
+      MainButtons.toggleButton(App.State.CurrentStage,true);
     }
     else {
       App.UserData[App.State.CurrentStage] = App.UserData[this.pivot][choice];
       MainButtons.toggleButton(++App.State.CurrentStage, true);
     }
+    $("#choiceLists .main-block").removeClass("selected");
+    $("#choiceList"+choice).addClass("selected");
     App.showView("preview");
     PreviewPane.refresh();
     $("#iResponse").show();
     $("#SubmitResponse").prop('disabled', false);
-    $("#choiceList").text("");
+    $("#choiceLists").hide();
 
   },
   SubmitResponse() {
@@ -168,6 +196,7 @@ var DataEntryPane = {
         $("#iResponse").val("");
         PreviewPane.refresh();
         App.showView("preview");
+        MainButtons.toggleButton(App.State.CurrentStage,true);
         return;
       }
       MainButtons.enableNextButton();
@@ -248,7 +277,18 @@ var DataEntryPane = {
     $("#iResponse").hide();
     $("#SubmitResponse").prop('disabled', true);
     for (var i = 0; i < App.UserData[this.pivot].length; i++) {
-      $("#choiceList").append('<button class="choiceOption" onClick="DataEntryPane.decisionChoice(' + i + ')">' + App.UserData[this.pivot][i] + '</button>');
+     // $("#choiceLists").append('<button class="choiceOption" onClick="DataEntryPane.decisionChoice(' + i + ')">' + App.UserData[this.pivot][i] + '</button>');
+     if(App.EDIT_MODE){
+     $("#choiceLists").show();
+     }
+     else{
+      App.choiceTemplate( "choiceList",i,"notselected" );
+      $('#choiceList'+ i).attr('onclick', 'DataEntryPane.decisionChoice('+i+')');
+     }
+      // $("#choiceList"+ i).click(function(){
+      //   alert("the not respons");
+      //   DataEntryPane.decisionChoice(i);
+      // });
     }
   },
   prepareForEdit() {
@@ -291,6 +331,7 @@ var PreviewPane = {
     App.edit = button_index;
     DataEntryPane.prepareForEdit();
     App.showView("dataEntry");
+    MainButtons.toggleButton(App.State.CurrentStage,false);
 
   },
   choice(action) {
@@ -355,17 +396,21 @@ var MainButtons = {
       classChoice = "selected";
       else
       classChoice ="notselected";
-      $("#rChoices").append('<tr class = "'+ classChoice +'"><td>' + App.UserData[1][i] +'</td><td>'+App.UserData[2][i]+'</td><td>'+App.UserData[3][i]+'</td><td>'+App.UserData[4][i]+'</td></tr>');
+        App.choiceTemplate("rChoice",i,classChoice);
+
     }
-    $("rMoreInfo").text(App.UserData[5]);
-    $("rHelp").text(App.UserData[6]);
-    $("rAssess").text(App.UserData[8]);
+    $("#rMoreInfo").text(App.UserData[5]);
+    var tempHelp = App.UserData[6].split("\n")
+    for(var i=0;i<tempHelp.length;i++){
+      $("#rHelp").append('<li>'+tempHelp[i]+'</li>')
+    }
+    $("#rAssess").text(App.UserData[8]);
   }
 
 }
 
 $(document).ready(function () {
-  TestSuite.focusOnSubmit();
+  //TestSuite.focusOnSubmit();
   MainButtons.toggleButton(App.State.CurrentStage, true);
   PreviewPane.refresh();
 });
