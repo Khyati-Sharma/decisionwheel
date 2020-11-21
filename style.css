@@ -13,7 +13,6 @@
     display: inline-flex;
     width: 250px;
     flex-direction: column;
-    align-items: center;
     background-color: #ecebeb;
     margin: 10px;
     box-shadow: 5px 5px 5px;
@@ -23,7 +22,6 @@
 .main-block h1 {
     font-size: 20px;
     width: 95%;
-    background-color: #3aa7a7;
     border-radius: 10px 10px 0px 0px;
     background-color: #a7d9e0;
     color: black;
@@ -42,7 +40,8 @@
     padding: 5px;
     }
     .main-block h1 {
-    font-size: 28px;
+    font-size: 20px;
+    padding: 5px;
     }
     .main-block ul{
         margin: 10px 0px;
@@ -50,7 +49,8 @@
 #finalReport{
     text-align: center;
     background-color: white;
-    margin: 0% 10%;
+    margin: 0% 7%;
+    border-radius: 5px 60px;
 }
 .choiceOption {
     display: block;
@@ -66,8 +66,20 @@
     margin-left: 20px;
 
 }
-#rChoices{
+#rChoices,#rEntries, #rEntries h1 {
   text-align: center;
+}
+#rEntries .main-block {
+    min-height: 230px;
+    text-align: left;
+}
+#rEntries .rEntryData{
+    padding:5px;
+    white-space: break-spaces;
+}
+#rEntries h1{
+    background-color: #005fff;
+    color: white;
 }
 
 @media only screen and (min-width: 50em)
@@ -292,6 +304,9 @@ h3{
 #rProblem{
 
     width: 100%;
-    background-color: #f35757;
+    background-color: #330099;
     color: white;
+    padding: 4px;
+    font-size: 2rem;
+    border-radius: 5px 60px;
 }

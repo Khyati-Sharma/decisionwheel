@@ -156,6 +156,7 @@ var DataEntryPane = {
     if (App.EDIT_MODE) {
       App.UserData[App.edit] = App.UserData[this.pivot][choice];
       App.EDIT_MODE=false;
+      MainButtons.toggleButton(App.State.CurrentStage,true);
     }
     else {
       App.UserData[App.State.CurrentStage] = App.UserData[this.pivot][choice];
@@ -195,6 +196,7 @@ var DataEntryPane = {
         $("#iResponse").val("");
         PreviewPane.refresh();
         App.showView("preview");
+        MainButtons.toggleButton(App.State.CurrentStage,true);
         return;
       }
       MainButtons.enableNextButton();
@@ -329,6 +331,7 @@ var PreviewPane = {
     App.edit = button_index;
     DataEntryPane.prepareForEdit();
     App.showView("dataEntry");
+    MainButtons.toggleButton(App.State.CurrentStage,false);
 
   },
   choice(action) {
@@ -407,7 +410,7 @@ var MainButtons = {
 }
 
 $(document).ready(function () {
- // TestSuite.focusOnSubmit();
+  //TestSuite.focusOnSubmit();
   MainButtons.toggleButton(App.State.CurrentStage, true);
   PreviewPane.refresh();
 });
