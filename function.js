@@ -40,13 +40,14 @@ var App = {
     for(var i=0;i<tempfeelings.length;i++){
       $(tempid  + " .feelings").append('<li>'+tempfeelings[i]+'</li>')
     }
+    /*rChoices =>.main-block #rChoices0
+    #rChoices0 => h1 choiceContent
+    #rChoices0 .choiceContent => h3 tags +ul tags with their class
+    #rChoices0 respective class=>li tags
+*/
   }
 }
-/*rChoices =>.main-block #rChoices0
-#rChoices0 => h1 choiceContent
-#rChoices0 .choiceContent => h3 tags +ul tags with their class
-#rChoices0 respective class=>li tags
-*/
+
 var TestSuite =
 {
 
