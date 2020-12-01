@@ -1,12 +1,8 @@
 #choiceLists .main-block {
     cursor: pointer;
 }
-#rEntries{
-  text-align: left;
-  margin: inherit;
-}
 .choiceContent{
-    width: 95%;
+    
     text-align: left;
 }
 .main-block {
@@ -20,53 +16,34 @@
     color: #666;
 }
 .main-block h1 {
-    font-size: 20px;
-    width: 95%;
+   
     border-radius: 10px 10px 0px 0px;
     background-color: #a7d9e0;
-    color: black;
-    font-weight: 500;
-}
- .main-block h1, .main-block h3 {
-    padding: 0;
-    margin: 0;
-    outline: none;
-    font-family: Roboto, Arial, sans-serif;
-    font-size: 16px;
-    color: #666;
-    }
-    .main-block h1, .main-block h3 {
-    font-weight: 400;
-    padding: 5px;
-    }
-    .main-block h1 {
     font-size: 20px;
     padding: 5px;
-    }
-    .main-block ul{
-        margin: 10px 0px;
-    }
+}
+.main-block h1, .main-block h3 {
+    margin: 0;
+    font-family: Roboto, Arial, sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    padding: 5px;
+}
+.main-block ul{
+    margin: 10px 0px;
+}
 #finalReport{
     text-align: center;
     background-image: radial-gradient(blue, transparent);
     margin: 0% 7%;
-    border-radius: 5px 60px;
-}
-.choiceOption {
-    display: block;
-    margin: 15px auto;
-    width: 400px;
-    min-height: 60px;
-    background-color: cornsilk;
 }
 #logo {
     height: 60px;
-    vertical-align: sub;
     float: left;
     margin-left: 20px;
 
 }
-#rChoices,#rEntries, #rEntries h1 {
+#rEntries, #rEntries h1 {
   text-align: center;
 }
 #rEntries .main-block {
