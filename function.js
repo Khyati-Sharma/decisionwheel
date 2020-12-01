@@ -124,14 +124,14 @@ var TestSuite =
     App.State.CurrentStage = 9;
     App.UserData = [
       "focusOnSubmit",
-      ["choice1", "choice2", "choice3","choice4"],
-      ["con1", "con2", "con3","choice3"],
-      ["val1", "val2", "val3","choice3"],
-      ["feel1", "feel2", "feel3","choice3"],
-      "gjjvhg",
-      "bvjkjkbb",
+      ["choice1", "choice2", "choice3egfgsxvdg","choice4kdfkgkjknknknkn"],
+      ["con1", "con2", "con3vbmdbdm","choice3"],
+      ["val1", "val2", "valsgufvgnvn3","choice3"],
+      ["feel1", "feel2", "feel3vcbdhd","choice3"],
+      "gjjvhgvbcbccnfg",
+      "bvjkjkbbdhnnvsfwnnbdghchgdgdbvxgvzzvsgg cffjvnnmh",
       "choice2",
-      "ADecision"
+      "ADecisionfhrhfvjjjtopwoklcmgdllbdgdbnbnmn"
     ];
     App.Begenning();
   }
@@ -292,7 +292,6 @@ var DataEntryPane = {
     $("#iResponse").hide();
     $("#SubmitResponse").prop('disabled', true);
     for (var i = 0; i < App.UserData[this.pivot].length; i++) {
-     // $("#choiceLists").append('<button class="choiceOption" onClick="DataEntryPane.decisionChoice(' + i + ')">' + App.UserData[this.pivot][i] + '</button>');
      if(App.EDIT_MODE){
      $("#choiceLists").show();
      }
