@@ -1,3 +1,47 @@
+Body{
+    margin: 0px;
+}
+#headerarea {
+    background-image: linear-gradient(45deg, transparent,blue, transparent);
+    color: aliceblue;
+    text-align: center;
+    font-size: 40px;
+}
+#head{
+    padding: 15px 0px;
+}
+#logo {
+    height: 60px;
+    float: left;
+    margin-left: 20px;
+    padding-top: 10px;
+}
+#viewarea, #buttonarea {
+    margin-top: 5px;
+}
+#viewarea {
+    float: right;
+    width: 75%;
+    background-image: linear-gradient(blue, lightblue);
+    text-align: center;
+    border-radius: 6px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+#buttonarea {
+    width: 24.5%;
+    float: left;
+    text-align: center;
+    box-sizing: border-box;
+    border-radius: 6px;
+    background-color: blue;
+    margin-right: 0.5%;
+}
+#progressBar{
+    display: none;
+    height:30px;
+    background-color: aliceblue;
+}
 #choiceLists .main-block {
     cursor: pointer;
 }
@@ -37,12 +81,7 @@
     background-image: radial-gradient(blue, transparent);
     margin: 0% 7%;
 }
-#logo {
-    height: 60px;
-    float: left;
-    margin-left: 20px;
 
-}
 #rEntries, #rEntries h1 {
   text-align: center;
 }
@@ -59,51 +98,14 @@
     color: white;
 }
 
-@media only screen and (min-width: 50em)
-/* ---for pc and dekstop ---*/
-{
-Body{
-    margin: 0px;
-}
 /*-------------------------------------------------------------------------------------- */
-#headerarea {
-    margin-top: 0%;
-    background-image: linear-gradient(45deg, transparent,blue, transparent);
-    background-color: linen;
-    color: aliceblue;
-    text-align: center;
-    height: 9%;
-    padding: 1px;
-    font-size: 2.5rem;
-    margin-bottom: 9px;
-    padding-top: 10px;
-}
 #parentdiv {
     background-color: white;
     height: 100vh;
     border-radius: 5px;
 }
-#buttonarea {
-    width: 24%;
-    height: 87%;
-    float: left;
-    text-align: center;
-    box-sizing: border-box;
-    border-radius: 6px;
-    background-color: blue;
-}
 
-#viewarea {
-    float: right;
-    width: 75%;
-    height: 87%;
-    max-height: 90%;
-    background-image: linear-gradient(blue, lightblue);
-    text-align: center;
-    border-radius: 6px;
-    overflow-y: scroll;
-    overflow-x: hidden;
-}
+
 
 .selected{
     box-shadow: 5px 5px 5px green;
@@ -269,8 +271,8 @@ h3{
     margin-top: 30px;
     margin-bottom: 100px;
 }
-}
 /*----------------------------------------------------------------------------------------*/
+
 #forward{
     float: right;
 }
@@ -288,4 +290,28 @@ h3{
     padding: 4px;
     font-size: 2rem;
     border-radius: 5px 60px;
+}
+
+/*-----------                   Mobile View CSS                 -------------*/
+
+@media only screen and (max-width: 600px){
+    #headerarea{
+        font-size: 25px;
+    }
+    #logo{
+        height: 40px;
+        margin-left: 5px;
+    }
+    #viewarea {
+        width: 100%;
+    }
+    #buttonarea {
+        display: none;
+    }
+    #progressBar{
+        display: block;
+    }
+    #previewheading {
+        display: none;
+    }
 }
