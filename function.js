@@ -45,6 +45,10 @@ var App = {
     #rChoices0 .choiceContent => h3 tags +ul tags with their class
     #rChoices0 respective class=>li tags
 */
+  },
+  Begenning(){
+    MainButtons.toggleButton(App.State.CurrentStage, true);
+    PreviewPane.refresh();
   }
 }
 
@@ -52,6 +56,7 @@ var TestSuite =
 {
 
   focusOnDecision() {
+    MainButtons.toggleButton(App.State.CurrentStage, false);
     App.State.CurrentStage = 7;
     App.UserData = [
       "focusOnDecision",
@@ -63,9 +68,11 @@ var TestSuite =
       "Whocanhelp",
       "",
       ""
-    ]
+    ];
+    App.Begenning();
   },
   focusOnChoice() {
+    MainButtons.toggleButton(App.State.CurrentStage, false);
     App.State.CurrentStage = 1;
     App.UserData = [
       "focusOnChoice",
@@ -77,9 +84,11 @@ var TestSuite =
       "",
       "",
       ""
-    ]
+    ];
+    App.Begenning();
   },
   focusOnDependentChoice() {
+    MainButtons.toggleButton(App.State.CurrentStage, false);
     App.State.CurrentStage = 2;
     App.UserData = [
       "focusOnDependentChoice",
@@ -91,9 +100,11 @@ var TestSuite =
       "",
       "",
       ""
-    ]
+    ];
+    App.Begenning();
   },
   focusOnAddInfo() {
+    MainButtons.toggleButton(App.State.CurrentStage, false);
     App.State.CurrentStage = 5;
     App.UserData = [
       "focusOnAddInfo",
@@ -105,9 +116,11 @@ var TestSuite =
       "",
       "",
       ""
-    ]
+    ];
+    App.Begenning();
   },
   focusOnSubmit() {
+    MainButtons.toggleButton(App.State.CurrentStage, false);
     App.State.CurrentStage = 9;
     App.UserData = [
       "focusOnSubmit",
@@ -119,7 +132,8 @@ var TestSuite =
       "bvjkjkbb",
       "choice2",
       "ADecision"
-    ]
+    ];
+    App.Begenning();
   }
 
 }
@@ -411,7 +425,6 @@ var MainButtons = {
 }
 
 $(document).ready(function () {
-  //TestSuite.focusOnSubmit();
-  MainButtons.toggleButton(App.State.CurrentStage, true);
-  PreviewPane.refresh();
+  App.Begenning();
+  //TestSuite.focusOnDecision();
 });
