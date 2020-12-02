@@ -1,12 +1,52 @@
+Body{
+    margin: 0px;
+}
+#headerarea {
+    background-image: linear-gradient(45deg, transparent,blue, transparent);
+    color: aliceblue;
+    text-align: center;
+    font-size: 40px;
+}
+#head{
+    padding: 15px 0px;
+}
+#logo {
+    height: 60px;
+    float: left;
+    margin-left: 20px;
+    padding-top: 10px;
+}
+#viewarea, #buttonarea {
+    margin-top: 5px;
+}
+#viewarea {
+    float: right;
+    width: 75%;
+    background-image: linear-gradient(blue, lightblue);
+    text-align: center;
+    border-radius: 6px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+#buttonarea {
+    width: 24.5%;
+    float: left;
+    text-align: center;
+    box-sizing: border-box;
+    border-radius: 6px;
+    background-color: blue;
+    margin-right: 0.5%;
+}
+#progressBar{
+    display: none;
+    height:30px;
+    background-color: aliceblue;
+}
 #choiceLists .main-block {
     cursor: pointer;
 }
-#rEntries{
-  text-align: left;
-  margin: inherit;
-}
 .choiceContent{
-    width: 95%;
+    
     text-align: left;
 }
 .main-block {
@@ -20,53 +60,29 @@
     color: #666;
 }
 .main-block h1 {
-    font-size: 20px;
-    width: 95%;
+   
     border-radius: 10px 10px 0px 0px;
     background-color: #a7d9e0;
-    color: black;
-    font-weight: 500;
-}
- .main-block h1, .main-block h3 {
-    padding: 0;
-    margin: 0;
-    outline: none;
-    font-family: Roboto, Arial, sans-serif;
-    font-size: 16px;
-    color: #666;
-    }
-    .main-block h1, .main-block h3 {
-    font-weight: 400;
-    padding: 5px;
-    }
-    .main-block h1 {
     font-size: 20px;
     padding: 5px;
-    }
-    .main-block ul{
-        margin: 10px 0px;
-    }
+}
+.main-block h1, .main-block h3 {
+    margin: 0;
+    font-family: Roboto, Arial, sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    padding: 5px;
+}
+.main-block ul{
+    margin: 10px 0px;
+}
 #finalReport{
     text-align: center;
-    background-color: white;
+    background-image: radial-gradient(blue, transparent);
     margin: 0% 7%;
-    border-radius: 5px 60px;
 }
-.choiceOption {
-    display: block;
-    margin: 15px auto;
-    width: 400px;
-    min-height: 60px;
-    background-color: cornsilk;
-}
-#logo {
-    height: 60px;
-    vertical-align: sub;
-    float: left;
-    margin-left: 20px;
 
-}
-#rChoices,#rEntries, #rEntries h1 {
+#rEntries, #rEntries h1 {
   text-align: center;
 }
 #rEntries .main-block {
@@ -82,50 +98,14 @@
     color: white;
 }
 
-@media only screen and (min-width: 50em)
-/* ---for pc and dekstop ---*/
-{
-Body{
-    margin: 0px;
-}
 /*-------------------------------------------------------------------------------------- */
-#headerarea{
-    margin-top: 0%;
-    background-color: black;
-    color: aliceblue;
-    text-align: center;
-    height: 9%;
-    padding:1px;
-    font-size: 2.5rem;
-    border-radius: 5px 60px;
-    margin-bottom: 9px;
-}
-#parentdiv{
-    background-color: #ccc;
+#parentdiv {
+    background-color: white;
     height: 100vh;
     border-radius: 5px;
 }
-#buttonarea{
-    width: 24%;
-    height:87%;
-    float: left;
-    background-color: aliceblue;
-    text-align: center;
-    box-sizing: border-box;
-    border-radius: 6px;
-}
-#viewarea{
-    float: right;
-    width: 75%;
-    height:87%;
-    max-height: 90%;
-    background-color: #78b7c7;
-    text-align: center;
-    border-radius: 6px;
-    overflow-y: scroll;
-    overflow-x: hidden;
 
-}
+
 
 .selected{
     box-shadow: 5px 5px 5px green;
@@ -161,18 +141,19 @@ Body{
     background-color: #000099;
     color:white;
 }
-#buttons{
+#buttons {
     align-items: center;
     height: 100%;
+    background-image: linear-gradient(blue, lightblue);
 }
+
 /*-------------------------------------------------------------------------------------- */
-#previewheading{
-    margin:0%;
-    background-color:#330099;
-    color: bisque;
+#previewheading {
+    margin: 0%;
+    background-image: linear-gradient(#9797e8,blue);
+    color: white;
     padding: 4px;
     font-size: 2rem;
-    border-radius: 5px 60px;
 }
 /*-------------------------------------------------------------------------------------*/
 
@@ -290,8 +271,8 @@ h3{
     margin-top: 30px;
     margin-bottom: 100px;
 }
-}
 /*----------------------------------------------------------------------------------------*/
+
 #forward{
     float: right;
 }
@@ -309,4 +290,28 @@ h3{
     padding: 4px;
     font-size: 2rem;
     border-radius: 5px 60px;
+}
+
+/*-----------                   Mobile View CSS                 -------------*/
+
+@media only screen and (max-width: 600px){
+    #headerarea{
+        font-size: 25px;
+    }
+    #logo{
+        height: 40px;
+        margin-left: 5px;
+    }
+    #viewarea {
+        width: 100%;
+    }
+    #buttonarea {
+        display: none;
+    }
+    #progressBar{
+        display: block;
+    }
+    #previewheading {
+        display: none;
+    }
 }

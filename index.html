@@ -4,128 +4,129 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
     <link rel="stylesheet" href="style.css">
-    <link rel="icon" href="wings2life.png"/>
+    <link rel="icon" href="skillpill_200x200.png"/>
     <title>Decision Making Tool</title>
 </head>
 
 <body>
-    <div id="parentdiv">
-        <h1 id="headerarea"><img id="logo" src="wings2life.png">Decision Making Tool</h1>
-        <div id="buttonarea" >
-            <div id="buttons">
-                <button class="btn" id="b1" onclick="MainButtons.showDataEntryPane(0)" disabled>Problem</button>
-                <button class="btn" id="b2" onclick="MainButtons.showChoicesEntryPane(1)" disabled>Choices</button>
-                <button class="btn" id="b3" onclick="MainButtons.showDependentEntryPane(2)"disabled>Consequences</button>
-                <button class="btn" id="b4" onclick="MainButtons.showDependentEntryPane(3)" disabled>Values</button>
-                <button class="btn" id="b5" onclick="MainButtons.showDependentEntryPane(4)" disabled>Feelings</button>
-                <button class="btn" id="b6" onclick="MainButtons.showDataEntryPane(5)" disabled>More Info</button>
-                <button class="btn" id="b7" onclick="MainButtons.showDataEntryPane(6)" disabled>Who can help ?</button>
-                <button class="btn" id="b8" onclick="MainButtons.showDecisionPane(7)" disabled>Decision</button>
-                <button class="btn" id="b9" onclick="MainButtons.showDataEntryPane(8)" disabled>Assess Decision</button>
-                <button class="btn" id="b10" onclick="MainButtons.showReport()" disabled>Submit</button>
+    <div id="headerarea"><img id="logo" src="skillpill_200x200.png"><div id="head">Decision Making Tool</div></div>
+    <div id="buttonarea" >
+        <div id="buttons">
+            <button class="btn" id="b1" onclick="MainButtons.showDataEntryPane(0)" disabled>Problem</button>
+            <button class="btn" id="b2" onclick="MainButtons.showChoicesEntryPane(1)" disabled>Choices</button>
+            <button class="btn" id="b3" onclick="MainButtons.showDependentEntryPane(2)"disabled>Consequences</button>
+            <button class="btn" id="b4" onclick="MainButtons.showDependentEntryPane(3)" disabled>Values</button>
+            <button class="btn" id="b5" onclick="MainButtons.showDependentEntryPane(4)" disabled>Feelings</button>
+            <button class="btn" id="b6" onclick="MainButtons.showDataEntryPane(5)" disabled>More Info</button>
+            <button class="btn" id="b7" onclick="MainButtons.showDataEntryPane(6)" disabled>Who can help ?</button>
+            <button class="btn" id="b8" onclick="MainButtons.showDecisionPane(7)" disabled>Decision</button>
+            <button class="btn" id="b9" onclick="MainButtons.showDataEntryPane(8)" disabled>Assess Decision</button>
+            <button class="btn" id="b10" onclick="MainButtons.showReport()" disabled>Submit</button>
+        </div>
+    </div>
+    <div id="viewarea" >
+        <div id="userdataentrybox" style="display: none; text-align: center;">
+            <h3 id="iQuestion"></h3>
+            <div id="iChoices"></div>
+            <br>
+            <div id="iDecision" style="display: none;">
+                <h3>Select from the given Choices</h3>
+            </div>
+            <textarea id="iResponse" style="text-align: center;"></textarea>
+            <div id="choiceLists"></div>
+            <br>
+            <div style="text-align: center;">
+                <button class="ibtn" type="button" id="AddMore" onclick="DataEntryPane.addChoices()" disabled> Add
+                    More </button>
+                <!-- <button class="ibtn" type="button" id="InputRemoveBtn" onclick="RemoveCurrent()" disabled> Remove
+                </button> -->
+                <button class="ibtn" type="button" id="InputPreviousBtn" onclick="ShowPrevious()" disabled> Previous
+                </button>
+                <button class="ibtn" type="button" id="InputNextBtn" onclick="DataEntryPane.nextChoice()"
+                    disabled>&nbsp; Next
+                    &nbsp;</button>
+                <button class="ibtn" type="button" id="SubmitResponse" onclick="DataEntryPane.SubmitResponse()">
+                    Submit </button>
             </div>
         </div>
-        <div id="viewarea" >
-            <div id="userdataentrybox" style="display: none; text-align: center;">
-                <h3 id="iQuestion"></h3>
-                <div id="iChoices"></div>
-                <br>
-                <div id="iDecision" style="display: none;">
-                    <h3>Select from the given Choices</h3>
-                </div>
-                <textarea id="iResponse" style="text-align: center;"></textarea>
-                <div id="choiceLists"></div>
-                <br>
-                <div style="text-align: center;">
-                    <button class="ibtn" type="button" id="AddMore" onclick="DataEntryPane.addChoices()" disabled> Add
-                        More </button>
-                    <!-- <button class="ibtn" type="button" id="InputRemoveBtn" onclick="RemoveCurrent()" disabled> Remove
-                    </button> -->
-                    <button class="ibtn" type="button" id="InputPreviousBtn" onclick="ShowPrevious()" disabled> Previous
-                    </button>
-                    <button class="ibtn" type="button" id="InputNextBtn" onclick="DataEntryPane.nextChoice()"
-                        disabled>&nbsp; Next
-                        &nbsp;</button>
-                    <button class="ibtn" type="button" id="SubmitResponse" onclick="DataEntryPane.SubmitResponse()">
-                        Submit </button>
-                </div>
+        <!-- -------------------------------------------------------------------------------------------- -->
+        <div id="previewviewarea">
+            <h1 id="previewheading">Preview</h1>
+            <div id="progressBar">Progress Bar</div>
+            <div class="out">
+                <button class="editbutton" id="e1" onclick="PreviewPane.edit(0)" hidden>edit</button>
+                <h3 class="topAlign">Problem :</h3>
+                <p class="content multiLine" id="p1">Problem Of the USER.</p>
             </div>
-            <!-- -------------------------------------------------------------------------------------------- -->
-            <div id="previewviewarea">
-                <h1 id="previewheading">Preview</h1>
-                <div class="out">
-                    <button class="editbutton" id="e1" onclick="PreviewPane.edit(0)" hidden>edit</button>
-                    <h3 class="topAlign">PROBLEM :</h3>
-                    <p class="content multiLine" id="p1">Problem Of the USER.</p>
-                </div>
-                <div class="out">
+            <div class="out">
 
-                    <h3 class="topAlign">CHOICE :</h3>
-                    <button class="editbutton" id="e2" onclick="PreviewPane.edit(1)" hidden>edit </button>
-                    <button id="forward" onclick="PreviewPane.choice('forward')">></button>
-                    <button id="backward" class="topAlign" onclick="PreviewPane.choice('backward')">
-                        <</button>
-                            <P class="content multiLine" id="p2">CHOICE </P>
-                </div>
-                <div class="out">
-                    <h3 class="topAlign" >CONSEQUENCES :</h3>
-                    <button class="editbutton" id="e3" onclick="PreviewPane.edit(2)" hidden>edit </button>
-                    <P class="content multiLine" id="p3">CONSEQUENCES regarding Choice</P>
-                </div>
-                <div class="out">
-                    <h3 class="topAlign" >VALUES :</h3>
-                    <button class="editbutton" id="e4" onclick="PreviewPane.edit(3)" hidden>edit </button>
-                    <P class="content multiLine" id="p4">VALUES regarding choice </P>
-                </div>
-                <div class="out">
-                    <h3 class="topAlign" >FEELING :</h3>
-                    <button class="editbutton" id="e5" onclick="PreviewPane.edit(4)" hidden>edit </button>
-                    <P class="content multiLine" id="p5">FEELING regarding choice</P>
-                </div>
-                <div class="out">
-                    <button class="editbutton" id="e6" onclick="PreviewPane.edit(5)" hidden>edit</button>
-                    <h3 class="topAlign" >MORE INFO :</h3>
-                    <P class="content multiLine" id="p6">More Information about Problem</P>
-                </div>
-                <div class="out">
-                    <button class="editbutton" id="e7" onclick="PreviewPane.edit(6)" hidden>edit</button>
-                    <h3 class="topAlign" >WHO CAN HELP ? :</h3>
-                    <P class="content multiLine" id="p7">WHO else can help ??</P>
-                </div>
-                <div class="out">
-                    <button class="editbutton" id="e8" onclick="PreviewPane.edit(7)" hidden>edit</button>
-                    <h3 class="topAlign" >DECISION :</h3>
-                    <P class="content multiLine" id="p8">DECISION of the USER</P>
-                </div>
-                <div class="out">
-                    <button class="editbutton" id="e9" onclick="PreviewPane.edit(8)" hidden>edit</button>
-                    <h3 class="topAlign" >ASSESS DECISION :</h3>
-                    <P class="content multiLine" id="p9">ASSESS your Decision</P>
-                </div>
+                <h3 class="topAlign">Choices :</h3>
+                <button class="editbutton" id="e2" onclick="PreviewPane.edit(1)" hidden>edit </button>
+                <button id="forward" onclick="PreviewPane.choice('forward')">></button>
+                <button id="backward" class="topAlign" onclick="PreviewPane.choice('backward')">
+                    <</button>
+                        <P class="content multiLine" id="p2">CHOICE </P>
             </div>
-
+            <div class="out">
+                <h3 class="topAlign" >Consequences :</h3>
+                <button class="editbutton" id="e3" onclick="PreviewPane.edit(2)" hidden>edit </button>
+                <P class="content multiLine" id="p3">CONSEQUENCES regarding Choice</P>
+            </div>
+            <div class="out">
+                <h3 class="topAlign" >Values :</h3>
+                <button class="editbutton" id="e4" onclick="PreviewPane.edit(3)" hidden>edit </button>
+                <P class="content multiLine" id="p4">VALUES regarding choice </P>
+            </div>
+            <div class="out">
+                <h3 class="topAlign" >Feelings :</h3>
+                <button class="editbutton" id="e5" onclick="PreviewPane.edit(4)" hidden>edit </button>
+                <P class="content multiLine" id="p5">FEELING regarding choice</P>
+            </div>
+            <div class="out">
+                <button class="editbutton" id="e6" onclick="PreviewPane.edit(5)" hidden>edit</button>
+                <h3 class="topAlign" >More Info :</h3>
+                <P class="content multiLine" id="p6">More Information about Problem</P>
+            </div>
+            <div class="out">
+                <button class="editbutton" id="e7" onclick="PreviewPane.edit(6)" hidden>edit</button>
+                <h3 class="topAlign" >Who Can Help ? :</h3>
+                <P class="content multiLine" id="p7">WHO else can help ??</P>
+            </div>
+            <div class="out">
+                <button class="editbutton" id="e8" onclick="PreviewPane.edit(7)" hidden>edit</button>
+                <h3 class="topAlign" >Decision :</h3>
+                <P class="content multiLine" id="p8">DECISION of the USER</P>
+            </div>
+            <div class="out">
+                <button class="editbutton" id="e9" onclick="PreviewPane.edit(8)" hidden>edit</button>
+                <h3 class="topAlign" >Assessment :</h3>
+                <P class="content multiLine" id="p9">ASSESS your Decision</P>
+            </div>
         </div>
-        <div id="finalReport" class="container" hidden>
-            <h1 id="rProblem">Problem of The user </h1>
-            <div id = "rChoices"></div>
-            <div id = "rEntries">
-                <div class="main-block">
-                    <h1>Additional info</h1>
-                    <div id="rMoreInfo" class="rEntryData"></div>
-                </div>
-                <div class="main-block">
-                    <h1>Who Can Help</h1>
-                    <ul id="rHelp"></ul>
-                </div>
-                <div class="main-block">
-                    <h1>Assess Decision</h1>
-                    <div id="rAssess" class="rEntryData"></div>
-                </div>        
+
+    </div>
+    <div id="finalReport" class="container" hidden>
+        <h1 id="rProblem">Problem of The user </h1>
+        <div id = "rChoices"></div>
+        <div id = "rEntries">
+            <div class="main-block">
+                <h1>Additional info</h1>
+                <div id="rMoreInfo" class="rEntryData"></div>
             </div>
+            <div class="main-block">
+                <h1>Who Can Help</h1>
+                <ul id="rHelp"></ul>
+            </div>
+            <div class="main-block">
+                <h1>Assessment</h1>
+                <div id="rAssess" class="rEntryData"></div>
+            </div>        
         </div>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> -->
     <script src="function.js"></script>
 
 </body>
