@@ -8,6 +8,7 @@
     background-color: #9e9eff ;
 }
 #headerarea {
+    display: flex;
     background-image: linear-gradient(45deg, transparent,blue, transparent);
     color: aliceblue;
     text-align: center;
@@ -15,19 +16,41 @@
 }
 #head{
     padding: 15px 0px;
+    width: 80%;
+}
+.picon{
+    color: black;
+    width: 10%;
+    padding-top: 20px;
 }
 #logo {
-    height: 60px;
+    height: 80px;
     float: left;
     margin-left: 20px;
     padding-top: 10px;
 }
+#eyeslash{
+    padding-top: 30px;
+    font-size: 24px;
+    color: grey;
+    display: none;
+}
+.editbutton {
+    display: none;
+}
+#finalReport{
+    display: none;
+}
 @media only screen and (max-width: 600px){
     #headerarea{
-        font-size: 25px;
+        font-size: 24px;
     }
     #logo{
         height: 50px;
         margin-left: 5px;
+    }
+    .picon,#eyeslash{
+        font-size: 20px;
+        padding-top: 25px;
     }
 }
