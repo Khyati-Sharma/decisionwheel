@@ -40,17 +40,23 @@ var App = {
     for(var i=0;i<tempfeelings.length;i++){
       $(tempid  + " .feelings").append('<li>'+tempfeelings[i]+'</li>')
     }
+    /*rChoices =>.main-block #rChoices0
+    #rChoices0 => h1 choiceContent
+    #rChoices0 .choiceContent => h3 tags +ul tags with their class
+    #rChoices0 respective class=>li tags
+*/
+  },
+  Begenning(){
+    MainButtons.toggleButton(App.State.CurrentStage, true);
+    PreviewPane.refresh();
   }
 }
-/*rChoices =>.main-block #rChoices0
-#rChoices0 => h1 choiceContent
-#rChoices0 .choiceContent => h3 tags +ul tags with their class
-#rChoices0 respective class=>li tags
-*/
+
 var TestSuite =
 {
 
   focusOnDecision() {
+    MainButtons.toggleButton(App.State.CurrentStage, false);
     App.State.CurrentStage = 7;
     App.UserData = [
       "focusOnDecision",
@@ -62,9 +68,11 @@ var TestSuite =
       "Whocanhelp",
       "",
       ""
-    ]
+    ];
+    App.Begenning();
   },
   focusOnChoice() {
+    MainButtons.toggleButton(App.State.CurrentStage, false);
     App.State.CurrentStage = 1;
     App.UserData = [
       "focusOnChoice",
@@ -76,9 +84,11 @@ var TestSuite =
       "",
       "",
       ""
-    ]
+    ];
+    App.Begenning();
   },
   focusOnDependentChoice() {
+    MainButtons.toggleButton(App.State.CurrentStage, false);
     App.State.CurrentStage = 2;
     App.UserData = [
       "focusOnDependentChoice",
@@ -90,9 +100,11 @@ var TestSuite =
       "",
       "",
       ""
-    ]
+    ];
+    App.Begenning();
   },
   focusOnAddInfo() {
+    MainButtons.toggleButton(App.State.CurrentStage, false);
     App.State.CurrentStage = 5;
     App.UserData = [
       "focusOnAddInfo",
@@ -104,21 +116,24 @@ var TestSuite =
       "",
       "",
       ""
-    ]
+    ];
+    App.Begenning();
   },
   focusOnSubmit() {
+    MainButtons.toggleButton(App.State.CurrentStage, false);
     App.State.CurrentStage = 9;
     App.UserData = [
       "focusOnSubmit",
-      ["choice1", "choice2", "choice3","choice4"],
-      ["con1", "con2", "con3","choice3"],
-      ["val1", "val2", "val3","choice3"],
-      ["feel1", "feel2", "feel3","choice3"],
-      "gjjvhg",
-      "bvjkjkbb",
+      ["choice1", "choice2", "choice3egfgsxvdg","choice4kdfkgkjknknknkn"],
+      ["con1", "con2", "con3vbmdbdm","choice3"],
+      ["val1", "val2", "valsgufvgnvn3","choice3"],
+      ["feel1", "feel2", "feel3vcbdhd","choice3"],
+      "gjjvhgvbcbccnfg",
+      "bvjkjkbbdhnnvsfwnnbdghchgdgdbvxgvzzvsgg cffjvnnmh",
       "choice2",
-      "ADecision"
-    ]
+      "ADecisionfhrhfvjjjtopwoklcmgdllbdgdbnbnmn"
+    ];
+    App.Begenning();
   }
 
 }
@@ -277,7 +292,6 @@ var DataEntryPane = {
     $("#iResponse").hide();
     $("#SubmitResponse").prop('disabled', true);
     for (var i = 0; i < App.UserData[this.pivot].length; i++) {
-     // $("#choiceLists").append('<button class="choiceOption" onClick="DataEntryPane.decisionChoice(' + i + ')">' + App.UserData[this.pivot][i] + '</button>');
      if(App.EDIT_MODE){
      $("#choiceLists").show();
      }
@@ -410,7 +424,6 @@ var MainButtons = {
 }
 
 $(document).ready(function () {
-  //TestSuite.focusOnSubmit();
-  MainButtons.toggleButton(App.State.CurrentStage, true);
-  PreviewPane.refresh();
+  App.Begenning();
+  //TestSuite.focusOnDecision();
 });
