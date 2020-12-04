@@ -175,26 +175,23 @@ var DataEntryPane = {
     }
     else {
       App.UserData[App.State.CurrentStage] = App.UserData[this.pivot][choice];
+      MainButtons.showDataEntryPane(App.State.CurrentStage+1);
       MainButtons.toggleButton(++App.State.CurrentStage, true);
     }
     $("#choiceLists .main-block").removeClass("selected");
     $("#choiceList"+choice).addClass("selected");
-    App.showView("preview");
-    PreviewPane.refresh();
     $("#iResponse").show();
     $("#SubmitResponse").prop('disabled', false);
     $("#choiceLists").hide();
-
   },
   SubmitResponse() {
     var tempResponse = $.trim($("#iResponse").val());
     if ( this.blankChoice > 1 && tempResponse.length == 0 ){
-      MainButtons.enableNextButton();
-      App.showView("preview");
       $("#AddMore").hide();
       PreviewPane.refresh();
-      App.State.CurrentStage++;
       this.blankChoice = 0 ;
+      MainButtons.showDependentEntryPane(App.State.CurrentStage+1);
+      App.State.CurrentStage++;
       return ;
     }
     var response = this.getResponse();
@@ -212,10 +209,10 @@ var DataEntryPane = {
         PreviewPane.refresh();
         App.showView("preview");
         MainButtons.toggleButton(App.State.CurrentStage,true);
+        MainButtons.enableNextButton();
+        App.showView("preview");  
         return;
       }
-      MainButtons.enableNextButton();
-      App.showView("preview");
       this.checkStageAndSetView(response);
       PreviewPane.refresh();
       App.State.CurrentStage++;
@@ -224,16 +221,30 @@ var DataEntryPane = {
     // var editId = ["#e1" , "#e2" , "#e3" , "#e4" , "e5" , "e6" , "e7" , "e8" , "e9"]
   },
   checkStageAndSetView(response) {
+    if(App.State.CurrentStage==0)
+    MainButtons.showChoicesEntryPane(App.State.CurrentStage+1);
+    else if(App.State.CurrentStage==5)
+    MainButtons.showDataEntryPane(App.State.CurrentStage+1);
+    else if(App.State.CurrentStage==6)
+    MainButtons.showDecisionPane(App.State.CurrentStage+1);
+    else if(App.State.CurrentStage==8){
+      MainButtons.enableNextButton();
+      App.showView("preview");
+    }
     if (this.IsList[App.State.CurrentStage]) {//Choices Condition
       this.addChoices();
       $("#AddMore").hide();
       this.blankChoice = 0 ;
+      MainButtons.showDependentEntryPane(App.State.CurrentStage+1);
     }
     else if (this.DependentList[App.State.CurrentStage]) {
       this.nextChoice();
       $("#iChoices").text("");
       this.incr = 0;
-
+      if(App.State.CurrentStage==4)
+      MainButtons.showDataEntryPane(App.State.CurrentStage+1);
+      else
+      MainButtons.showDependentEntryPane(App.State.CurrentStage+1);
     }
     else if (App.State.CurrentStage == 7) { ; }
     else {
