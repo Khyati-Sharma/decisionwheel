@@ -12,7 +12,7 @@
     background-image: linear-gradient(45deg, transparent,blue, transparent);
     color: aliceblue;
     text-align: center;
-    font-size: 40px;
+    font-size: xx-large;
 }
 #head{
     padding: 15px 0px;
@@ -33,7 +33,6 @@
     padding-top: 30px;
     font-size: 24px;
     color: grey;
-    display: none;
 }
 .editbutton {
     display: none;
@@ -41,9 +40,12 @@
 #finalReport{
     display: none;
 }
+#eye{
+    display: none;
+}
 @media only screen and (max-width: 600px){
     #headerarea{
-        font-size: 24px;
+        font-size: larger;
     }
     #logo{
         height: 50px;
