@@ -408,7 +408,7 @@ var MainButtons = {
     DataEntryPane.showAdd();
     this.showDataEntryPane(DataEntryPane.pivot);
   },
-  showDependentEntryPane(btnIndex) {ss
+  showDependentEntryPane(btnIndex) {
     DataEntryPane.showNext();
     DataEntryPane.showChoices();
     this.showDataEntryPane(btnIndex);
