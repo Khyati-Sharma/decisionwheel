@@ -16,8 +16,8 @@
     <div id="headerarea">
         <img id="logo" src="skillpill_200x200.png">
         <div id="head">Decision Making Tool</div>
-        <i id="eye"class="fa picon">&#xf06e;</i>
-        <i id="eyeslash"class='fas picon'>&#xf070;</i>
+        <i id="eye" onclick=' App.showView("preview")' class="fa picon">&#xf06e;</i>
+        <i id="eyeslash" onclick=' App.showView("dataEntry")' class='fas picon'>&#xf070;</i>
     </div>
     <div class="progress">
         <div class="progress-bar"id="completedbar" role="progressbar" style="width: 0%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
@@ -66,7 +66,6 @@
         <!-- -------------------------------------------------------------------------------------------- -->
         <div id="previewviewarea">
             <h1 id="previewheading">Preview</h1>
-            <div id="progressBar">Progress Bar</div>
             <div class="out">
                 <button class="editbutton" id="e1" onclick="PreviewPane.edit(0)">edit</button>
                 <h3 class="topAlign">Problem :</h3>
@@ -116,9 +115,12 @@
                 <h3 class="topAlign" >Assessment :</h3>
                 <P class="content multiLine" id="p9">ASSESS your Decision</P>
             </div>
+            <button type="button" id="mobileStart" class="btn btn-primary btn-lg btn-block"  onclick="MainButtons.showDataEntryMobile()">Start</button>
+           
         </div>
 
     </div>
+    
     <div id="finalReport" class="container">
         <h1 id="rProblem">Problem of The user </h1>
         <div id = "rChoices"></div>

@@ -441,6 +441,19 @@ var MainButtons = {
       $("#rHelp").append('<li>' + tempHelp[i] + '</li>')
     }
     $("#rAssess").text(App.UserData[8]);
+  },
+  showDataEntryMobile(){
+    if(App.State.CurrentStage ==0){
+     this.showDataEntryPane(0);
+     $("#mobileStart").text("Continue");
+    }
+    else if(App.State.CurrentStage<9){
+      App.showView("dataEntry");
+    }
+    else{
+      this.showReport();
+
+    }
   }
 
 }
