@@ -240,6 +240,8 @@ var DataEntryPane = {
     else if (App.State.CurrentStage == 8) {
       MainButtons.enableNextButton();
       App.showView("preview");
+      $("#mobileStart").text("Submit");
+
     }
     if (this.IsList[App.State.CurrentStage]) {//Choices Condition
       this.addChoices();
@@ -297,6 +299,9 @@ var DataEntryPane = {
   },
   setView(btnIndex) {
     $("#iQuestion").text(this.Questions[btnIndex]);
+    if(btnIndex==8)
+    $("#iChoices").text(App.UserData[8]);
+
   },
   showAdd() {
     $("#AddMore").prop('disabled', false);
@@ -403,7 +408,7 @@ var MainButtons = {
     DataEntryPane.showAdd();
     this.showDataEntryPane(DataEntryPane.pivot);
   },
-  showDependentEntryPane(btnIndex) {
+  showDependentEntryPane(btnIndex) {ss
     DataEntryPane.showNext();
     DataEntryPane.showChoices();
     this.showDataEntryPane(btnIndex);
@@ -425,6 +430,7 @@ var MainButtons = {
     $("#viewarea").hide();
     $("#buttonarea").hide();
     $("#finalReport").show();
+    $("#completedbar").hide();
     $("#rProblem").text(App.UserData[0]);
     var classChoice;
     for (var i = 0; i < App.UserData[1].length; i++) {
