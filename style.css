@@ -53,7 +53,7 @@
 }
 @media only screen and (max-width: 600px){
     #headerarea{
-        font-size: larger;
+        font-size: x-large;
     }
     #logo{
         height: 50px;
@@ -62,6 +62,12 @@
     .picon,#eyeslash{
         font-size: 20px;
         padding-top: 25px;
+    }
+    #previewheading{
+        font-size:x-large;
+    }
+    .topAlign{
+        font-size: large;
     }
     #mobileStart{
         display: block;
