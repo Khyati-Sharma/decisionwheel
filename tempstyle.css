@@ -237,9 +237,6 @@ h3{
 }
 
 
-#InputPreviousBtn:disabled{
-    display: none;
-}
 
 #InputNextBtn:disabled{
     display: none;
