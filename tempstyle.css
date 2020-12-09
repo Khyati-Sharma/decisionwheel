@@ -37,11 +37,6 @@ Body{
     background-color: blue;
     margin-right: 0.5%;
 }
-#progressBar{
-    display: none;
-    height:30px;
-    background-color: aliceblue;
-}
 #choiceLists .main-block {
     cursor: pointer;
 }
@@ -242,9 +237,6 @@ h3{
 }
 
 
-#InputPreviousBtn:disabled{
-    display: none;
-}
 
 #InputNextBtn:disabled{
     display: none;
@@ -306,12 +298,6 @@ h3{
         width: 100%;
     }
     #buttonarea {
-        display: none;
-    }
-    #progressBar{
-        display: block;
-    }
-    #previewheading {
         display: none;
     }
 }

@@ -23,6 +23,9 @@
     width: 10%;
     padding-top: 20px;
 }
+#cancel{
+    display: none;
+}
 #logo {
     height: 80px;
     float: left;
@@ -33,6 +36,7 @@
     padding-top: 30px;
     font-size: 24px;
     color: grey;
+    display: none;
 }
 .editbutton {
     display: none;
@@ -43,9 +47,17 @@
 #eye{
     display: none;
 }
+#mobileStart{
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    margin: 0px;
+    display: none;
+}
 @media only screen and (max-width: 600px){
     #headerarea{
-        font-size: larger;
+        font-size: x-large;
     }
     #logo{
         height: 50px;
@@ -55,4 +67,14 @@
         font-size: 20px;
         padding-top: 25px;
     }
+    #previewheading{
+        font-size:x-large;
+    }
+    .topAlign{
+        font-size: large;
+    }
+    #mobileStart{
+        display: block;
+    }
+
 }
