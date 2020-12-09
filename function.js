@@ -189,7 +189,7 @@ var DataEntryPane = {
     $("#choiceLists .main-block").removeClass("selected");
     $("#choiceList" + choice).addClass("selected");
     $("#iResponse").show();
-    $("#SubmitResponse").prop('disabled', false);
+    $("#SubmitResponse").show();
     $("#choiceLists").hide();
     $("#iResponse").focus();
   },
@@ -270,8 +270,8 @@ var DataEntryPane = {
     if (response != false) {
       this.incr++;
       if (App.UserData[this.pivot].length - 1 == this.incr) {
-        $("#InputNextBtn").prop('disabled', true);
-        $("#SubmitResponse").prop('disabled', false);
+        $("#InputNextBtn").hide();
+        $("#SubmitResponse").show();
       }
       this.showChoices();
       App.UserData[App.State.CurrentStage].push(response);
@@ -304,19 +304,19 @@ var DataEntryPane = {
 
   },
   showAdd() {
-    $("#AddMore").prop('disabled', false);
+    $("#AddMore").show();
     $("#SubmitResponse").hide();
   },
   showNext() {
-    $("#InputNextBtn").prop('disabled', false);
-    $("#SubmitResponse").prop('disabled', true);
+    $("#InputNextBtn").show();
+    $("#SubmitResponse").hide();
   },
   showChoices() {
     $("#iChoices").text(App.UserData[this.pivot][this.incr]);
   },
   setDecisionPane() {
     $("#iResponse").hide();
-    $("#SubmitResponse").prop('disabled', true);
+    $("#SubmitResponse").hide();
     for (var i = 0; i < App.UserData[this.pivot].length; i++) {
       if (App.EDIT_MODE) {
         $("#choiceLists").show();
@@ -347,7 +347,7 @@ var DataEntryPane = {
       var data = App.UserData[App.edit];
     }
     $("#iResponse").val(data);
-    $("#InputNewBtn").prop('disabled', true);
+    $("#InputNewBtn").hide();
     $("#iQuestion").text(DataEntryPane.Questions[App.edit]);
   }
 }
@@ -406,6 +406,17 @@ var PreviewPane = {
     $("#SubmitResponse").show();
     $("#choiceLists").hide();
     $("#iResponse").show();
+  },
+  hidePreview(){
+    if (  App.State.CurrentStage == 1 )
+      MainButtons.showChoicesEntryPane(App.State.CurrentStage);
+    else if ( App.State.CurrentStage == 7 )
+      MainButtons.showDecisionPane(App.State.CurrentStage);
+    else if ( App.State.CurrentStage > 1 && App.State.CurrentStage < 5 )
+      MainButtons.showDependentEntryPane(App.State.CurrentStage);
+    else
+      MainButtons.showDataEntryPane(App.State.CurrentStage);
+    $("#iResponse").text(this.textEntry);
   }
 }
 
@@ -471,6 +482,7 @@ var MainButtons = {
 
     }
   }
+
 
 }
 

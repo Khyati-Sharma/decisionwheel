@@ -228,21 +228,12 @@ h3{
 }
 
 
-#AddMore:disabled{
-    display: none;
-}
-
-#InputRemoveBtn:disabled{
+#AddMore{
     display: none;
 }
 
 
-
-#InputNextBtn:disabled{
-    display: none;
-}
-
-#SubmitResponse:disabled{
+#InputNextBtn{
     display: none;
 }
 
