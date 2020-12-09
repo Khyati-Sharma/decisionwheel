@@ -16,7 +16,7 @@
     <div id="headerarea">
         <img id="logo" src="skillpill_200x200.png">
         <div id="head">Decision Making Tool</div>
-        <i id="eye" onclick=' App.showView("preview")' class="fa picon">&#xf06e;</i>
+        <i id="eye" onclick='PreviewPane.showPreview()' class="fa picon">&#xf06e;</i>
         <i id="eyeslash" onclick=' App.showView("dataEntry")' class='fas picon'>&#xf070;</i>
     </div>
     <div class="progress">
@@ -54,13 +54,13 @@
                     More </button>
                 <!-- <button class="ibtn" type="button" id="InputRemoveBtn" onclick="RemoveCurrent()" disabled> Remove
                 </button> -->
-                <button class="ibtn" type="button" id="InputPreviousBtn" onclick="ShowPrevious()" disabled> Previous
-                </button>
+                <!-- <button class="ibtn" type="button" id="InputPreviousBtn" onclick="ShowPrevious()" disabled> Previous
+                </button> -->
                 <button class="ibtn" type="button" id="InputNextBtn" onclick="DataEntryPane.nextChoice()"
                     disabled>&nbsp; Next
                     &nbsp;</button>
-                <button class="ibtn" type="button" id="SubmitResponse" onclick="DataEntryPane.SubmitResponse()">
-                    Submit </button>
+                <button class="ibtn" type="button" id="cancel">Cancel</button>
+                <button class="ibtn" type="button" id="SubmitResponse" onclick="DataEntryPane.SubmitResponse()">Submit </button>
             </div>
         </div>
         <!-- -------------------------------------------------------------------------------------------- -->

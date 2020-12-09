@@ -23,6 +23,9 @@
     width: 10%;
     padding-top: 20px;
 }
+#cancel{
+    display: none;
+}
 #logo {
     height: 80px;
     float: left;
@@ -33,6 +36,7 @@
     padding-top: 30px;
     font-size: 24px;
     color: grey;
+    display: none;
 }
 .editbutton {
     display: none;
