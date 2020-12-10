@@ -37,6 +37,7 @@
     font-size: 24px;
     color: grey;
     display: none;
+    cursor: pointer;
 }
 .editbutton {
     display: none;
@@ -46,6 +47,7 @@
 }
 #eye{
     display: none;
+    cursor: pointer;
 }
 #mobileStart{
     position: fixed;
@@ -53,7 +55,6 @@
     bottom: 0;
     width: 100%;
     margin: 0px;
-    display: none;
 }
 @media only screen and (max-width: 600px){
     #headerarea{
@@ -73,8 +74,4 @@
     .topAlign{
         font-size: large;
     }
-    #mobileStart{
-        display: block;
-    }
-
 }

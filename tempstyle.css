@@ -109,7 +109,7 @@ Body{
     background-color: #7fe77f;
 }
 /*-------------------------------------------------------------------------------------- */
-.btn {
+.lbl {
     border: none;
     display: block;
     width: 90%;
@@ -117,24 +117,14 @@ Body{
     text-align: center;
     font-size:large;
     font-weight: 700;
-    transition-duration: 0.4s;
-    cursor: pointer;
     margin:4%;
     background-color: white;
     border: 2px solid #006699;
     border-radius:10px;
 }
-.btn:hover {
-    background-color: #000099;
-    color: white;
-}
-.btn:enabled{
+.lbl:enabled{
     background-color: #00CCFF;
     color: rgb(71, 70, 70);
-}
-.btn:enabled:hover{
-    background-color: #000099;
-    color:white;
 }
 #buttons {
     align-items: center;
