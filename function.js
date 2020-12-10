@@ -185,6 +185,8 @@ var DataEntryPane = {
       App.UserData[App.State.CurrentStage] = App.UserData[this.pivot][choice];
       MainButtons.showDataEntryPane(++App.State.CurrentStage);
       App.Progress();
+      $("#b" + (App.State.CurrentStage)).addClass("completed");
+      $("#b" + (App.State.CurrentStage+1)).addClass("inProgress");
     }
     $("#choiceLists .main-block").removeClass("selected");
     $("#choiceList" + choice).addClass("selected");
@@ -202,6 +204,8 @@ var DataEntryPane = {
       MainButtons.showDependentEntryPane(App.State.CurrentStage + 1);
       App.State.CurrentStage++;
       App.Progress();
+      $("#b" + (App.State.CurrentStage)).addClass("completed");
+      $("#b" + (App.State.CurrentStage+1)).addClass("inProgress");
       return;
     }
     var response = this.getResponse();
@@ -225,10 +229,10 @@ var DataEntryPane = {
       this.checkStageAndSetView(response);
       PreviewPane.refresh();
       App.State.CurrentStage++;
+      $("#b" + (App.State.CurrentStage)).addClass("completed");
+      $("#b" + (App.State.CurrentStage+1)).addClass("inProgress");
       App.Progress();
     }
-
-    // var editId = ["#e1" , "#e2" , "#e3" , "#e4" , "e5" , "e6" , "e7" , "e8" , "e9"]
   },
   checkStageAndSetView(response) {
     if (App.State.CurrentStage == 0)
@@ -487,6 +491,7 @@ var MainButtons = {
   showDataEntryMobile() {
     if (App.State.CurrentStage == 0) {
       this.showDataEntryPane(0);
+      $("#b" + (App.State.CurrentStage+1)).addClass("inProgress");
       $("#mobileStart").text("Continue");
     }
     else if (App.State.CurrentStage < 9) {
