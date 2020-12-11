@@ -53,8 +53,8 @@ var App = {
     MainButtons.toggleButton(App.State.CurrentStage, true);
     PreviewPane.refresh();
   },
-  Progress(){
-    $("#completedbar").width((this.State.CurrentStage / 9 * 100) + "%" );
+  Progress() {
+    $("#completedbar").width((this.State.CurrentStage / 9 * 100) + "%");
   }
 }
 
@@ -178,18 +178,20 @@ var DataEntryPane = {
       App.UserData[App.edit] = App.UserData[this.pivot][choice];
       App.EDIT_MODE = false;
       MainButtons.toggleButton(App.State.CurrentStage, true);
-      App.showView("preview");	
+      App.showView("preview");
       PreviewPane.refresh();
     }
     else {
       App.UserData[App.State.CurrentStage] = App.UserData[this.pivot][choice];
       MainButtons.showDataEntryPane(++App.State.CurrentStage);
       App.Progress();
+      $("#b" + (App.State.CurrentStage)).addClass("completed");
+      $("#b" + (App.State.CurrentStage+1)).addClass("inProgress");
     }
     $("#choiceLists .main-block").removeClass("selected");
     $("#choiceList" + choice).addClass("selected");
     $("#iResponse").show();
-    $("#SubmitResponse").prop('disabled', false);
+    $("#SubmitResponse").show();
     $("#choiceLists").hide();
     $("#iResponse").focus();
   },
@@ -202,6 +204,8 @@ var DataEntryPane = {
       MainButtons.showDependentEntryPane(App.State.CurrentStage + 1);
       App.State.CurrentStage++;
       App.Progress();
+      $("#b" + (App.State.CurrentStage)).addClass("completed");
+      $("#b" + (App.State.CurrentStage+1)).addClass("inProgress");
       return;
     }
     var response = this.getResponse();
@@ -225,10 +229,10 @@ var DataEntryPane = {
       this.checkStageAndSetView(response);
       PreviewPane.refresh();
       App.State.CurrentStage++;
+      $("#b" + (App.State.CurrentStage)).addClass("completed");
+      $("#b" + (App.State.CurrentStage+1)).addClass("inProgress");
       App.Progress();
     }
-
-    // var editId = ["#e1" , "#e2" , "#e3" , "#e4" , "e5" , "e6" , "e7" , "e8" , "e9"]
   },
   checkStageAndSetView(response) {
     if (App.State.CurrentStage == 0)
@@ -270,8 +274,8 @@ var DataEntryPane = {
     if (response != false) {
       this.incr++;
       if (App.UserData[this.pivot].length - 1 == this.incr) {
-        $("#InputNextBtn").prop('disabled', true);
-        $("#SubmitResponse").prop('disabled', false);
+        $("#InputNextBtn").hide();
+        $("#SubmitResponse").show();
       }
       this.showChoices();
       App.UserData[App.State.CurrentStage].push(response);
@@ -299,24 +303,24 @@ var DataEntryPane = {
   },
   setView(btnIndex) {
     $("#iQuestion").text(this.Questions[btnIndex]);
-    if(btnIndex==8)
-    $("#iChoices").text(App.UserData[7]);
+    if (btnIndex == 8)
+      $("#iChoices").text(App.UserData[7]);
 
   },
   showAdd() {
-    $("#AddMore").prop('disabled', false);
+    $("#AddMore").show();
     $("#SubmitResponse").hide();
   },
   showNext() {
-    $("#InputNextBtn").prop('disabled', false);
-    $("#SubmitResponse").prop('disabled', true);
+    $("#InputNextBtn").show();
+    $("#SubmitResponse").hide();
   },
   showChoices() {
     $("#iChoices").text(App.UserData[this.pivot][this.incr]);
   },
   setDecisionPane() {
     $("#iResponse").hide();
-    $("#SubmitResponse").prop('disabled', true);
+    $("#SubmitResponse").hide();
     for (var i = 0; i < App.UserData[this.pivot].length; i++) {
       if (App.EDIT_MODE) {
         $("#choiceLists").show();
@@ -347,14 +351,14 @@ var DataEntryPane = {
       var data = App.UserData[App.edit];
     }
     $("#iResponse").val(data);
-    $("#InputNewBtn").prop('disabled', true);
+    $("#InputNewBtn").hide();
     $("#iQuestion").text(DataEntryPane.Questions[App.edit]);
   }
 }
 
 var PreviewPane = {
   "ChoicePosition": 0,
-  "textEntry":"",
+  "textEntry": "",
   refresh() {
     controls = ["#p1", "#p2", "#p3", "#p4", "#p5", "#p6", "#p7", "#p8", "#p9"];
     for (var i = 0; i < controls.length; i++) {
@@ -400,12 +404,32 @@ var PreviewPane = {
   },
   showPreview() {
     App.showView("preview");
-    this.textEntry=$.trim($("#iResponse").val());
+    this.textEntry = $.trim($("#iResponse").val());
     $("#iChoices").text("");
     $(".ibtn").hide();
     $("#SubmitResponse").show();
     $("#choiceLists").hide();
     $("#iResponse").show();
+    this.refresh();
+  },
+  hidePreview() {
+    if (App.State.CurrentStage == 1) {
+      MainButtons.showChoicesEntryPane(App.State.CurrentStage);
+      if (App.UserData[1].length > 0)
+        $("#SubmitResponse").show();
+    }
+    else if (App.State.CurrentStage == 7) {
+      $("#iResponse").hide();
+      $("#SubmitResponse").hide();
+      $("#choiceLists").show();
+      MainButtons.showDataEntryPane(App.State.CurrentStage);
+      $("#choiceLists").show();
+    }
+    else if (App.State.CurrentStage > 1 && App.State.CurrentStage < 5)
+      MainButtons.showDependentEntryPane(App.State.CurrentStage);
+    else
+      MainButtons.showDataEntryPane(App.State.CurrentStage);
+    $("#iResponse").val(this.textEntry);
   }
 }
 
@@ -419,13 +443,19 @@ var MainButtons = {
     this.showDataEntryPane(DataEntryPane.pivot);
   },
   showDependentEntryPane(btnIndex) {
-    DataEntryPane.showNext();
+    if ((App.UserData[DataEntryPane.pivot].length - 1) == (App.UserData[App.State.CurrentStage].length)) {
+      $("#InputNextBtn").hide();
+      $("#SubmitResponse").show();
+    }
+    else
+      DataEntryPane.showNext();
     DataEntryPane.showChoices();
     this.showDataEntryPane(btnIndex);
   },
   showDecisionPane(btnIndex) {
     DataEntryPane.setDecisionPane();
     this.showDataEntryPane(btnIndex);
+    $("#choiceLists").show();
   },
   showDataEntryPane(btnIndex) {
     DataEntryPane.setView(btnIndex);
@@ -458,19 +488,21 @@ var MainButtons = {
     }
     $("#rAssess").text(App.UserData[8]);
   },
-  showDataEntryMobile(){
-    if(App.State.CurrentStage ==0){
-     this.showDataEntryPane(0);
-     $("#mobileStart").text("Continue");
+  showDataEntryMobile() {
+    if (App.State.CurrentStage == 0) {
+      this.showDataEntryPane(0);
+      $("#b" + (App.State.CurrentStage+1)).addClass("inProgress");
+      $("#mobileStart").text("Continue");
     }
-    else if(App.State.CurrentStage<9){
-      App.showView("dataEntry");
+    else if (App.State.CurrentStage < 9) {
+      PreviewPane.hidePreview();    
     }
-    else{
+    else {
       this.showReport();
 
     }
   }
+
 
 }
 
