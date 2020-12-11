@@ -429,7 +429,7 @@ var PreviewPane = {
       MainButtons.showDependentEntryPane(App.State.CurrentStage);
     else
       MainButtons.showDataEntryPane(App.State.CurrentStage);
-    $("#iResponse").text(this.textEntry);
+    $("#iResponse").val(this.textEntry);
   }
 }
 
@@ -495,7 +495,7 @@ var MainButtons = {
       $("#mobileStart").text("Continue");
     }
     else if (App.State.CurrentStage < 9) {
-      App.showView("dataEntry");
+      PreviewPane.hidePreview();    
     }
     else {
       this.showReport();
