@@ -17,7 +17,7 @@
         <img id="logo" src="skillpill_200x200.png">
         <div id="head">Decision Making Tool</div>
         <i id="eye" onclick='PreviewPane.showPreview()' class="fa picon">&#xf06e;</i>
-        <i id="eyeslash" onclick=' App.showView("dataEntry")' class='fas picon'>&#xf070;</i>
+        <i id="eyeslash" onclick='PreviewPane.hidePreview()' class='fas picon'>&#xf070;</i>
     </div>
     <div class="progress">
         <div class="progress-bar"id="completedbar" role="progressbar" style="width: 0%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
@@ -25,18 +25,15 @@
         <div class="progress-bar bg" id="incompletebar" role="progressbar" style="width: 50%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div> -->
       </div>
     <div id="buttonarea" >
-        <div id="buttons">
-            <button class="btn" id="b1" onclick="MainButtons.showDataEntryPane(0)" disabled>Problem</button>
-            <button class="btn" id="b2" onclick="MainButtons.showChoicesEntryPane(1)" disabled>Choices</button>
-            <button class="btn" id="b3" onclick="MainButtons.showDependentEntryPane(2)"disabled>Consequences</button>
-            <button class="btn" id="b4" onclick="MainButtons.showDependentEntryPane(3)" disabled>Values</button>
-            <button class="btn" id="b5" onclick="MainButtons.showDependentEntryPane(4)" disabled>Feelings</button>
-            <button class="btn" id="b6" onclick="MainButtons.showDataEntryPane(5)" disabled>More Info</button>
-            <button class="btn" id="b7" onclick="MainButtons.showDataEntryPane(6)" disabled>Who can help ?</button>
-            <button class="btn" id="b8" onclick="MainButtons.showDecisionPane(7)" disabled>Decision</button>
-            <button class="btn" id="b9" onclick="MainButtons.showDataEntryPane(8)" disabled>Assess Decision</button>
-            <button class="btn" id="b10" onclick="MainButtons.showReport()" disabled>Submit</button>
-        </div>
+            <div class="lbl" id="b1" onclick="MainButtons.showDataEntryPane(0)">Problem</div>
+            <div class="lbl" id="b2" onclick="MainButtons.showChoicesEntryPane(1)">Choices</div>
+            <div class="lbl" id="b3" onclick="MainButtons.showDependentEntryPane(2)">Consequences</div>
+            <div class="lbl" id="b4" onclick="MainButtons.showDependentEntryPane(3)">Values</div>
+            <div class="lbl" id="b5" onclick="MainButtons.showDependentEntryPane(4)">Feelings</div>
+            <div class="lbl" id="b6" onclick="MainButtons.showDataEntryPane(5)">More Info</div>
+            <div class="lbl" id="b7" onclick="MainButtons.showDataEntryPane(6)">Who can help ?</div>
+            <div class="lbl" id="b8" onclick="MainButtons.showDecisionPane(7)">Decision</div>
+            <div class="lbl" id="b9" onclick="MainButtons.showDataEntryPane(8)">Assess Decision</div>
     </div>
     <div id="viewarea" >
         <div id="userdataentrybox" style="display: none; text-align: center;">
@@ -50,14 +47,13 @@
             <div id="choiceLists"></div>
             <br>
             <div style="text-align: center;">
-                <button class="ibtn" type="button" id="AddMore" onclick="DataEntryPane.addChoices()" disabled> Add
+                <button class="ibtn" type="button" id="AddMore" onclick="DataEntryPane.addChoices()" > Add
                     More </button>
-                <!-- <button class="ibtn" type="button" id="InputRemoveBtn" onclick="RemoveCurrent()" disabled> Remove
+                <!-- <button class="ibtn" type="button" id="InputRemoveBtn" onclick="RemoveCurrent()"> Remove
                 </button> -->
-                <!-- <button class="ibtn" type="button" id="InputPreviousBtn" onclick="ShowPrevious()" disabled> Previous
+                <!-- <button class="ibtn" type="button" id="InputPreviousBtn" onclick="ShowPrevious()"> Previous
                 </button> -->
-                <button class="ibtn" type="button" id="InputNextBtn" onclick="DataEntryPane.nextChoice()"
-                    disabled>&nbsp; Next
+                <button class="ibtn" type="button" id="InputNextBtn" onclick="DataEntryPane.nextChoice()">&nbsp; Next
                     &nbsp;</button>
                 <button class="ibtn" type="button" id="cancel">Cancel</button>
                 <button class="ibtn" type="button" id="SubmitResponse" onclick="DataEntryPane.SubmitResponse()">Submit </button>

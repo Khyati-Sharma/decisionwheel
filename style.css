@@ -1,3 +1,6 @@
+body{
+    height: 100vh;
+}
 #completedbar{
     background-color: #33c733;
 }
@@ -32,11 +35,36 @@
     margin-left: 20px;
     padding-top: 10px;
 }
+#buttonarea {
+    width: 24.5%;
+    float: left;
+    margin-right: 0.5%;
+    margin-top: 5px;
+    background-image: linear-gradient(blue, lightblue);
+    height: 80%;
+    flex-direction: column;
+    justify-content: space-around;
+    display: flex;
+}
+.lbl {
+    width: 92%;
+    padding: 10px 5px;
+    text-align: center;
+    font-size: large;
+    font-weight: 700;
+    margin: 4%;
+}
+.completed{
+    background-color: #5deb72;
+}.inProgress{
+    background-image: linear-gradient(180deg, #5deb72, transparent);
+}
 #eyeslash{
     padding-top: 30px;
     font-size: 24px;
     color: grey;
     display: none;
+    cursor: pointer;
 }
 .editbutton {
     display: none;
@@ -46,6 +74,7 @@
 }
 #eye{
     display: none;
+    cursor: pointer;
 }
 #mobileStart{
     position: fixed;
@@ -53,7 +82,6 @@
     bottom: 0;
     width: 100%;
     margin: 0px;
-    display: none;
 }
 @media only screen and (max-width: 600px){
     #headerarea{
@@ -73,8 +101,7 @@
     .topAlign{
         font-size: large;
     }
-    #mobileStart{
-        display: block;
+    #buttonarea {
+        display: none;
     }
-
 }

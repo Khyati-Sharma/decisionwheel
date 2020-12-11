@@ -28,15 +28,7 @@ Body{
     overflow-y: scroll;
     overflow-x: hidden;
 }
-#buttonarea {
-    width: 24.5%;
-    float: left;
-    text-align: center;
-    box-sizing: border-box;
-    border-radius: 6px;
-    background-color: blue;
-    margin-right: 0.5%;
-}
+
 #choiceLists .main-block {
     cursor: pointer;
 }
@@ -109,38 +101,8 @@ Body{
     background-color: #7fe77f;
 }
 /*-------------------------------------------------------------------------------------- */
-.btn {
-    border: none;
-    display: block;
-    width: 90%;
-    padding: 10px 5px;
-    text-align: center;
-    font-size:large;
-    font-weight: 700;
-    transition-duration: 0.4s;
-    cursor: pointer;
-    margin:4%;
-    background-color: white;
-    border: 2px solid #006699;
-    border-radius:10px;
-}
-.btn:hover {
-    background-color: #000099;
-    color: white;
-}
-.btn:enabled{
-    background-color: #00CCFF;
-    color: rgb(71, 70, 70);
-}
-.btn:enabled:hover{
-    background-color: #000099;
-    color:white;
-}
-#buttons {
-    align-items: center;
-    height: 100%;
-    background-image: linear-gradient(blue, lightblue);
-}
+
+
 
 /*-------------------------------------------------------------------------------------- */
 #previewheading {
@@ -228,21 +190,12 @@ h3{
 }
 
 
-#AddMore:disabled{
-    display: none;
-}
-
-#InputRemoveBtn:disabled{
+#AddMore{
     display: none;
 }
 
 
-
-#InputNextBtn:disabled{
-    display: none;
-}
-
-#SubmitResponse:disabled{
+#InputNextBtn{
     display: none;
 }
 
@@ -297,7 +250,5 @@ h3{
     #viewarea {
         width: 100%;
     }
-    #buttonarea {
-        display: none;
-    }
+ 
 }
