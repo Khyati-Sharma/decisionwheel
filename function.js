@@ -192,7 +192,7 @@ var DataEntryPane = {
     $("#choiceList" + choice).addClass("selected");
     $("#iResponse").show();
     $("#SubmitResponse").show();
-    $("#choiceLists").hide();
+    $("#decisionData").hide();
     $("#iResponse").focus();
   },
   SubmitResponse() {
@@ -235,18 +235,7 @@ var DataEntryPane = {
     }
   },
   checkStageAndSetView(response) {
-    if (App.State.CurrentStage == 0)
-      MainButtons.showChoicesEntryPane(App.State.CurrentStage + 1);
-    else if (App.State.CurrentStage == 5)
-      MainButtons.showDataEntryPane(App.State.CurrentStage + 1);
-    else if (App.State.CurrentStage == 6)
-      MainButtons.showDecisionPane(App.State.CurrentStage + 1);
-    else if (App.State.CurrentStage == 8) {
-      MainButtons.enableNextButton();
-      App.showView("preview");
-      $("#mobileStart").text("Submit");
-      $("#iChoices").text("");
-    }
+    
     if (this.IsList[App.State.CurrentStage]) {//Choices Condition
       this.addChoices();
       $("#AddMore").hide();
@@ -266,6 +255,18 @@ var DataEntryPane = {
     else {
       App.UserData[App.State.CurrentStage] = response;
       $("#iResponse").val("");
+    }
+    if (App.State.CurrentStage == 0)
+      MainButtons.showChoicesEntryPane(App.State.CurrentStage + 1);
+    else if (App.State.CurrentStage == 5)
+      MainButtons.showDataEntryPane(App.State.CurrentStage + 1);
+    else if (App.State.CurrentStage == 6)
+      MainButtons.showDecisionPane(App.State.CurrentStage + 1);
+    else if (App.State.CurrentStage == 8) {
+      MainButtons.enableNextButton();
+      App.showView("preview");
+      $("#mobileStart").text("Submit");
+      $("#iChoices").text("");
     }
   },
 
@@ -323,7 +324,7 @@ var DataEntryPane = {
     $("#SubmitResponse").hide();
     for (var i = 0; i < App.UserData[this.pivot].length; i++) {
       if (App.EDIT_MODE) {
-        $("#choiceLists").show();
+        $("#decisionData").show();
       }
       else {
         App.choiceTemplate("choiceList", i, "notselected");
@@ -333,6 +334,11 @@ var DataEntryPane = {
       //   alert("the not respons");
       //   DataEntryPane.decisionChoice(i);
       // });
+    }
+    $("#MoreInfo").text(App.UserData[5]);
+    var Help = App.UserData[6].split("\n");
+    for (var i = 0; i < Help.length; i++) {
+      $("#Help").append('<li>'+Help[i] + '</li>');
     }
   },
   prepareForEdit() {
@@ -408,7 +414,7 @@ var PreviewPane = {
     $("#iChoices").text("");
     $(".ibtn").hide();
     $("#SubmitResponse").show();
-    $("#choiceLists").hide();
+    $("#decisionData").hide();
     $("#iResponse").show();
     this.refresh();
   },
@@ -421,9 +427,9 @@ var PreviewPane = {
     else if (App.State.CurrentStage == 7) {
       $("#iResponse").hide();
       $("#SubmitResponse").hide();
-      $("#choiceLists").show();
+      $("#decisionData").show();
       MainButtons.showDataEntryPane(App.State.CurrentStage);
-      $("#choiceLists").show();
+      $("#decisionData").show();
     }
     else if (App.State.CurrentStage > 1 && App.State.CurrentStage < 5)
       MainButtons.showDependentEntryPane(App.State.CurrentStage);
@@ -455,7 +461,7 @@ var MainButtons = {
   showDecisionPane(btnIndex) {
     DataEntryPane.setDecisionPane();
     this.showDataEntryPane(btnIndex);
-    $("#choiceLists").show();
+    $("#decisionData").show();
   },
   showDataEntryPane(btnIndex) {
     DataEntryPane.setView(btnIndex);
