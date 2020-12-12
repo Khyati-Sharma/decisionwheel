@@ -52,7 +52,7 @@ body{
     text-align: center;
     font-size: large;
     font-weight: 700;
-    margin: 4%;
+    margin: 0% 4%;
 }
 .completed{
     background-color: #5deb72;
@@ -82,6 +82,9 @@ body{
     bottom: 0;
     width: 100%;
     margin: 0px;
+}
+#decisionData{
+    display: none;
 }
 @media only screen and (max-width: 600px){
     #headerarea{
