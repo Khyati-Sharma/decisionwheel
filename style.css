@@ -26,9 +26,6 @@ body{
     width: 10%;
     padding-top: 20px;
 }
-.topAlign{
-    float: left;
-}
 #cancel{
     display: none;
 }
