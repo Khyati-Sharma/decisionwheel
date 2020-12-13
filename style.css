@@ -26,6 +26,9 @@ body{
     width: 10%;
     padding-top: 20px;
 }
+.topAlign{
+    float: left;
+}
 #cancel{
     display: none;
 }
@@ -50,8 +53,15 @@ body{
     display: inline-block;
     background: transparent;
     border: none;
-    font-size: 20px;
-    padding-top: 5px;
+    font-size: large;
+    margin: 0% 1%;
+}
+
+#finalReport{
+    display: none;
+    min-height: 85vh;
+    text-align: center;
+    background-image: radial-gradient(blue, transparent);
 }
 .lbl {
     width: 92%;
@@ -74,9 +84,6 @@ body{
     cursor: pointer;
 }
 .editbutton {
-    display: none;
-}
-#finalReport{
     display: none;
 }
 #eye{
@@ -113,5 +120,29 @@ body{
     }
     #buttonarea {
         display: none;
+    }
+    #iQuestion{
+        font-size: larger;
+        border-radius: 0px;
+    }
+    #iQuestion h3{
+        margin: 0px;
+    }
+    .ibtn{
+        font-size: small;
+        min-width: 70%;
+    }
+    #iChoices{
+        display: none;
+        font-size: large;
+        border-radius: 0px;
+        width: 100%;
+    }
+    #iResponse {
+        max-width: 100%;
+        width: 100%;
+        margin: 0px;
+        font-size: 20px;
+        border: none;
     }
 }
