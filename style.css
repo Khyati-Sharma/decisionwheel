@@ -46,6 +46,13 @@ body{
     justify-content: space-around;
     display: flex;
 }
+.editbutton, #backward, #forward{
+    display: inline-block;
+    background: transparent;
+    border: none;
+    font-size: 20px;
+    padding-top: 5px;
+}
 .lbl {
     width: 92%;
     padding: 10px 5px;
