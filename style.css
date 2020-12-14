@@ -17,6 +17,9 @@ body{
     text-align: center;
     font-size: xx-large;
 }
+.topAlign{
+    vertical-align: top;
+}
 #head{
     padding: 15px 0px;
     width: 80%;
@@ -25,9 +28,6 @@ body{
     color: black;
     width: 10%;
     padding-top: 20px;
-}
-.topAlign{
-    float: left;
 }
 #cancel{
     display: none;
@@ -134,7 +134,7 @@ body{
     }
     #iChoices{
         display: none;
-        font-size: large;
+        font-size: medium;
         border-radius: 0px;
         width: 100%;
     }
@@ -144,5 +144,11 @@ body{
         margin: 0px;
         font-size: 20px;
         border: none;
+    }
+    #rProblem {
+        font-size: x-large;
+    }
+    #viewarea {
+        height: 87%;
     }
 }

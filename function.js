@@ -304,9 +304,10 @@ var DataEntryPane = {
   },
   setView(btnIndex) {
     $("#iQuestion").text(this.Questions[btnIndex]);
-    if (btnIndex == 8)
+    if (btnIndex == 8){
       $("#iChoices").text(App.UserData[7]);
       $("#iChoices").show();
+    }
   },
   showAdd() {
     $("#AddMore").show();
