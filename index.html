@@ -124,7 +124,8 @@
                 <P class="content multiLine" id="p9">Assess your Decision</P>
             </div>
             <button type="button" id="mobileStart" class="btn btn-primary btn-lg btn-block"  onclick="MainButtons.showDataEntryMobile()">Start</button>
-           
+            
+              </div>           
         </div>
 
     </div>
@@ -144,7 +145,12 @@
             <div class="main-block">
                 <h1>Assessment</h1>
                 <div id="rAssess" class="rEntryData"></div>
-            </div>        
+            </div>     
+            <div class="input-group mb-3" id="sendReport">
+                <input type="text"id = "sendReportInt" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2">
+                <button type="button" id="sendReportBtn" class="btn btn-primary btn-lg btn-block"  onclick="MainButtons.showDataEntryMobile()">Send Report Via Email</button>
+              </div>
+                 
         </div>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

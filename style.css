@@ -29,6 +29,7 @@ body{
     width: 10%;
     padding-top: 20px;
 }
+
 #cancel{
     display: none;
 }
@@ -62,6 +63,20 @@ body{
     min-height: 85vh;
     text-align: center;
     background-image: radial-gradient(blue, transparent);
+}
+#sendReport{
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    padding: 5px;
+}
+#sendReportInt{
+    display: none;
+    
+}
+#sendReportIntBtn{
+    width: 100%;
 }
 .lbl {
     width: 92%;
@@ -144,11 +159,5 @@ body{
         margin: 0px;
         font-size: 20px;
         border: none;
-    }
-    #rProblem {
-        font-size: x-large;
-    }
-    #viewarea {
-        height: 87%;
     }
 }
