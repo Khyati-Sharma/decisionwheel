@@ -146,16 +146,23 @@
                 <h1>Assessment</h1>
                 <div id="rAssess" class="rEntryData"></div>
             </div>     
-            <div class="input-group mb-0 " id="sendReport">
-                <input type="text"id = "sendReportInt" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2">
-                <button type="button" id="sendReportBtn" class="btn btn-primary btn-lg btn-block"  onclick="MainButtons.showDataEntryMobile()">Send Report Via Email</button>
-              </div>
-                 
+            <div class="input-group" id="sendReport">
+                <input type="email" id = "sendReportInt" class="form-control" placeholder="name@example.com" aria-label="Recipient's username" aria-describedby="button-addon2">
+                <button type="button" id="sendReportBtn" class="btn btn-primary "  onclick="MainButtons.sendEmail()">
+                <div id="sendText"> Send Report Via Email  </div><i class="fas fa-paper-plane"></i></button>
+            </div>                            
         </div>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/emailjs-com@2/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function() {
+            // https://dashboard.emailjs.com/admin/integration
+            emailjs.init('user_AT5nORStcFhAPLlCR9Xy2');
+        })();
+    </script>
     <script src="function.js"></script>
 
 </body>

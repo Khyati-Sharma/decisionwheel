@@ -71,13 +71,16 @@ body{
     width: 100%;
     margin: 0px;
 }
-#sendReportInt{
-    display: none;
+#sendText{
+    display: inline;
+}
+/* #sendReportInt{
+    display
     
 }
 #sendReportIntBtn{
     width: 100%;
-}
+} */
 .lbl {
     width: 92%;
     padding: 10px 5px;
@@ -159,5 +162,12 @@ body{
         margin: 0px;
         font-size: 20px;
         border: none;
+    }
+    #sendText{
+        display: none;
+        
+    }
+    #sendReportBtn{
+        width: 20%;
     }
 }
