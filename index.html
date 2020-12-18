@@ -12,7 +12,7 @@
     <title>Decision Making Tool</title>
 </head>
 
-<body>
+<body >
     <div id="headerarea">
         <img id="logo" src="skillpill_200x200.png">
         <div id="head">Decision Making Tool</div>
@@ -131,27 +131,29 @@
     </div>
     
     <div id="finalReport">
-        <h1 id="rProblem">Problem of The user </h1>
-        <div id = "rChoices"></div>
-        <div id = "rEntries">
-            <div class="main-block">
-                <h1>Additional info</h1>
-                <div id="rMoreInfo" class="rEntryData"></div>
+        <div id="subReport">
+            <h1 id="rProblem">Problem of The user </h1>
+            <div id = "rChoices"></div>
+            <div id = "rEntries">
+                <div class="main-block">
+                    <h1>Additional info</h1>
+                    <div id="rMoreInfo" class="rEntryData"></div>
+                </div>
+                <div class="main-block">
+                    <h1>Who Can Help</h1>
+                    <ul id="rHelp"></ul>
+                </div>
+                <div class="main-block">
+                    <h1>Assessment</h1>
+                    <div id="rAssess" class="rEntryData"></div>
+                </div>
             </div>
-            <div class="main-block">
-                <h1>Who Can Help</h1>
-                <ul id="rHelp"></ul>
-            </div>
-            <div class="main-block">
-                <h1>Assessment</h1>
-                <div id="rAssess" class="rEntryData"></div>
-            </div>     
+        </div>
             <div class="input-group" id="sendReport">
                 <input type="email" id = "sendReportInt" class="form-control" placeholder="name@example.com" aria-label="Recipient's username" aria-describedby="button-addon2">
                 <button type="button" id="sendReportBtn" class="btn btn-primary "  onclick="MainButtons.sendEmail()">
                 <div id="sendText"> Send Report Via Email  </div><i class="fas fa-paper-plane"></i></button>
-            </div>                            
-        </div>
+            </div>  
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
