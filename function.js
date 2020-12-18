@@ -514,7 +514,7 @@ var MainButtons = {
   sendEmail(){
     var emailGt =$.trim($("#sendReportInt").val());
     if (emailGt== "") {
-      alert("Give some response");
+      alert("Please enter the Email");
       return;
     }
     var templateParams = {
@@ -533,5 +533,5 @@ var MainButtons = {
 
 $(document).ready(function () {
   App.Begenning();
- // TestSuite.focusOnSubmit();
+  TestSuite.focusOnSubmit();
 });
