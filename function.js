@@ -520,7 +520,7 @@ var MainButtons = {
     var templateParams = {
       Problem: App.UserData[0],
       reply_to: emailGt,
-      reportData:"<!DOCTYPE html><html><head><title>Page Title</title></head><body><h1>This is a Heading</h1><p>This is a paragraph.</p></body></html>"
+      reportData:"<!DOCTYPE html><html><head><title>Page Title</title></head><body>" + $("#subReport").html() + "</body></html>"
   }; 
     emailjs.send("default_service", "template_2rkf4re", templateParams)
     .then(function() {
@@ -533,5 +533,5 @@ var MainButtons = {
 
 $(document).ready(function () {
   App.Begenning();
-  TestSuite.focusOnSubmit();
+  // TestSuite.focusOnSubmit();
 });
