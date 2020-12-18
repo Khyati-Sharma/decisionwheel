@@ -130,14 +130,14 @@ var TestSuite =
     App.State.CurrentStage = 9;
     App.UserData = [
       "focusOnSubmit",
-      ["choice1", "choice2", "choice3egfgsxvdg", "choice4kdfkgkjknknknkn"],
+      ["choice1", "choice2", "choice3egfgsxvdg", "choice4kd fkgkjknknknkn"],
       ["con1", "con2", "con3vbmdbdm", "choice3"],
       ["val1", "val2", "valsgufvgnvn3", "choice3"],
       ["feel1", "feel2", "feel3vcbdhd", "choice3"],
       "gjjvhgvbcbccnfg",
-      "bvjkjkbbdhnnvsfwnnbdghchgdgdbvxgvzzvsgg cffjvnnmh",
+      "bvjkjkbbdhnnvsfwn nbdghch gdgdb vxgvzzvsgg cffjvnnmh",
       "choice2",
-      "ADecisionfhrhfvjjjtopwoklcmgdllbdgdbnbnmn"
+      "ADecisionf hrhf,vjjjtopwok  lcmgdllbd gdbnbnmn"
     ];
     App.Begenning();
   }
@@ -213,7 +213,7 @@ var DataEntryPane = {
       if (App.EDIT_MODE) {
         if (this.IsList[App.edit] || this.DependentList[App.edit]) {
           App.UserData[App.edit][PreviewPane.ChoicePosition] = response;
-          $("#iChoices").text("");
+          $("#iChoices").hide();
         }
         else {
           App.UserData[App.edit] = response;
@@ -244,7 +244,7 @@ var DataEntryPane = {
     }
     else if (this.DependentList[App.State.CurrentStage]) {
       this.nextChoice();
-      $("#iChoices").text("");
+      $("#iChoices").hide();      
       this.incr = 0;
       if (App.State.CurrentStage == 4)
         MainButtons.showDataEntryPane(App.State.CurrentStage + 1);
@@ -266,7 +266,7 @@ var DataEntryPane = {
       MainButtons.enableNextButton();
       App.showView("preview");
       $("#mobileStart").text("Submit");
-      $("#iChoices").text("");
+      $("#iChoices").hide();    
     }
   },
 
@@ -304,9 +304,10 @@ var DataEntryPane = {
   },
   setView(btnIndex) {
     $("#iQuestion").text(this.Questions[btnIndex]);
-    if (btnIndex == 8)
+    if (btnIndex == 8){
       $("#iChoices").text(App.UserData[7]);
-
+      $("#iChoices").show();
+    }
   },
   showAdd() {
     $("#AddMore").show();
@@ -318,6 +319,7 @@ var DataEntryPane = {
   },
   showChoices() {
     $("#iChoices").text(App.UserData[this.pivot][this.incr]);
+    $("#iChoices").show();
   },
   setDecisionPane() {
     $("#iResponse").hide();
@@ -346,6 +348,7 @@ var DataEntryPane = {
       var data = App.UserData[App.edit][PreviewPane.ChoicePosition];
       if (this.DependentList[App.edit]) {
         $("#iChoices").text(App.UserData[this.pivot][PreviewPane.ChoicePosition]);
+        $("#iChoices").show();
       }
     }
     else if (App.edit == 7) {
@@ -411,7 +414,7 @@ var PreviewPane = {
   showPreview() {
     App.showView("preview");
     this.textEntry = $.trim($("#iResponse").val());
-    $("#iChoices").text("");
+    $("#iChoices").hide();
     $(".ibtn").hide();
     $("#SubmitResponse").show();
     $("#decisionData").hide();
@@ -507,12 +510,28 @@ var MainButtons = {
       this.showReport();
 
     }
-  }
-
-
+  },
+  sendEmail(){
+    var emailGt =$.trim($("#sendReportInt").val());
+    if (emailGt== "") {
+      alert("Please enter the Email");
+      return;
+    }
+    var templateParams = {
+      Problem: App.UserData[0],
+      reply_to: emailGt,
+      reportData:"<!DOCTYPE html><html><head><title>Page Title</title></head><body><h1>This is a Heading</h1><p>This is a paragraph.</p></body></html>"
+  }; 
+    emailjs.send("default_service", "template_2rkf4re", templateParams)
+    .then(function() {
+        console.log('SUCCESS!');
+    }, function(error) {
+        console.log('FAILED...', error);
+    });
+  },
 }
 
 $(document).ready(function () {
   App.Begenning();
-  //TestSuite.focusOnDecision();
+  TestSuite.focusOnSubmit();
 });

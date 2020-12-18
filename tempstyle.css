@@ -27,6 +27,7 @@ Body{
     border-radius: 6px;
     overflow-y: scroll;
     overflow-x: hidden;
+    height: 80%;
 }
 
 #choiceLists .main-block {
@@ -38,10 +39,11 @@ Body{
 }
 .main-block {
     display: inline-flex;
-    width: 250px;
+    min-width: 250px;
+    width: 20%;
     flex-direction: column;
     background-color: #ecebeb;
-    margin: 10px;
+    margin: 1% 2%;
     box-shadow: 5px 5px 5px;
     border-radius: 10px;
     color: #666;
@@ -50,7 +52,7 @@ Body{
    
     border-radius: 10px 10px 0px 0px;
     background-color: #a7d9e0;
-    font-size: 20px;
+    font-size: larger;
     padding: 5px;
 }
 .main-block h1, .main-block h3 {
@@ -62,11 +64,6 @@ Body{
 }
 .main-block ul{
     margin: 10px 0px;
-}
-#finalReport{
-    text-align: center;
-    background-image: radial-gradient(blue, transparent);
-    margin: 0% 7%;
 }
 
 #rEntries, #rEntries h1 {
@@ -93,12 +90,19 @@ Body{
 }
 
 
-
+.notselected h1{
+    background-color: tomato;
+    color: white;
+}
+.notselected{
+    box-shadow: 5px 5px 5px tomato;
+}
 .selected{
     box-shadow: 5px 5px 5px green;
 }
 .selected h1{
     background-color: #7fe77f;
+    color: #666;
 }
 /*-------------------------------------------------------------------------------------- */
 
@@ -132,7 +136,7 @@ h3{
 }
 .content{
     font-size: 1.2rem;
-    font-weight: 535;
+    font-weight: 400;
     font-style: italic;
 }
 #previewviewarea{
@@ -152,7 +156,7 @@ h3{
     margin:0%;
     width: 99.3%;
     background-color: #330099;
-    color: bisque;
+    color: white;
     padding: 4px;
     font-size: 2rem;
     border-radius: 5px 60px;
@@ -169,7 +173,7 @@ h3{
     font-size: 2rem;
     padding: 0px 50px;
     width: fit-content;
-    color: antiquewhite;
+    color: white;
 }
 
 #iResponse{
@@ -233,7 +237,7 @@ h3{
     background-color: #330099;
     color: white;
     padding: 4px;
-    font-size: 2rem;
+    font-size: x-large;
     border-radius: 5px 60px;
 }
 

@@ -17,6 +17,9 @@ body{
     text-align: center;
     font-size: xx-large;
 }
+.topAlign{
+    vertical-align: top;
+}
 #head{
     padding: 15px 0px;
     width: 80%;
@@ -26,6 +29,7 @@ body{
     width: 10%;
     padding-top: 20px;
 }
+
 #cancel{
     display: none;
 }
@@ -46,6 +50,37 @@ body{
     justify-content: space-around;
     display: flex;
 }
+.editbutton, #backward, #forward{
+    display: inline-block;
+    background: transparent;
+    border: none;
+    font-size: large;
+    margin: 0% 1%;
+}
+
+#finalReport{
+    display: none;
+    min-height: 85vh;
+    text-align: center;
+    background-image: radial-gradient(blue, transparent);
+}
+#sendReport{
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    margin: 0px;
+}
+#sendText{
+    display: inline;
+}
+/* #sendReportInt{
+    display
+    
+}
+#sendReportIntBtn{
+    width: 100%;
+} */
 .lbl {
     width: 92%;
     padding: 10px 5px;
@@ -67,9 +102,6 @@ body{
     cursor: pointer;
 }
 .editbutton {
-    display: none;
-}
-#finalReport{
     display: none;
 }
 #eye{
@@ -106,5 +138,36 @@ body{
     }
     #buttonarea {
         display: none;
+    }
+    #iQuestion{
+        font-size: larger;
+        border-radius: 0px;
+    }
+    #iQuestion h3{
+        margin: 0px;
+    }
+    .ibtn{
+        font-size: small;
+        min-width: 70%;
+    }
+    #iChoices{
+        display: none;
+        font-size: medium;
+        border-radius: 0px;
+        width: 100%;
+    }
+    #iResponse {
+        max-width: 100%;
+        width: 100%;
+        margin: 0px;
+        font-size: 20px;
+        border: none;
+    }
+    #sendText{
+        display: none;
+        
+    }
+    #sendReportBtn{
+        width: 20%;
     }
 }
