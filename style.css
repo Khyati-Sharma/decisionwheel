@@ -17,6 +17,9 @@ body{
     text-align: center;
     font-size: xx-large;
 }
+.topAlign{
+    vertical-align: top;
+}
 #head{
     padding: 15px 0px;
     width: 80%;
@@ -26,9 +29,7 @@ body{
     width: 10%;
     padding-top: 20px;
 }
-.topAlign{
-    float: left;
-}
+
 #cancel{
     display: none;
 }
@@ -63,6 +64,23 @@ body{
     text-align: center;
     background-image: radial-gradient(blue, transparent);
 }
+#sendReport{
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    margin: 0px;
+}
+#sendText{
+    display: inline;
+}
+/* #sendReportInt{
+    display
+    
+}
+#sendReportIntBtn{
+    width: 100%;
+} */
 .lbl {
     width: 92%;
     padding: 10px 5px;
@@ -134,7 +152,7 @@ body{
     }
     #iChoices{
         display: none;
-        font-size: large;
+        font-size: medium;
         border-radius: 0px;
         width: 100%;
     }
@@ -144,5 +162,12 @@ body{
         margin: 0px;
         font-size: 20px;
         border: none;
+    }
+    #sendText{
+        display: none;
+        
+    }
+    #sendReportBtn{
+        width: 20%;
     }
 }

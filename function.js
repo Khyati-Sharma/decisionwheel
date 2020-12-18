@@ -130,14 +130,14 @@ var TestSuite =
     App.State.CurrentStage = 9;
     App.UserData = [
       "focusOnSubmit",
-      ["choice1", "choice2", "choice3egfgsxvdg", "choice4kdfkgkjknknknkn"],
+      ["choice1", "choice2", "choice3egfgsxvdg", "choice4kd fkgkjknknknkn"],
       ["con1", "con2", "con3vbmdbdm", "choice3"],
       ["val1", "val2", "valsgufvgnvn3", "choice3"],
       ["feel1", "feel2", "feel3vcbdhd", "choice3"],
       "gjjvhgvbcbccnfg",
-      "bvjkjkbbdhnnvsfwnnbdghchgdgdbvxgvzzvsgg cffjvnnmh",
+      "bvjkjkbbdhnnvsfwn nbdghch gdgdb vxgvzzvsgg cffjvnnmh",
       "choice2",
-      "ADecisionfhrhfvjjjtopwoklcmgdllbdgdbnbnmn"
+      "ADecisionf hrhf,vjjjtopwok  lcmgdllbd gdbnbnmn"
     ];
     App.Begenning();
   }
@@ -304,9 +304,10 @@ var DataEntryPane = {
   },
   setView(btnIndex) {
     $("#iQuestion").text(this.Questions[btnIndex]);
-    if (btnIndex == 8)
+    if (btnIndex == 8){
       $("#iChoices").text(App.UserData[7]);
       $("#iChoices").show();
+    }
   },
   showAdd() {
     $("#AddMore").show();
@@ -509,12 +510,28 @@ var MainButtons = {
       this.showReport();
 
     }
-  }
-
-
+  },
+  sendEmail(){
+    var emailGt =$.trim($("#sendReportInt").val());
+    if (emailGt== "") {
+      alert("Please enter the Email");
+      return;
+    }
+    var templateParams = {
+      Problem: App.UserData[0],
+      reply_to: emailGt,
+      reportData:"<!DOCTYPE html><html><head><title>Page Title</title></head><body><h1>This is a Heading</h1><p>This is a paragraph.</p></body></html>"
+  }; 
+    emailjs.send("default_service", "template_2rkf4re", templateParams)
+    .then(function() {
+        console.log('SUCCESS!');
+    }, function(error) {
+        console.log('FAILED...', error);
+    });
+  },
 }
 
 $(document).ready(function () {
   App.Begenning();
-  //TestSuite.focusOnDecision();
+  TestSuite.focusOnSubmit();
 });
