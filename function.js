@@ -499,7 +499,7 @@ var MainButtons = {
       $("#rHelp").append('<li>' + tempHelp[i] + '</li>')
     }
     $("#rAssess").text(App.UserData[8]);
-    $("#progress").hide();
+    $(".progress").hide();
   },
   showDataEntryMobile() {
     if (App.State.CurrentStage == 0) {
