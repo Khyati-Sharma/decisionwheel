@@ -130,14 +130,14 @@ var TestSuite =
     App.State.CurrentStage = 9;
     App.UserData = [
       "focusOnSubmit",
-      ["choice1", "choice2", "choice3egfgsxvdg", "choice4kdfkgkjknknknkn"],
+      ["choice1", "choice2", "choice3egfgsxvdg", "choice4kd fkgkjknknknkn"],
       ["con1", "con2", "con3vbmdbdm", "choice3"],
       ["val1", "val2", "valsgufvgnvn3", "choice3"],
       ["feel1", "feel2", "feel3vcbdhd", "choice3"],
       "gjjvhgvbcbccnfg",
-      "bvjkjkbbdhnnvsfwnnbdghchgdgdbvxgvzzvsgg cffjvnnmh",
+      "bvjkjkbbdhnnvsfwn nbdghch gdgdb vxgvzzvsgg cffjvnnmh",
       "choice2",
-      "ADecisionfhrhfvjjjtopwoklcmgdllbdgdbnbnmn"
+      "ADecisionf hrhf,vjjjtopwok  lcmgdllbd gdbnbnmn"
     ];
     App.Begenning();
   }
@@ -337,7 +337,10 @@ var DataEntryPane = {
       //   DataEntryPane.decisionChoice(i);
       // });
     }
-    $("#MoreInfo").text(App.UserData[5]);
+    var addInfo = App.UserData[5].split("\n");
+    for (var i = 0; i < addInfo.length; i++) {
+      $("#MoreInfo").append('<li>'+addInfo[i] + '</li>');
+    }
     var Help = App.UserData[6].split("\n");
     for (var i = 0; i < Help.length; i++) {
       $("#Help").append('<li>'+Help[i] + '</li>');
@@ -496,6 +499,7 @@ var MainButtons = {
       $("#rHelp").append('<li>' + tempHelp[i] + '</li>')
     }
     $("#rAssess").text(App.UserData[8]);
+    $(".progress").hide();
   },
   showDataEntryMobile() {
     if (App.State.CurrentStage == 0) {
@@ -510,12 +514,65 @@ var MainButtons = {
       this.showReport();
 
     }
+  },
+  sendEmail(){
+    var emailGt =$.trim($("#sendReportInt").val());
+    if (emailGt== "") {
+      alert("Please enter the Email");
+      return;
+    }
+    var width=75/App.UserData[1].length;
+    var Choices='',cons='',val='',feel='',help='';
+    for(var c=0;c<App.UserData[1].length;c++){
+      Choices+='<td style="border: 1px solid black; width:'+width+'%;">'+App.UserData[1][c]+'</td>';
+    }
+    for(var c=0;c<App.UserData[1].length;c++){
+      cons+='<td style="border: 1px solid black; width:'+width+'%;"><ul>';
+      var tempcons = App.UserData[2][c].split("\n");
+      for (var i = 0; i < tempcons.length; i++) {
+        cons+='<li>'+tempcons[i]+'</li>';
+      }
+      cons+='</ul></td>';
+    }
+    for(var c=0;c<App.UserData[1].length;c++){
+      val+='<td style="border: 1px solid black; width:'+width+'%;"><ul>';
+      var tempvals = App.UserData[3][c].split("\n");
+      for (var i = 0; i < tempvals.length; i++) {
+        val+='<li>'+tempvals[i]+'</li>';
+      }
+      val+='</ul></td>';
+    }
+    for(var c=0;c<App.UserData[1].length;c++){
+      feel+='<td style="border: 1px solid black; width:'+width+'%;"><ul>';
+      var tempcons = App.UserData[4][c].split("\n");
+      for (var i = 0; i < tempcons.length; i++) {
+        feel+='<li>'+tempcons[i]+'</li>';
+      }
+      feel+='</ul></td>';
+    }
+    var wcHelp = App.UserData[6].split("\n");
+    for (var i = 0; i < wcHelp.length; i++) {
+      help+='<li>'+wcHelp[i]+'</li>';
+    }
+    var templateParams = {
+      Problem: App.UserData[0],
+      reply_to: emailGt,
+      reportData:'<!DOCTYPE html><html><body><table style="width:100%; border: 1px solid black;"><tr><th style="border: 1px solid black; width: 25%;">Problem</th><th style="border: 1px solid black; width: 75%;" colspan="'+App.UserData[1].length+'">'+App.UserData[0]+'</th></tr><tr><td style="border: 1px solid black; width: 25%;">Choices</td>'+Choices+'</tr><tr><td style="border: 1px solid black; width: 25%;">Consequences</td>'+cons+'</tr><tr><td style="border: 1px solid black; width: 25%;">Values</td>'+val+'</tr><tr><td style="border: 1px solid black; width: 25%;">Feelings</td>'+feel+'</tr><tr><td style="border: 1px solid black; width: 25%;">Additional Info</td><td style="border: 1px solid black; width: 75%;" colspan="'+App.UserData[1].length+'">'+App.UserData[5]+'</td></tr><tr><td style="border: 1px solid black; width: 25%;">Who Can Help</td><td style="border: 1px solid black; width: 75%;" colspan="'+App.UserData[1].length+'"><ul>'+help+'</ul></td></tr><tr><td style="border: 1px solid black; width: 25%;">Decision</td><td style="border: 1px solid black; width: 75%;" colspan="'+App.UserData[1].length+'">'+App.UserData[7]+'</td></tr><tr><td style="border: 1px solid black; width: 25%;">Assessment</td><td style="border: 1px solid black; width: 75%;" colspan="'+App.UserData[1].length+'">'+App.UserData[8]+'</td></tr></table></body></html>'
+  }; 
+    emailjs.send("default_service", "template_2rkf4re", templateParams)
+    .then(function() {
+      $("#finalReport").hide();
+      $("#thankYou").show();
+    }, function(error) {
+        alert("Sorry,We can't send your email currently, you can save report by downloading the webpage");
+    });
+  },
+  reloadPage(){
+    location.reload();
   }
-
-
 }
 
 $(document).ready(function () {
   App.Begenning();
-  //TestSuite.focusOnDecision();
+  //TestSuite.focusOnSubmit();
 });
