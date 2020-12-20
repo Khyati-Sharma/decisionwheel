@@ -9,13 +9,13 @@
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
         integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
     <link rel="stylesheet" href="style.css">
-    <link rel="icon" href="skillpill_200x200.png" />
+    <link rel="icon" href="Images/skillpill_200x200.png" />
     <title>Decision Making Tool</title>
 </head>
 
 <body>
     <div id="headerarea">
-        <img id="logo" src="skillpill_200x200.png">
+        <img id="logo" src="Images/skillpill_200x200.png">
         <div id="head">Decision Making Tool</div>
         <i id="eye" onclick='PreviewPane.showPreview()' class="fa picon">&#xf06e;</i>
         <i id="eyeslash" onclick='PreviewPane.hidePreview()' class='fas picon'>&#xf070;</i>
@@ -51,7 +51,7 @@
                 <div>
                     <div class="main-block">
                         <h1>Additional info</h1>
-                        <div id="MoreInfo" class="rEntryData"></div>
+                        <ul id="MoreInfo" class="rEntryData"></ul>
                     </div>
                     <div class="main-block">
                         <h1>Who Can Help</h1>
@@ -161,6 +161,12 @@
                 <div id="sendText"> Send Report Via Email </div><i class="fas fa-paper-plane"></i>
             </button>
         </div>
+    </div>
+    <div id="thankYou">
+        <i class="fas fa-check-circle" id="success"></i>
+        <h1>Thank You</h1>
+        <h2>Report of your data has been sent to your email</h2>
+        <button type="button" class="btn btn-primary" onclick="MainButtons.reloadPage()">Go for another Problem</button>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
