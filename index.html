@@ -4,63 +4,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous"> 
-    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
-    <link rel="stylesheet" href="tempstyle.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+        integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
     <link rel="stylesheet" href="style.css">
-    <link rel="icon" href="skillpill_200x200.png"/>
+    <link rel="icon" href="Images/skillpill_200x200.png" />
     <title>Decision Making Tool</title>
 </head>
 
-<body >
+<body>
     <div id="headerarea">
-        <img id="logo" src="skillpill_200x200.png">
+        <img id="logo" src="Images/skillpill_200x200.png">
         <div id="head">Decision Making Tool</div>
         <i id="eye" onclick='PreviewPane.showPreview()' class="fa picon">&#xf06e;</i>
         <i id="eyeslash" onclick='PreviewPane.hidePreview()' class='fas picon'>&#xf070;</i>
     </div>
     <div class="progress">
-        <div class="progress-bar"id="completedbar" role="progressbar" style="width: 0%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+        <div class="progress-bar" id="completedbar" role="progressbar" style="width: 0%" aria-valuenow="15"
+            aria-valuemin="0" aria-valuemax="100"></div>
         <!-- <div class="progress-bar bg" id="inprogressbar" role="progressbar" style="width: 12.5%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
         <div class="progress-bar bg" id="incompletebar" role="progressbar" style="width: 50%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div> -->
-      </div>
-    <div id="buttonarea" >
-            <div class="lbl" id="b1" onclick="MainButtons.showDataEntryPane(0)">Problem</div>
-            <div class="lbl" id="b2" onclick="MainButtons.showChoicesEntryPane(1)">Choices</div>
-            <div class="lbl" id="b3" onclick="MainButtons.showDependentEntryPane(2)">Consequences</div>
-            <div class="lbl" id="b4" onclick="MainButtons.showDependentEntryPane(3)">Values</div>
-            <div class="lbl" id="b5" onclick="MainButtons.showDependentEntryPane(4)">Feelings</div>
-            <div class="lbl" id="b6" onclick="MainButtons.showDataEntryPane(5)">More Info</div>
-            <div class="lbl" id="b7" onclick="MainButtons.showDataEntryPane(6)">Who can help ?</div>
-            <div class="lbl" id="b8" onclick="MainButtons.showDecisionPane(7)">Decision</div>
-            <div class="lbl" id="b9" onclick="MainButtons.showDataEntryPane(8)">Assess Decision</div>
     </div>
-    <div id="viewarea" >
+    <div id="buttonarea">
+        <div class="lbl" id="b1" onclick="MainButtons.showDataEntryPane(0)">Problem</div>
+        <div class="lbl" id="b2" onclick="MainButtons.showChoicesEntryPane(1)">Choices</div>
+        <div class="lbl" id="b3" onclick="MainButtons.showDependentEntryPane(2)">Consequences</div>
+        <div class="lbl" id="b4" onclick="MainButtons.showDependentEntryPane(3)">Values</div>
+        <div class="lbl" id="b5" onclick="MainButtons.showDependentEntryPane(4)">Feelings</div>
+        <div class="lbl" id="b6" onclick="MainButtons.showDataEntryPane(5)">More Info</div>
+        <div class="lbl" id="b7" onclick="MainButtons.showDataEntryPane(6)">Who can help ?</div>
+        <div class="lbl" id="b8" onclick="MainButtons.showDecisionPane(7)">Decision</div>
+        <div class="lbl" id="b9" onclick="MainButtons.showDataEntryPane(8)">Assess Decision</div>
+    </div>
+    <div id="viewarea">
         <div id="userdataentrybox" style="display: none; text-align: center;">
             <h3 id="iQuestion"></h3>
             <div id="iChoices"></div>
-            
+
             <div id="iDecision" style="display: none;">
                 <h3>Select from the given Choices</h3>
             </div>
             <textarea id="iResponse" style="text-align: center;"></textarea>
             <div id="decisionData">
-            <div id="choiceLists"></div>
-            <div>
-                <div class="main-block">
-                    <h1>Additional info</h1>
-                    <div id="MoreInfo" class="rEntryData"></div>
-                </div>
-                <div class="main-block">
-                    <h1>Who Can Help</h1>
-                    <ul id="Help"></ul>
+                <div id="choiceLists"></div>
+                <div>
+                    <div class="main-block">
+                        <h1>Additional info</h1>
+                        <ul id="MoreInfo" class="rEntryData"></ul>
+                    </div>
+                    <div class="main-block">
+                        <h1>Who Can Help</h1>
+                        <ul id="Help"></ul>
+                    </div>
                 </div>
             </div>
-            </div>   
-            
-            
+
+
             <div style="text-align: center;">
-                <button class="ibtn" type="button" id="AddMore" onclick="DataEntryPane.addChoices()" > Add
+                <button class="ibtn" type="button" id="AddMore" onclick="DataEntryPane.addChoices()"> Add
                     More </button>
                 <!-- <button class="ibtn" type="button" id="InputRemoveBtn" onclick="RemoveCurrent()"> Remove
                 </button> -->
@@ -69,7 +71,8 @@
                 <button class="ibtn" type="button" id="InputNextBtn" onclick="DataEntryPane.nextChoice()">&nbsp; Next
                     &nbsp;</button>
                 <button class="ibtn" type="button" id="cancel">Cancel</button>
-                <button class="ibtn" type="button" id="SubmitResponse" onclick="DataEntryPane.SubmitResponse()">Submit </button>
+                <button class="ibtn" type="button" id="SubmitResponse" onclick="DataEntryPane.SubmitResponse()">Submit
+                </button>
             </div>
         </div>
         <!-- -------------------------------------------------------------------------------------------- -->
@@ -85,56 +88,58 @@
                 <h3 class="topAlign">Choices :</h3>
                 <button class="editbutton" id="e2" onclick="PreviewPane.edit(1)"><i class="fas fa-edit"></i></button>
                 <button id="forward" onclick="PreviewPane.choice('forward')"><i class="fas fa-angle-right"></i></button>
-                <button id="backward" class="topAlign" onclick="PreviewPane.choice('backward')"><i class="fas fa-angle-left"></i></button>
-                        <P class="content multiLine" id="p2">Choice </P>
+                <button id="backward" class="topAlign" onclick="PreviewPane.choice('backward')"><i
+                        class="fas fa-angle-left"></i></button>
+                <P class="content multiLine" id="p2">Choice </P>
             </div>
             <div class="out">
-                <h3 class="topAlign" >Consequences :</h3>
+                <h3 class="topAlign">Consequences :</h3>
                 <button class="editbutton" id="e3" onclick="PreviewPane.edit(2)"><i class="fas fa-edit"></i></button>
                 <P class="content multiLine" id="p3">Consequences regarding Choice</P>
             </div>
             <div class="out">
-                <h3 class="topAlign" >Values :</h3>
+                <h3 class="topAlign">Values :</h3>
                 <button class="editbutton" id="e4" onclick="PreviewPane.edit(3)"><i class="fas fa-edit"></i></button>
                 <P class="content multiLine" id="p4">Values regarding choice </P>
             </div>
             <div class="out">
-                <h3 class="topAlign" >Feelings :</h3>
+                <h3 class="topAlign">Feelings :</h3>
                 <button class="editbutton" id="e5" onclick="PreviewPane.edit(4)"><i class="fas fa-edit"></i></button>
                 <P class="content multiLine" id="p5">Feeling regarding choice</P>
             </div>
             <div class="out">
                 <button class="editbutton" id="e6" onclick="PreviewPane.edit(5)"><i class="fas fa-edit"></i></button>
-                <h3 class="topAlign" >More Info :</h3>
+                <h3 class="topAlign">More Info :</h3>
                 <P class="content multiLine" id="p6">More Information about Problem</P>
             </div>
             <div class="out">
                 <button class="editbutton" id="e7" onclick="PreviewPane.edit(6)"><i class="fas fa-edit"></i></button>
-                <h3 class="topAlign" >Who Can Help ? :</h3>
+                <h3 class="topAlign">Who Can Help ? :</h3>
                 <P class="content multiLine" id="p7">WHO else can help ??</P>
             </div>
             <div class="out">
                 <button class="editbutton" id="e8" onclick="PreviewPane.edit(7)"><i class="fas fa-edit"></i></button>
-                <h3 class="topAlign" >Decision :</h3>
+                <h3 class="topAlign">Decision :</h3>
                 <P class="content multiLine" id="p8">Decision of the USER</P>
             </div>
             <div class="out">
                 <button class="editbutton" id="e9" onclick="PreviewPane.edit(8)"><i class="fas fa-edit"></i></button>
-                <h3 class="topAlign" >Assessment :</h3>
+                <h3 class="topAlign">Assessment :</h3>
                 <P class="content multiLine" id="p9">Assess your Decision</P>
             </div>
-            <button type="button" id="mobileStart" class="btn btn-primary btn-lg btn-block"  onclick="MainButtons.showDataEntryMobile()">Start</button>
-            
-              </div>           
-        </div>
+            <button type="button" id="mobileStart" class="btn btn-primary btn-lg btn-block"
+                onclick="MainButtons.showDataEntryMobile()">Start</button>
 
+        </div>
     </div>
+
     
+
     <div id="finalReport">
         <div id="subReport">
             <h1 id="rProblem">Problem of The user </h1>
-            <div id = "rChoices"></div>
-            <div id = "rEntries">
+            <div id="rChoices"></div>
+            <div id="rEntries">
                 <div class="main-block">
                     <h1>Additional info</h1>
                     <div id="rMoreInfo" class="rEntryData"></div>
@@ -149,18 +154,30 @@
                 </div>
             </div>
         </div>
-            <div class="input-group" id="sendReport">
-                <input type="email" id = "sendReportInt" class="form-control" placeholder="name@example.com" aria-label="Recipient's username" aria-describedby="button-addon2">
-                <button type="button" id="sendReportBtn" class="btn btn-primary "  onclick="MainButtons.sendEmail()">
-                <div id="sendText"> Send Report Via Email  </div><i class="fas fa-paper-plane"></i></button>
-            </div>  
+        <div class="input-group" id="sendReport">
+            <input type="email" id="sendReportInt" class="form-control" placeholder="name@example.com"
+                aria-label="Recipient's username" aria-describedby="button-addon2">
+            <button type="button" id="sendReportBtn" class="btn btn-primary " onclick="MainButtons.sendEmail()">
+                <div id="sendText"> Send Report Via Email </div><i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+    <div id="thankYou">
+        <i class="fas fa-check-circle" id="success"></i>
+        <h1>Thank You</h1>
+        <h2>Report of your data has been sent to your email</h2>
+        <button type="button" class="btn btn-primary" onclick="MainButtons.reloadPage()">Go for another Problem</button>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
+        crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/emailjs-com@2/dist/email.min.js"></script>
     <script type="text/javascript">
-        (function() {
+        (function () {
             // https://dashboard.emailjs.com/admin/integration
             emailjs.init('user_AT5nORStcFhAPLlCR9Xy2');
         })();
