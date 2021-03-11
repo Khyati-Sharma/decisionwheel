@@ -12,8 +12,8 @@
     <title>Decision Making Tool</title>
 </head>
 <body>
-    <div id="headerArea">
-        <div style="width: 10%;">
+    <div id="header_area">
+        <div style="width: 10%; height: 100%;">
             <img id="logo" src="Images/skillpill_200x200.png">
         </div>
         <div id="head">Decision Making Tool</div>
@@ -22,56 +22,120 @@
             <i id="eyeslash" onclick='PreviewPane.hidePreview()' class='fas picon'>&#xf070;</i>
         </div>
     </div>
-    <div class="progress">
-        <div class="progress-bar" id="completedbar" role="progressbar" style="width: 0%" aria-valuenow="15"
-            aria-valuemin="0" aria-valuemax="100"></div>
-    </div>
-    <div id="buttonarea">
-        <div class="lbl" id="b1">Problem</div>
-        <div class="lbl" id="b2">Choices</div>
-        <div class="lbl" id="b3">Consequences</div>
-        <div class="lbl" id="b4">Values</div>
-        <div class="lbl" id="b5">Feelings</div>
-        <div class="lbl" id="b6">More Info</div>
-        <div class="lbl" id="b7">Who can help ?</div>
-        <div class="lbl" id="b8">Decision</div>
-        <div class="lbl" id="b9">Assess Decision</div>
-    </div>
-    <div id="viewarea">
-        <div id="userdataentrybox" style=" text-align: center;">
-            <h3 id="iQuestion"></h3>
-            <div id="iChoices"></div>
-
-            <div id="iDecision" style="display: none;">
-                <h3>Select from the given Choices</h3>
+    <div id="workspace">
+        <div id="details">
+            <div class="progress">
+                <div class="progress-bar" id="completed_bar" role="progressbar" style="width: 0%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
-            <textarea id="iResponse" style="text-align: center;"></textarea>
-            <div id="decisionData">
-                <div id="choiceLists"></div>
-                <div>
-                    <div class="main-block">
-                        <h1>Additional info</h1>
-                        <ul id="MoreInfo" class="rEntryData"></ul>
+            <div id="details_division">
+                <div id="button_area">
+                    <div class="lbl" id="b1">Problem</div>
+                    <div class="lbl" id="b2">Choices</div>
+                    <div class="lbl" id="b3">Consequences</div>
+                    <div class="lbl" id="b4">Values</div>
+                    <div class="lbl" id="b5">Feelings</div>
+                    <div class="lbl" id="b6">More Info</div>
+                    <div class="lbl" id="b7">Who can help ?</div>
+                    <div class="lbl" id="b8">Decision</div>
+                    <div class="lbl" id="b9">Assess Decision</div>
+                </div>
+                <div id="view_area">
+                    <div id="preview_area">
+                        <div id="preview_heading">Preview</h1>
+                        <div class="out">
+                            <button class="editbutton" id="e1" onclick="PreviewPane.edit(0)"><i class="fas fa-edit"></i></button>
+                            <h3 class="topAlign">Problem :</h3>
+                            <p class="content multiLine" id="p1">Problem Of the USER.</p>
+                        </div>
+                        <div class="out">
+            
+                            <h3 class="topAlign">Choices :</h3>
+                            <button class="editbutton" id="e2" onclick="PreviewPane.edit(1)"><i class="fas fa-edit"></i></button>
+                            <button id="forward" onclick="PreviewPane.choice('forward')"><i class="fas fa-angle-right"></i></button>
+                            <button id="backward" class="topAlign" onclick="PreviewPane.choice('backward')"><i
+                                    class="fas fa-angle-left"></i></button>
+                            <P class="content multiLine" id="p2">Choice </P>
+                        </div>
+                        <div class="out">
+                            <h3 class="topAlign">Consequences :</h3>
+                            <button class="editbutton" id="e3" onclick="PreviewPane.edit(2)"><i class="fas fa-edit"></i></button>
+                            <P class="content multiLine" id="p3">Consequences regarding Choice</P>
+                        </div>
+                        <div class="out">
+                            <h3 class="topAlign">Values :</h3>
+                            <button class="editbutton" id="e4" onclick="PreviewPane.edit(3)"><i class="fas fa-edit"></i></button>
+                            <P class="content multiLine" id="p4">Values regarding choice </P>
+                        </div>
+                        <div class="out">
+                            <h3 class="topAlign">Feelings :</h3>
+                            <button class="editbutton" id="e5" onclick="PreviewPane.edit(4)"><i class="fas fa-edit"></i></button>
+                            <P class="content multiLine" id="p5">Feeling regarding choice</P>
+                        </div>
+                        <div class="out">
+                            <button class="editbutton" id="e6" onclick="PreviewPane.edit(5)"><i class="fas fa-edit"></i></button>
+                            <h3 class="topAlign">More Info :</h3>
+                            <P class="content multiLine" id="p6">More Information about Problem</P>
+                        </div>
+                        <div class="out">
+                            <button class="editbutton" id="e7" onclick="PreviewPane.edit(6)"><i class="fas fa-edit"></i></button>
+                            <h3 class="topAlign">Who Can Help ? :</h3>
+                            <P class="content multiLine" id="p7">WHO else can help ??</P>
+                        </div>
+                        <div class="out">
+                            <button class="editbutton" id="e8" onclick="PreviewPane.edit(7)"><i class="fas fa-edit"></i></button>
+                            <h3 class="topAlign">Decision :</h3>
+                            <P class="content multiLine" id="p8">Decision of the USER</P>
+                        </div>
+                        <div class="out">
+                            <button class="editbutton" id="e9" onclick="PreviewPane.edit(8)"><i class="fas fa-edit"></i></button>
+                            <h3 class="topAlign">Assessment :</h3>
+                            <P class="content multiLine" id="p9">Assess your Decision</P>
+                        </div>
+                        <button type="button" id="mobileStart" class="btn btn-primary btn-lg btn-block"
+                            onclick="MainButtons.showDataEntryMobile()">Start</button>
+            
                     </div>
-                    <div class="main-block">
-                        <h1>Who Can Help</h1>
-                        <ul id="Help"></ul>
+                    <div id="user_data_entry_box" style=" text-align: center;">
+                        <h3 id="iQuestion"></h3>
+                        <div id="iChoices"></div>
+            
+                        <div id="iDecision" style="display: none;">
+                            <h3>Select from the given Choices</h3>
+                        </div>
+                        <textarea id="iResponse" style="text-align: center;"></textarea>
+                        <div id="decisionData">
+                            <div id="choiceLists"></div>
+                            <div>
+                                <div class="main-block">
+                                    <h1>Additional info</h1>
+                                    <ul id="MoreInfo" class="rEntryData"></ul>
+                                </div>
+                                <div class="main-block">
+                                    <h1>Who Can Help</h1>
+                                    <ul id="Help"></ul>
+                                </div>
+                            </div>
+                        </div>
+            
+            
+                        <div style="text-align: center;">
+                            <button class="ibtn" type="button" id="AddMore" onclick="DataEntryPane.addChoices()"> Add
+                                More </button>
+                            <button class="ibtn" type="button" id="InputNextBtn" onclick="DataEntryPane.nextChoice()">&nbsp; Next
+                                &nbsp;</button>
+                            <button class="ibtn" type="button" id="cancel">Cancel</button>
+                            <button class="ibtn" type="button" id="SubmitResponse" onclick="DataEntryPane.SubmitResponse()">Submit
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
-
-
-            <div style="text-align: center;">
-                <button class="ibtn" type="button" id="AddMore" onclick="DataEntryPane.addChoices()"> Add
-                    More </button>
-                <button class="ibtn" type="button" id="InputNextBtn" onclick="DataEntryPane.nextChoice()">&nbsp; Next
-                    &nbsp;</button>
-                <button class="ibtn" type="button" id="cancel">Cancel</button>
-                <button class="ibtn" type="button" id="SubmitResponse" onclick="DataEntryPane.SubmitResponse()">Submit
-                </button>
-            </div>
         </div>
+        <div id="report"></div>
     </div>
+    <div id="footer_area"></div>
+    
+    
 
 </body>
 </html>

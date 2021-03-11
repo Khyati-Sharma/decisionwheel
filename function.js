@@ -49,7 +49,7 @@ var app = {
       previewPane.refresh();
     },
     progress() {
-      $("#completedbar").width((this.state.currentStage / 9 * 100) + "%");
+      $("#completed_bar").width((this.state.currentStage / 9 * 100) + "%");
     }
   }
   
@@ -477,7 +477,7 @@ var app = {
       $("#viewarea").hide();
       $("#buttonarea").hide();
       $("#finalReport").show();
-      $("#completedbar").hide();
+      $("#completed_bar").hide();
       $("#rProblem").text(app.userData[0]);
       var classChoice;
       for (var i = 0; i < app.userData[1].length; i++) {
