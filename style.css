@@ -1,37 +1,87 @@
-body {
-    height: 100vh;
-    margin: 0px;
+#headerArea {
+    display: flex;
+    background-image: linear-gradient(45deg, transparent, blue, transparent);
+    color: aliceblue;
+    text-align: center;
+    font-size: xx-large;
 }
 
-h3 {
-    font-size: 1.3rem;
+#logo {
+    height: 80px;
+    float: left;
+    margin-left: 20px;
+    padding-top: 10px;
+}
+
+#eye {
+    display: none;
+    cursor: pointer;
+}
+
+#head {
+    padding: 15px 0px;
+    width: 80%;
+}
+
+#eyeslash {
+    padding-top: 30px;
+    font-size: 24px;
+    color: grey;
+    display: none;
+    cursor: pointer;
 }
 
 #completedbar {
     background-color: #33c733;
 }
 
-#inprogressbar {
-    background-color: #f9f918;
-}
 
-#incompletebar {
-    background-color: #9e9eff;
-}
-
-#viewarea, #buttonarea {
+#buttonarea {
+    width: 24.5%;
+    float: left;
+    margin-right: 0.5%;
     margin-top: 5px;
+    background-image: linear-gradient(blue, lightblue);
+    flex-direction: column;
 }
 
-#viewarea {
-    float: right;
-    width: 75%;
-    background-image: linear-gradient(blue, lightblue);
+.lbl {
+    padding: 10px 5px;
     text-align: center;
-    border-radius: 6px;
-    overflow-y: scroll;
-    overflow-x: hidden;
-    height: 80%;
+    font-size: large;
+    font-weight: 700;
+    margin-top: 10%;
+}
+
+#iQuestion{		
+    margin:0%;	
+    width: 99.3%;	
+    background-color: #330099;	
+    color: white;	
+    padding: 4px;	
+    font-size: 2rem;		
+    margin-bottom: 5px;	
+}
+
+#iDecision {
+    margin-top: 30px;
+    margin-bottom: 100px;
+}
+
+#iResponse{	
+    font-size: 30px;	
+    background-color: white;
+    margin: 50px;	
+    border: 3px solid #006699;	
+    padding: 20px;	
+    max-width: 75%;	
+    min-width: 75%;	
+    min-height: 180px;	
+    max-height: 180px;	
+}
+
+#decisionData {
+    display: none;
 }
 
 #choiceLists .main-block {
@@ -69,68 +119,9 @@ h3 {
     margin: 10px 0px;
 }
 
-.choiceContent {
-    text-align: left;
-}
-
-#headerarea {
-    display: flex;
-    background-image: linear-gradient(45deg, transparent, blue, transparent);
-    color: aliceblue;
-    text-align: center;
-    font-size: xx-large;
-}
-
-#rEntries, #rEntries h1 {
-    text-align: center;
-}
-
 #rEntries .main-block {
     min-height: 230px;
     text-align: left;
-}
-
-#rEntries .rEntryData {
-    padding: 5px;
-    white-space: break-spaces;
-}
-
-#rEntries h1 {
-    background-color: #005fff;
-    color: white;
-}
-
-.notselected h1 {
-    background-color: tomato;
-    color: white;
-}
-
-.notselected {
-    box-shadow: 5px 5px 5px tomato;
-}
-
-.selected {
-    box-shadow: 5px 5px 5px green;
-}
-
-.selected h1 {
-    background-color: #7fe77f;
-    color: #666;
-}
-
-.topAlign {
-    vertical-align: top;
-}
-
-#head {
-    padding: 15px 0px;
-    width: 80%;
-}
-
-.picon {
-    color: black;
-    width: 10%;
-    padding-top: 20px;
 }
 
 .ibtn {	
@@ -145,249 +136,32 @@ h3 {
     cursor: pointer;	
     border-radius: 6px;	
 }
-#cancel {
-    display: none;
-}
 
-#logo {
-    height: 80px;
-    float: left;
-    margin-left: 20px;
-    padding-top: 10px;
-}
-#rProblem {
-    width: 100%;
-    background-color: #330099;
-    color: white;
-    padding: 4px;
-    font-size: x-large;
-    border-radius: 5px 60px;
-}
-#buttonarea {
-    width: 24.5%;
-    float: left;
-    margin-right: 0.5%;
-    margin-top: 5px;
-    background-image: linear-gradient(blue, lightblue);
-    height: 80%;
-    flex-direction: column;
-    justify-content: space-around;
-    display: flex;
-}
-#forward, #backward{
-    float: right;
-}
-.multiLine {
-    white-space: pre;
-}
-.editbutton, #backward, #forward {
-    display: inline-block;
-    background: transparent;
-    border: none;
-    font-size: large;
-    margin: 0% 1%;
-}
-
-#previewviewarea {
-    width: 100%;
-    max-height: 100vh;
-}
-#previewheading {
-    font-size: 2rem;
-    margin: 0%;
-    background-image: linear-gradient(#9797e8, blue);
-    color: white;
-    padding: 4px;
-}
-.content {
-    font-size: 1.2rem;
-    font-weight: 400;
-    font-style: italic;
-}
-
-.content, h3 {
-    display: inline-block;
-    margin: 1% 0.5%;
-}
-
-.out {
-    background-color: rgba(248, 247, 244, 0.849);
-    margin: 9px;
-    border-radius: 4px;
-    text-align: left;
-}
-
-#finalReport {
-    display: none;
-    min-height: 85vh;
-    text-align: center;
-    background-image: radial-gradient(blue, transparent);
-}
-
-#sendReport {
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    margin: 0px;
-}
-
-#sendText {
-    display: inline;
-}
-
-#iDecision {
-    margin-top: 30px;
-    margin-bottom: 100px;
-} 
-
-#iQuestion{		
-    margin:0%;	
-    width: 99.3%;	
-    background-color: #330099;	
-    color: white;	
-    padding: 4px;	
-    font-size: 2rem;		
-    margin-bottom: 5px;	
-}
-
-/* #sendReportInt{
-    display
-    
-}
-#sendReportIntBtn{
-    width: 100%;
-} */
-
-#iChoices{	
-    background-color: #330099;		
-    font-size: 2rem;	
-    padding: 0px 50px;	
-    width: fit-content;	
-    color: white;	
-
-}
-.lbl {
-    width: 92%;
-    padding: 10px 5px;
-    text-align: center;
-    font-size: large;
-    font-weight: 700;
-    margin: 0% 4%;
-}
-
-.completed {
-    background-color: #5deb72;
-}
-
-.inProgress {
-    background-image: linear-gradient(180deg, #5deb72, transparent);
-}
-
-#eyeslash {
-    padding-top: 30px;
-    font-size: 24px;
-    color: grey;
-    display: none;
-    cursor: pointer;
-}
-
-.editbutton {
-    display: none;
-    float: right;
-}
-
-#eye {
-    display: none;
-    cursor: pointer;
-}
-
-#mobileStart {
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    margin: 0px;
-}
-
-#decisionData {
-    display: none;
-}
-
-#iResponse{	
-    font-size: 30px;	
-    background-color: white;	
-
-    margin: 50px;	
-    border: 3px solid #006699;	
-    padding: 20px;	
-    max-width: 75%;	
-    min-width: 75%;	
-    min-height: 180px;	
-    max-height: 180px;	
-
-}
-
-#InputNextBtn {
-    display: none;
-}
-#AddMore {
-    display: none;
-}
-#thankYou{
-    display: none;
-    text-align: center;
-}
-#success {
-    font-size: 150px;
-    color: green;
-    padding: 30px;
-    padding-top: 70px;
-}
 @media only screen and (max-width: 600px) {
-    #headerarea {
+    #headerArea {
         font-size: x-large;
     }
+
     #logo {
         height: 50px;
         margin-left: 5px;
     }
+
     .picon, #eyeslash {
         font-size: 20px;
         padding-top: 25px;
     }
-    #viewarea {
-        width: 100%;
-    }
-    #previewheading{	    
-        font-size:x-large;	       
-    }
-
-    .topAlign {
-        font-size: large;
-    }
+    
     #buttonarea {
         display: none;
     }
-    
+
     #iQuestion {
         font-size: larger;
     }
 
     #iQuestion h3 {
         margin: 0px;
-    }
-    .ibtn {
-        font-size: small;
-        min-width: 70%;
-        
-    }
-   #iChoices {
-       
-        display: none;
-        font-size: medium;
-        width: 100%;
-        
     }
     
     #iResponse {
@@ -397,11 +171,11 @@ h3 {
         border: none;
         margin:0px;
     }
-    
-    #sendText {
-        display: none;
+
+    .ibtn {
+        font-size: small;
+        min-width: 70%;
+        
     }
-    #sendReportBtn {
-        width: 20%;
-    }
+
 }
