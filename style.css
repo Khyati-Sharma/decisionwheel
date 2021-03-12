@@ -21,6 +21,7 @@ body {
 #head {
     padding-top: 5px;
     width: 80%;
+    font-weight: 600;
 }
 
 .picon {
@@ -58,7 +59,7 @@ body {
 }
 
 #button_area {
-    height:100%;
+    height: 100%;
     width: 24.5%;
     margin-right: 0.5%;
     background-image: linear-gradient(blue, lightblue);
@@ -81,8 +82,8 @@ body {
     background-image: linear-gradient(blue, lightblue);
 }
 
-#preview_area{
-    height:100%;
+#preview_area {
+    height: 100%;
 }
 
 #preview_heading {
@@ -91,13 +92,27 @@ body {
     height: 10%;
     background-image: linear-gradient(#9797e8, blue);
     color: white;
-    font-size: x-large;
 }
 
-#user_data_entry_box{
+#preview_division {
+    height: 90%;
+}
+
+.preview_steps {
+    background-color: rgba(248, 247, 244, 0.849);
+    border-radius: 4px;
+    text-align: left;
+}
+
+.step_head {
+    width:15%;
+}
+
+#user_data_entry_box {
     height: 100%;
     display: none;
 }
+
 /*---------------------         footer area        ----------------------------------*/
 
 #footer_area {
@@ -199,7 +214,8 @@ body {
         padding-top: 5px;
     }
     #head {
-        padding-top: 7px;
+        padding-top: 9px;
+        font-size: 27px;
     }
     /*---------------------         workspace        ----------------------------------*/
     #workspace {
@@ -210,6 +226,10 @@ body {
     }
     #view_area {
         width: 100%;
+    }
+    #preview_heading {
+        font-size: 27px;
+        padding-top: 5px;
     }
     #iQuestion {
         font-size: larger;
