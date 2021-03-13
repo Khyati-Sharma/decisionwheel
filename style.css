@@ -123,18 +123,21 @@ body {
     margin: 0;
     padding: 5px;
     font-size: 20px;
+    width: 76%;
 }
 
 .multiLine {
     white-space: pre;
 }
 
+#p2 {
+    width: 70%;
+}
+
 .editbutton, #backward, #forward {
-    display: inline-block;
     background: transparent;
     border: none;
-    font-size: large;
-    margin: 0% 1%;
+    width: 3%;
 }
 
 #user_data_entry_box {
@@ -244,7 +247,7 @@ body {
     }
     #head {
         padding-top: 9px;
-        font-size: 27px;
+        font-size: 26px;
     }
     /*---------------------         workspace        ----------------------------------*/
     #workspace {
@@ -259,6 +262,10 @@ body {
     #preview_heading {
         font-size: 27px;
         padding-top: 5px;
+    }
+    .step_head {
+        font-size: 19px;
+        width: 42%;
     }
     #iQuestion {
         font-size: larger;
