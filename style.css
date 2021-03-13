@@ -126,10 +126,6 @@ body {
     width: 76%;
 }
 
-.multiLine {
-    white-space: pre;
-}
-
 #p2 {
     width: 70%;
 }
@@ -138,6 +134,8 @@ body {
     background: transparent;
     border: none;
     width: 3%;
+    padding:0;
+    margin:0;
 }
 
 #user_data_entry_box {
@@ -266,6 +264,18 @@ body {
     .step_head {
         font-size: 19px;
         width: 42%;
+    }
+    .colon {
+        width: 2%;
+    }
+    .content {
+        width:50%;
+    }
+    #p2 {
+        width:38%;
+    }
+    .editbutton, #backward, #forward {
+        width: 6%;
     }
     #iQuestion {
         font-size: larger;
