@@ -34,7 +34,7 @@ body {
 /*---------------------         workspace        ----------------------------------*/
 
 #workspace {
-    height: 80%;
+    height: 82%;
 }
 
 #details {
@@ -96,6 +96,7 @@ body {
 
 #preview_division {
     height: 93%;
+    overflow-y:scroll;
 }
 
 .preview_steps {
@@ -136,12 +137,22 @@ body {
     width: 3%;
     padding:0;
     margin:0;
+    display: none;
 }
 
 #user_data_entry_box {
-    height: 100%;
     display: none;
-}
+    height: 100%;
+    }
+        
+        #iChoices{	
+            background-color: #330099;		
+            font-size: 2rem;	
+            padding: 0px 50px;	
+            width: fit-content;	
+            color: white;	
+        
+    }
 
 /*---------------------         footer area        ----------------------------------*/
 
@@ -276,6 +287,7 @@ body {
     }
     .editbutton, #backward, #forward {
         width: 6%;
+        display: none;
     }
     #iQuestion {
         font-size: larger;
@@ -294,4 +306,19 @@ body {
         font-size: small;
         min-width: 70%;
     }
+    #iChoices {
+       
+        display: none;
+        font-size: medium;
+        width: 100%;
+        
+    }
+    #Start {
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        margin: 0px;
+    }
+    
 }
