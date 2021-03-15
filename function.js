@@ -15,7 +15,7 @@ var storageUnit = {
 var helper = {
     "isList": [false, true, false, false, false, false, false, false, false],
     "dependentList": [false, false, true, true, true, false, false, false, false],
-    "currentChoice" : 0
+    "currentChoice": 0
 }
 
 var action = {
@@ -46,15 +46,15 @@ var general = {
 
     refresh() {
         for (var i = 0; i < storageUnit.currentStage; i++) {
-            if(helper.isList[i] || helper.dependentList[i]){
+            if (helper.isList[i] || helper.dependentList[i]) {
                 $("#p" + (i + 1)).text(storageUnit.userData[i][helper.currentChoice]);
             }
-            else{
+            else {
                 $("#p" + (i + 1)).text(storageUnit.userData[i]);
             }
             $("#e" + (i + 1)).show();
         }
-        if(storageUnit.userData[1]){
+        if (storageUnit.userData[1]) {
             $("#backward").show();
             $("#forward").show();
         }
