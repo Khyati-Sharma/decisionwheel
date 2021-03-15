@@ -140,12 +140,21 @@ body {
     display: none;
 }
 
+.completed {
+    background-color: #5deb72;
+}
+
+.inProgress {
+    background-image: linear-gradient(180deg, #5deb72, transparent);
+}
+
 #user_data_entry_box {
     display: none;
     height: 100%;
     }
         
         #iChoices{	
+            display:none;
             background-color: #330099;		
             font-size: 2rem;	
             padding: 0px 50px;	
@@ -232,6 +241,7 @@ body {
 }
 
 .ibtn {
+    display:none;
     margin: 5px;
     background-color: #3399ff;
     transition-duration: 0.3s;
@@ -243,6 +253,7 @@ body {
     cursor: pointer;
     border-radius: 6px;
 }
+
 
 @media only screen and (max-width: 600px) {
     /*---------------------         header area        ----------------------------------*/
