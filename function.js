@@ -23,6 +23,12 @@ var action = {
         $('#preview_area').hide();
         $('#user_data_entry_box').show();
         $('#SubmitResponse').show();
+        $('#mobileStart').hide();
+        $('#home').removeAttr('hidden');
+    },
+    showHomeDetails(){
+      $('#preview_area').show();
+
     },
 
     showView(viewname) {
@@ -34,6 +40,16 @@ var action = {
         $(viewmap[this.last_visible_view]).show();
         $(viewEye[this.last_visible_view]).show();
     }
+    /*
+    Start:-
+      -change view from preview to user_data_entry_box
+      -replace itself with home button
+      -setup userdataentrybox based on storageUnit
+      -change name from start->resume->view report
+    Home:-
+      -change view from \user_data_entry_box to preview
+      -replace itself with start button
+    */
 }
 
 var general = {
@@ -62,7 +78,20 @@ var general = {
     }
 }
 
-
+var user_data_entry_box={
+  /**
+   *  Submit
+   *    -store current value
+   *      -special case choice multiple
+   *    -call refresh
+   *    -blank text area
+   *    -move to next level
+   *    
+   *    -special use(for edit)
+   * 
+   * 
+   */
+}
 
 var TestSuite =
 {
