@@ -23,6 +23,12 @@ var action = {
         $('#preview_area').hide();
         $('#user_data_entry_box').show();
         $('#SubmitResponse').show();
+        $('#mobileStart').hide();
+        $('#home').removeAttr('hidden');
+    },
+    showHomeDetails(){
+      $('#preview_area').show();
+
     },
 
     showView(viewname) {
