@@ -147,7 +147,7 @@
                                 &nbsp;</button>
                             <button class="ibtn" type="button" id="cancel">Cancel</button>
                             <button class="ibtn" type="button" id="SubmitResponse"
-                                onclick="DataEntryPane.SubmitResponse()">Submit
+                                onclick="dataInput.submitResponse()">Submit
                             </button>
                         </div>
                     </div>
@@ -157,8 +157,10 @@
         <div id="report"></div>
     </div>
     <div id="footer_area">
-        <button type="button" id="mobileStart" class="btn btn-primary btn-lg btn-block"onclick="action.showDataEntry()">Start</button>
-        <button type="button" id="home" class="btn btn-primary btn-lg btn-block" onclick="action.showHomeDetails()" hidden>Home</button>
+        <button type="button" id="start" class="btn btn-primary btn-lg btn-block"onclick="action.showDataEntry()">Start</button>
+        <button type="button" id="preview" class="btn btn-primary btn-lg btn-block" onclick="action.showPreview()" hidden>Preview</button>
+        <button type="button" id="resume" class="btn btn-primary btn-lg btn-block" onclick="action.resume()" hidden>Resume</button>
+
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
