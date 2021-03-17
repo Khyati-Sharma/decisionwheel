@@ -23,12 +23,21 @@ var action = {
         $('#preview_area').hide();
         $('#user_data_entry_box').show();
         $('#SubmitResponse').show();
-        $('#mobileStart').hide();
-        $('#home').removeAttr('hidden');
+        $('#start').hide();
+        $('#preview').removeAttr('hidden');
     },
-    showHomeDetails(){
-      $('#preview_area').show();
+    showPreview() {
+        $('#preview_area').show();
+        $('#user_data_entry_box').hide();
+        $('#resume').removeAttr('hidden');
+        $('#preview').hide();
 
+    },
+    resume() {
+        $('#preview_area').hide();
+        $('#user_data_entry_box').show();
+        $('#resume').hide();
+        $('#preview').show();
     },
 
     showView(viewname) {
@@ -78,19 +87,30 @@ var general = {
     }
 }
 
-var user_data_entry_box={
-  /**
-   *  Submit
-   *    -store current value
-   *      -special case choice multiple
-   *    -call refresh
-   *    -blank text area
-   *    -move to next level
-   *    
-   *    -special use(for edit)
-   * 
-   * 
-   */
+var dataInput = {
+    /**
+     *  Submit
+     *    -store current value
+     *      -special case choice multiple
+     *    -call refresh
+     *    -blank text area
+     *    -move to next level
+     *    
+     *    -special use(for edit)
+     * 
+     * 
+     */
+     submitResponse(){
+       /* var tempResponse = $.trim($("#iResponse").val());
+        storageUnit.userData[currentStage]=tempResponse;
+        $('#p1').val(tempResponse);
+         $('#iResponse').val("");*/
+        general.refresh();
+
+
+
+     },
+
 }
 
 var TestSuite =
