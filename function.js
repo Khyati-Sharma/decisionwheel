@@ -20,8 +20,7 @@ var helper = {
 
 var action = {
     showDataEntry() {
-        $('#preview_area').hide();
-        $('#user_data_entry_box').show();
+        this.showView()
         $('#SubmitResponse').show();
         $('#start').hide();
         $('#preview').removeAttr('hidden');
@@ -40,13 +39,13 @@ var action = {
         $('#preview').show();
     },
 
-    showView(viewname) {
-        viewmap = { "preview": "#previewviewarea", "dataEntry": "#userdataentrybox" };
-        viewEye = { "preview": "#eyeslash", "dataEntry": "#eye" };
-        $(viewmap[this.last_visible_view]).hide();
+    showView(viewName) {
+        viewMap = { "preview": "#previewviewarea", "dataEntry": "#userdataentrybox" };
+        viewEye = { "preview": "#show_data_entry", "dataEntry": "#show_preview" };
+        $(viewMap[this.last_visible_view]).hide();
         $(viewEye[this.last_visible_view]).hide();
-        this.last_visible_view = viewname;
-        $(viewmap[this.last_visible_view]).show();
+        this.last_visible_view = viewName;
+        $(viewMap[this.last_visible_view]).show();
         $(viewEye[this.last_visible_view]).show();
     }
     /*
@@ -58,6 +57,7 @@ var action = {
     Home:-
       -change view from \user_data_entry_box to preview
       -replace itself with start button
+      -preservence of user_data_entry_box
     */
 }
 
