@@ -13,17 +13,60 @@ var storageUnit = {
     ]
 }
 var helper = {
-    "isList": [false, true, false, false, false, false, false, false, false],
-    "dependentList": [false, false, true, true, true, false, false, false, false],
-    "currentChoice": 0
+    pivot: 1,
+    dependentList: [false, false, true, true, true, false, false, false, false],
+    currentChoice: 0,
+    viewMap : { "preview": "#preview_area", "dataEntry": "#user_data_entry_box" },
+    viewButton : { "preview": "#show_data_entry", "dataEntry": "#show_preview" },
+    last_visible_view : "preview",
+    questions: [
+        "What is Problem ?",
+        "What are the choices?",
+        "What are the consequences ?",
+        "What are the values?",
+        "What are your feelings ?",
+        "Anything More you want to share ?",
+        "Who Can Help ?",
+        "What is your Decision ?",
+        "Assess Decision"
+      ],
+      choiceTemplate(id, index, classChoice) {
+        var tempid = id + index;
+        $("#" + id + "s").append('<div class="main-block ' + classChoice + ' "  id="' + tempid + '"></div>');
+        tempid = "#" + tempid;
+        $(tempid).append('<h1>' + this.UserData[1][index] + '</h1><div class = "choiceContent"></div>');
+        $(tempid + " .choiceContent").append('<h3>Consequences</h3><ul class = "cons"></ul><h3>Values</h3><ul class = "values"></ul><h3>Feelings</h3><ul class = "feelings"></ul>');
+        var tempconsequences = this.UserData[2][index].split("\n")
+        for (var i = 0; i < tempconsequences.length; i++) {
+          $(tempid + " .cons").append('<li>' + tempconsequences[i] + '</li>')
+        }
+        var tempvalues = this.UserData[3][index].split("\n")
+        for (var i = 0; i < tempvalues.length; i++) {
+          $(tempid + " .values").append('<li>' + tempvalues[i] + '</li>')
+        }
+        var tempfeelings = this.UserData[4][index].split("\n")
+        for (var i = 0; i < tempfeelings.length; i++) {
+          $(tempid + " .feelings").append('<li>' + tempfeelings[i] + '</li>')
+        }
+        /*rChoices =>.main-block #rChoices0
+        #rChoices0 => h1 choiceContent
+        #rChoices0 .choiceContent => h3 tags +ul tags with their class
+        #rChoices0 respective class=>li tags
+    */
+      },
+      showView(viewName) {
+        $(helper.viewMap[helper.last_visible_view]).hide();
+        $(helper.viewButton[helper.last_visible_view]).hide();
+        helper.last_visible_view = viewName;
+        $(helper.viewMap[helper.last_visible_view]).show();
+        $(helper.viewButton[helper.last_visible_view]).show();
+    }
 }
 
 var action = {
     showDataEntry() {
-        this.showView()
-        $('#SubmitResponse').show();
-        $('#start').hide();
-        $('#preview').removeAttr('hidden');
+        this.showView("dataEntry");
+        dataInput.setupUserDataEntryBox();
     },
     showPreview() {
         $('#preview_area').show();
@@ -39,19 +82,10 @@ var action = {
         $('#preview').show();
     },
 
-    showView(viewName) {
-        viewMap = { "preview": "#previewviewarea", "dataEntry": "#userdataentrybox" };
-        viewEye = { "preview": "#show_data_entry", "dataEntry": "#show_preview" };
-        $(viewMap[this.last_visible_view]).hide();
-        $(viewEye[this.last_visible_view]).hide();
-        this.last_visible_view = viewName;
-        $(viewMap[this.last_visible_view]).show();
-        $(viewEye[this.last_visible_view]).show();
-    }
     /*
     Start:-
       -change view from preview to user_data_entry_box
-      -replace itself with home button
+      -replace itself with preview button
       -setup userdataentrybox based on storageUnit
       -change name from start->resume->view report
     Home:-
@@ -71,7 +105,7 @@ var general = {
 
     refresh() {
         for (var i = 0; i < storageUnit.currentStage; i++) {
-            if (helper.isList[i] || helper.dependentList[i]) {
+            if (helper.pivot==i || helper.dependentList[i]) {
                 $("#p" + (i + 1)).text(storageUnit.userData[i][helper.currentChoice]);
             }
             else {
@@ -79,7 +113,7 @@ var general = {
             }
             $("#e" + (i + 1)).show();
         }
-        if (storageUnit.userData[1]) {
+        if (helper.pivot < storageUnit.currentStage) {
             $("#backward").show();
             $("#forward").show();
         }
@@ -100,7 +134,33 @@ var dataInput = {
      * 
      * 
      */
-     submitResponse(){
+    setupUserDataEntryBox(){
+        $('#iQuestion').text(helper.questions[storageUnit.currentStage]);
+        if(storageUnit.currentStage == 7){
+            $("#iResponse").hide();
+            $("#iDecision").show();
+            for (var i = 0; i < storageUnit.UserData[helper.pivot].length; i++) {
+                helper.choiceTemplate("choiceList", i, "notselected");
+                $('#choiceList' + i).attr('onclick', 'DataEntryPane.decisionChoice(' + i + ')');
+              
+              // $("#choiceList"+ i).click(function(){
+              //   alert("the not respons");
+              //   DataEntryPane.decisionChoice(i);
+              // });
+            }
+            var addInfo = App.UserData[5].split("\n");
+            for (var i = 0; i < addInfo.length; i++) {
+              $("#MoreInfo").append('<li>'+addInfo[i] + '</li>');
+            }
+            var Help = App.UserData[6].split("\n");
+            for (var i = 0; i < Help.length; i++) {
+              $("#Help").append('<li>'+Help[i] + '</li>');
+            }
+        }
+        
+    },
+    
+    submitResponse(){
        /* var tempResponse = $.trim($("#iResponse").val());
         storageUnit.userData[currentStage]=tempResponse;
         $('#p1').val(tempResponse);
