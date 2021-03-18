@@ -60,6 +60,7 @@ var helper = {
         helper.last_visible_view = viewName;
         $(helper.viewMap[helper.last_visible_view]).show();
         $(helper.viewButton[helper.last_visible_view]).show();
+        
     }
 }
 
@@ -74,12 +75,6 @@ var action = {
         $('#resume').removeAttr('hidden');
         $('#preview').hide();
 
-    },
-    resume() {
-        $('#preview_area').hide();
-        $('#user_data_entry_box').show();
-        $('#resume').hide();
-        $('#preview').show();
     },
 
     /*
@@ -156,7 +151,7 @@ var dataInput = {
             $("#AddMore").show();
         }
         else if(helper.dependentList[storageUnit.currentStage]){
-            
+            $("#InputNextBtn").show();
         }
     },
     
