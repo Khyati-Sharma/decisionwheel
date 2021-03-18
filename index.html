@@ -58,7 +58,7 @@
                                 <h4 class="colon">:</h4>
                                 <div class="content" id="p2">Choice</div>
                                 <button id="backward" class="topAlign" onclick="PreviewPane.choice('backward')"><i
-                                    class="fas fa-angle-left"></i></button>
+                                        class="fas fa-angle-left"></i></button>
                                 <button id="forward" onclick="PreviewPane.choice('forward')"><i
                                         class="fas fa-angle-right"></i></button>
                                 <button class="editbutton" id="e2" onclick="PreviewPane.edit(1)"><i
@@ -114,11 +114,11 @@
                                         class="fas fa-edit"></i></button>
                             </div>
                         </div>
-                       
+
                     </div>
-                    <div id="user_data_entry_box" style=" text-align: center;" >
+                    <div id="user_data_entry_box" style=" text-align: center;">
                         <h3 id="iQuestion"> </h3>
-                        <div id="iChoices"> </div>
+                        <div id="i_choices"> </div>
 
                         <div id="iDecision" style="display: none;">
                             <h3>Select from the given Choices</h3>
@@ -140,13 +140,13 @@
 
 
                         <div style="text-align: center;">
-                            <button class="ibtn" type="button" id="AddMore" onclick="DataEntryPane.addChoices()"> Add
+                            <button class="ibtn" type="button" id="add_more" onclick="DataEntryPane.addChoices()"> Add
                                 More </button>
                             <button class="ibtn" type="button" id="InputNextBtn"
                                 onclick="DataEntryPane.nextChoice()">&nbsp; Next
                                 &nbsp;</button>
                             <button class="ibtn" type="button" id="cancel">Cancel</button>
-                            <button class="ibtn" type="button" id="SubmitResponse"
+                            <button class="ibtn" type="button" id="submit_response"
                                 onclick="dataInput.submitResponse()">Submit
                             </button>
                         </div>
@@ -157,8 +157,10 @@
         <div id="report"></div>
     </div>
     <div id="footer_area">
-        <button type="button" id="show_data_entry" class="btn btn-primary btn-lg btn-block"onclick="action.showDataEntry()">Start</button>
-        <button type="button" id="show_preview" class="btn btn-primary btn-lg btn-block" onclick="action.showPreview()">Preview</button>
+        <button type="button" id="show_data_entry" class="btn btn-primary btn-lg btn-block"
+            onclick="action.showDataEntry()">Start</button>
+        <button type="button" id="show_preview" class="btn btn-primary btn-lg btn-block"
+            onclick="action.showPreview()">Preview</button>
 
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
