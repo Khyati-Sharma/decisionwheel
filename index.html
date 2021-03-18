@@ -117,8 +117,8 @@
                        
                     </div>
                     <div id="user_data_entry_box" style=" text-align: center;" >
-                        <h3 id="iQuestion"> What is Problem</h3>
-                        <div id="iChoices"> Choices</div>
+                        <h3 id="iQuestion"> </h3>
+                        <div id="iChoices"> </div>
 
                         <div id="iDecision" style="display: none;">
                             <h3>Select from the given Choices</h3>
@@ -147,7 +147,7 @@
                                 &nbsp;</button>
                             <button class="ibtn" type="button" id="cancel">Cancel</button>
                             <button class="ibtn" type="button" id="SubmitResponse"
-                                onclick="DataEntryPane.SubmitResponse()">Submit
+                                onclick="dataInput.submitResponse()">Submit
                             </button>
                         </div>
                     </div>
@@ -157,8 +157,9 @@
         <div id="report"></div>
     </div>
     <div id="footer_area">
-        <button type="button" id="mobileStart" class="btn btn-primary btn-lg btn-block"
-        onclick="action.showDataEntry()">Start</button>
+        <button type="button" id="show_data_entry" class="btn btn-primary btn-lg btn-block"onclick="action.showDataEntry()">Start</button>
+        <button type="button" id="show_preview" class="btn btn-primary btn-lg btn-block" onclick="action.showPreview()">Preview</button>
+
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"

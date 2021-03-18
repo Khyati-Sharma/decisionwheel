@@ -254,6 +254,9 @@ body {
     border-radius: 6px;
 }
 
+#show_preview{
+    display:none;
+}
 
 @media only screen and (max-width: 600px) {
     /*---------------------         header area        ----------------------------------*/
