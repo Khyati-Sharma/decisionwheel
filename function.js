@@ -36,17 +36,17 @@ var helper = {
         tempid = "#" + tempid;
         $(tempid).append('<h1>' + this.UserData[1][index] + '</h1><div class = "choiceContent"></div>');
         $(tempid + " .choiceContent").append('<h3>Consequences</h3><ul class = "cons"></ul><h3>Values</h3><ul class = "values"></ul><h3>Feelings</h3><ul class = "feelings"></ul>');
-        var tempconsequences = this.UserData[2][index].split("\n")
+        var tempconsequences = this.UserData[2][index].split("\n");
         for (var i = 0; i < tempconsequences.length; i++) {
-          $(tempid + " .cons").append('<li>' + tempconsequences[i] + '</li>')
+          $(tempid + " .cons").append('<li>' + tempconsequences[i] + '</li>');
         }
-        var tempvalues = this.UserData[3][index].split("\n")
+        var tempvalues = this.UserData[3][index].split("\n");
         for (var i = 0; i < tempvalues.length; i++) {
-          $(tempid + " .values").append('<li>' + tempvalues[i] + '</li>')
+          $(tempid + " .values").append('<li>' + tempvalues[i] + '</li>');
         }
-        var tempfeelings = this.UserData[4][index].split("\n")
+        var tempfeelings = this.UserData[4][index].split("\n");
         for (var i = 0; i < tempfeelings.length; i++) {
-          $(tempid + " .feelings").append('<li>' + tempfeelings[i] + '</li>')
+          $(tempid + " .feelings").append('<li>' + tempfeelings[i] + '</li>');
         }
         /*rChoices =>.main-block #rChoices0
         #rChoices0 => h1 choiceContent
@@ -65,7 +65,7 @@ var helper = {
 
 var action = {
     showDataEntry() {
-        this.showView("dataEntry");
+        helper.showView("dataEntry");
         dataInput.setupUserDataEntryBox();
     },
     showPreview() {
@@ -142,11 +142,6 @@ var dataInput = {
             for (var i = 0; i < storageUnit.UserData[helper.pivot].length; i++) {
                 helper.choiceTemplate("choiceList", i, "notselected");
                 $('#choiceList' + i).attr('onclick', 'DataEntryPane.decisionChoice(' + i + ')');
-              
-              // $("#choiceList"+ i).click(function(){
-              //   alert("the not respons");
-              //   DataEntryPane.decisionChoice(i);
-              // });
             }
             var addInfo = App.UserData[5].split("\n");
             for (var i = 0; i < addInfo.length; i++) {
@@ -157,7 +152,12 @@ var dataInput = {
               $("#Help").append('<li>'+Help[i] + '</li>');
             }
         }
-        
+        else if(storageUnit.currentStage == helper.pivot) {
+            $("#AddMore").show();
+        }
+        else if(helper.dependentList[storageUnit.currentStage]){
+            
+        }
     },
     
     submitResponse(){
