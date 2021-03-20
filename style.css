@@ -96,7 +96,7 @@ body {
 
 #preview_division {
     height: 93%;
-    overflow-y:scroll;
+    overflow-y: scroll;
 }
 
 .preview_steps {
@@ -110,7 +110,7 @@ body {
 .step_head {
     width: 20%;
     margin: 0;
-    padding:5px;
+    padding: 5px;
 }
 
 .colon {
@@ -135,8 +135,8 @@ body {
     background: transparent;
     border: none;
     width: 3%;
-    padding:0;
-    margin:0;
+    padding: 0;
+    margin: 0;
     display: none;
 }
 
@@ -151,17 +151,16 @@ body {
 #user_data_entry_box {
     display: none;
     height: 100%;
-    }
-        
-        #iChoices{	
-            display:none;
-            background-color: #330099;		
-            font-size: 2rem;	
-            padding: 0px 50px;	
-            width: fit-content;	
-            color: white;	
-        
-    }
+}
+
+#i_choices {
+    display: none;
+    background-color: #330099;
+    font-size: 2rem;
+    padding: 0px 50px;
+    width: fit-content;
+    color: white;
+}
 
 /*---------------------         footer area        ----------------------------------*/
 
@@ -241,7 +240,7 @@ body {
 }
 
 .ibtn {
-    display:none;
+    display: none;
     margin: 5px;
     background-color: #3399ff;
     transition-duration: 0.3s;
@@ -254,8 +253,8 @@ body {
     border-radius: 6px;
 }
 
-#show_preview{
-    display:none;
+#show_preview {
+    display: none;
 }
 
 @media only screen and (max-width: 600px) {
@@ -294,10 +293,10 @@ body {
         width: 2%;
     }
     .content {
-        width:50%;
+        width: 50%;
     }
     #p2 {
-        width:38%;
+        width: 38%;
     }
     .editbutton, #backward, #forward {
         width: 6%;
@@ -320,12 +319,9 @@ body {
         font-size: small;
         min-width: 70%;
     }
-    #iChoices {
-       
-        display: none;
+    #i_choices {
         font-size: medium;
         width: 100%;
-        
     }
     #Start {
         position: fixed;
@@ -334,5 +330,4 @@ body {
         width: 100%;
         margin: 0px;
     }
-    
 }
