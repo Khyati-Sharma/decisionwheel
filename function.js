@@ -64,8 +64,8 @@ var helper = {
     },
     getResponse() {
         var response = $.trim($("#iResponse").val());
-        if (response == "" && this.currentChoice > 1 && storageUnit.CurrentStage == this.pivot) {
-            alert("Give some response");
+        if (response == "" ) {
+            alert("Give some response"); 
             $("#iResponse").focus();
             return false;
         }
@@ -171,15 +171,16 @@ var dataInput = {
     },
 
     submitResponse() {
-        var response = helper.getResponse();
+        var tempresponse = $.trim($("#iResponse").val());
         $("#submit_response").hide();
-        if (this.currentChoice > 1 && response == false) {
+        if (this.currentChoice > 1 && tempresponse == false) {
             $("#add_more").hide();
             storageUnit.CurrentStage++;
             this.setupUserDataEntryBox();
             general.progress();
             return;
         }
+        var response = helper.getResponse();
         if (response != false) {
             if(storageUnit.currentStage==helper.pivot || helper.dependentList[storageUnit.currentStage]){
                 
