@@ -19,6 +19,7 @@ var helper = {
     viewMap: { "preview": "#preview_area", "dataEntry": "#user_data_entry_box" },
     viewButton: { "preview": "#show_data_entry", "dataEntry": "#show_preview" },
     last_visible_view: "preview",
+    currentChoice: 0,
     questions: [
         "What is Problem ?",
         "What are the choices?",
@@ -102,9 +103,9 @@ var action = {
 var general = {
     progress() {
         $("#completed_bar").width(storageUnit.currentStage / 9 * 100 + "%");
-        for (var i = 0; i < storageUnit.currentStage; i++) {
-            $("#b" + (i + 1)).addClass("completed");
-        }
+        $("#b" + (storageUnit.currentStage)).removeClass("inProgress");
+        $("#b" + (storageUnit.currentStage)).addClass("completed");
+        $("#b" + (storageUnit.currentStage + 1)).addClass("inProgress");
     },
 
     refresh() {
@@ -140,6 +141,7 @@ var dataInput = {
      */
     setupUserDataEntryBox() {
         $('#iQuestion').text(helper.questions[storageUnit.currentStage]);
+        $('#iResponse').focus();
         if (storageUnit.currentStage == 7) {
             $("#iResponse").hide();
             $("#iDecision").show();
@@ -169,25 +171,48 @@ var dataInput = {
     },
 
     submitResponse() {
-        var tempResponse = $.trim($("#iResponse").val());
-        if (this.blankChoice > 1 && tempResponse.length == 0) {
-            $("#add_more").hide();
+        var tempresponse = $.trim($("#iResponse").val());
+        if (this.currentChoice > 1 && tempresponse == "") {
             $("#submit_response").hide();
-            storageUnit.CurrentStage++;
+            $("#add_more").hide();
+            storageUnit.currentStage++;
             this.setupUserDataEntryBox();
             general.progress();
-            $("#b" + (storageUnit.CurrentStage)).removeClass("inProgress");
-            $("#b" + (storageUnit.CurrentStage)).addClass("completed");
-            $("#b" + (storageUnit.CurrentStage + 1)).addClass("inProgress");
             return;
         }
-        var response = this.getResponse();
+        var response = helper.getResponse();
         if (response != false) {
-            if(storageUnit.currentStage==helper.pivot || helper.dependentList[storageUnit.currentStage]){
-                
+            $("#submit_response").hide();
+            if (storageUnit.currentStage == helper.pivot || helper.dependentList[storageUnit.currentStage]) {
+                storageUnit.userData[storageUnit.currentStage][helper.currentChoice] = response;
+                $("#add_more").hide();
+                $("#iResponse").val("");
+                storageUnit.currentStage++;
+                this.setupUserDataEntryBox();
+                general.progress();
+            }
+            else {
+                storageUnit.userData[storageUnit.currentStage] = response;
+                $('#iResponse').val("");
+                storageUnit.currentStage++;
+                general.progress();
+                this.setupUserDataEntryBox();
             }
         }
     },
+    addChoices() {
+        $('#iResponse').focus();
+        var response = helper.getResponse();
+        if (response != false) {
+            storageUnit.userData[storageUnit.currentStage][helper.currentChoice] = response;
+            $('#iResponse').val("");
+            helper.currentChoice++;
+            $("#submit_response").show();
+        }
+    },
+    nextChoice() {
+        
+    }
 }
 
 var TestSuite =
@@ -208,8 +233,8 @@ var TestSuite =
     },
 
     focusOnDecision() {
-        MainButtons.toggleButton(storageUnit.CurrentStage, false);
-        storageUnit.CurrentStage = 7;
+        MainButtons.toggleButton(storageUnit.currentStage, false);
+        storageUnit.currentStage = 7;
         App.UserData = [
             "focusOnDecision",
             ["choice1", "choice2", "choice3"],
@@ -224,8 +249,8 @@ var TestSuite =
         App.Beginning();
     },
     focusOnChoice() {
-        MainButtons.toggleButton(storageUnit.CurrentStage, false);
-        storageUnit.CurrentStage = 1;
+        MainButtons.toggleButton(storageUnit.currentStage, false);
+        storageUnit.currentStage = 1;
         App.UserData = [
             "focusOnChoice",
             [],
@@ -240,8 +265,8 @@ var TestSuite =
         App.Beginning();
     },
     focusOnDependentChoice() {
-        MainButtons.toggleButton(storageUnit.CurrentStage, false);
-        storageUnit.CurrentStage = 2;
+        MainButtons.toggleButton(storageUnit.currentStage, false);
+        storageUnit.currentStage = 2;
         App.UserData = [
             "focusOnDependentChoice",
             ["choice1", "choice2", "choice3"],
@@ -256,8 +281,8 @@ var TestSuite =
         App.Beginning();
     },
     focusOnAddInfo() {
-        MainButtons.toggleButton(storageUnit.CurrentStage, false);
-        storageUnit.CurrentStage = 5;
+        MainButtons.toggleButton(storageUnit.currentStage, false);
+        storageUnit.currentStage = 5;
         App.UserData = [
             "focusOnAddInfo",
             ["choice1", "choice2", "choice3"],
@@ -272,8 +297,8 @@ var TestSuite =
         App.Beginning();
     },
     focusOnSubmit() {
-        MainButtons.toggleButton(storageUnit.CurrentStage, false);
-        storageUnit.CurrentStage = 9;
+        MainButtons.toggleButton(storageUnit.currentStage, false);
+        storageUnit.currentStage = 9;
         App.UserData = [
             "focusOnSubmit",
             ["choice1", "choice2", "choice3egfgsxvdg", "choice4kd fkgkjknknknkn"],
