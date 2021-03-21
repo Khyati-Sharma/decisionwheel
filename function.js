@@ -20,6 +20,7 @@ var helper = {
     viewButton: { "preview": "#show_data_entry", "dataEntry": "#show_preview" },
     last_visible_view: "preview",
     currentChoice: 0,
+    incr: 0,
     questions: [
         "What is Problem ?",
         "What are the choices?",
@@ -136,7 +137,11 @@ var dataInput = {
      *    -move to next level
      *    
      *    -special use(for edit)
-     * 
+     * Next 
+     *  - first of all store the data in current stage
+     *  - next i_choices print in consequences
+     *  - the next button show only (n-1) index of choices
+     *  - then after show submit button
      * 
      */
     setupUserDataEntryBox() {
@@ -163,7 +168,8 @@ var dataInput = {
         }
         else if (helper.dependentList[storageUnit.currentStage]) {
             $("#InputNextBtn").show();
-            $("#i_choices").text(storageUnit.userData[helper.pivot][0]);
+            $("#i_choices").text(storageUnit.userData[helper.pivot][helper.incr]);
+            $("#i_choices").show();
         }
         else {
             $("#submit_response").show();
@@ -210,8 +216,17 @@ var dataInput = {
             $("#submit_response").show();
         }
     },
+
     nextChoice() {
-        
+        $('#iResponse').focus();
+        var response = helper.getResponse();
+        if (response != false) {
+            storageUnit.userData[storageUnit.currentStage][helper.incr] = response;
+            $('#iResponse').val("");
+            helper.incr++;
+            this.setupUserDataEntryBox();
+
+        }
     }
 }
 
