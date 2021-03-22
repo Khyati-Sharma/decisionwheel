@@ -20,6 +20,7 @@ var helper = {
     viewButton: { "preview": "#show_data_entry", "dataEntry": "#show_preview" },
     last_visible_view: "preview",
     currentChoice: 0,
+    incr: 0,
     questions: [
         "What is Problem ?",
         "What are the choices?",
@@ -64,8 +65,8 @@ var helper = {
     },
     getResponse() {
         var response = $.trim($("#iResponse").val());
-        if (response == "" ) {
-            alert("Give some response"); 
+        if (response == "") {
+            alert("Give some response");
             $("#iResponse").focus();
             return false;
         }
@@ -105,7 +106,7 @@ var general = {
         $("#completed_bar").width(storageUnit.currentStage / 9 * 100 + "%");
         $("#b" + (storageUnit.currentStage)).removeClass("inProgress");
         $("#b" + (storageUnit.currentStage)).addClass("completed");
-        $("#b" + (storageUnit.currentStage+1)).addClass("inProgress");
+        $("#b" + (storageUnit.currentStage + 1)).addClass("inProgress");
     },
 
     refresh() {
@@ -136,7 +137,11 @@ var dataInput = {
      *    -move to next level
      *    
      *    -special use(for edit)
-     * 
+     * Next 
+     *  - first of all store the data in current stage
+     *  - next i_choices print in consequences
+     *  - the next button show only (n-1) index of choices
+     *  - then after show submit button
      * 
      */
     setupUserDataEntryBox() {
@@ -163,7 +168,8 @@ var dataInput = {
         }
         else if (helper.dependentList[storageUnit.currentStage]) {
             $("#InputNextBtn").show();
-            $("#i_choices").text(storageUnit.userData[helper.pivot][0]);
+            $("#i_choices").text(storageUnit.userData[helper.pivot][helper.incr]);
+            $("#i_choices").show();
         }
         else {
             $("#submit_response").show();
@@ -172,20 +178,26 @@ var dataInput = {
 
     submitResponse() {
         var tempresponse = $.trim($("#iResponse").val());
-        $("#submit_response").hide();
-        if (this.currentChoice > 1 && tempresponse == false) {
+        if (this.currentChoice > 1 && tempresponse == "") {
+            $("#submit_response").hide();
             $("#add_more").hide();
-            storageUnit.CurrentStage++;
+            storageUnit.currentStage++;
             this.setupUserDataEntryBox();
             general.progress();
             return;
         }
         var response = helper.getResponse();
         if (response != false) {
-            if(storageUnit.currentStage==helper.pivot || helper.dependentList[storageUnit.currentStage]){
-                
+            $("#submit_response").hide();
+            if (storageUnit.currentStage == helper.pivot || helper.dependentList[storageUnit.currentStage]) {
+                storageUnit.userData[storageUnit.currentStage][helper.currentChoice] = response;
+                $("#add_more").hide();
+                $("#iResponse").val("");
+                storageUnit.currentStage++;
+                this.setupUserDataEntryBox();
+                general.progress();
             }
-            else{
+            else {
                 storageUnit.userData[storageUnit.currentStage] = response;
                 $('#iResponse').val("");
                 storageUnit.currentStage++;
@@ -194,13 +206,26 @@ var dataInput = {
             }
         }
     },
-    addChoices(){
+    addChoices() {
+        $('#iResponse').focus();
         var response = helper.getResponse();
-        if (response != false){
+        if (response != false) {
             storageUnit.userData[storageUnit.currentStage][helper.currentChoice] = response;
             $('#iResponse').val("");
             helper.currentChoice++;
             $("#submit_response").show();
+        }
+    },
+
+    nextChoice() {
+        $('#iResponse').focus();
+        var response = helper.getResponse();
+        if (response != false) {
+            storageUnit.userData[storageUnit.currentStage][helper.incr] = response;
+            $('#iResponse').val("");
+            helper.incr++;
+            this.setupUserDataEntryBox();
+
         }
     }
 }
@@ -223,8 +248,8 @@ var TestSuite =
     },
 
     focusOnDecision() {
-        MainButtons.toggleButton(storageUnit.CurrentStage, false);
-        storageUnit.CurrentStage = 7;
+        MainButtons.toggleButton(storageUnit.currentStage, false);
+        storageUnit.currentStage = 7;
         App.UserData = [
             "focusOnDecision",
             ["choice1", "choice2", "choice3"],
@@ -239,8 +264,8 @@ var TestSuite =
         App.Beginning();
     },
     focusOnChoice() {
-        MainButtons.toggleButton(storageUnit.CurrentStage, false);
-        storageUnit.CurrentStage = 1;
+        MainButtons.toggleButton(storageUnit.currentStage, false);
+        storageUnit.currentStage = 1;
         App.UserData = [
             "focusOnChoice",
             [],
@@ -255,8 +280,8 @@ var TestSuite =
         App.Beginning();
     },
     focusOnDependentChoice() {
-        MainButtons.toggleButton(storageUnit.CurrentStage, false);
-        storageUnit.CurrentStage = 2;
+        MainButtons.toggleButton(storageUnit.currentStage, false);
+        storageUnit.currentStage = 2;
         App.UserData = [
             "focusOnDependentChoice",
             ["choice1", "choice2", "choice3"],
@@ -271,8 +296,8 @@ var TestSuite =
         App.Beginning();
     },
     focusOnAddInfo() {
-        MainButtons.toggleButton(storageUnit.CurrentStage, false);
-        storageUnit.CurrentStage = 5;
+        MainButtons.toggleButton(storageUnit.currentStage, false);
+        storageUnit.currentStage = 5;
         App.UserData = [
             "focusOnAddInfo",
             ["choice1", "choice2", "choice3"],
@@ -287,8 +312,8 @@ var TestSuite =
         App.Beginning();
     },
     focusOnSubmit() {
-        MainButtons.toggleButton(storageUnit.CurrentStage, false);
-        storageUnit.CurrentStage = 9;
+        MainButtons.toggleButton(storageUnit.currentStage, false);
+        storageUnit.currentStage = 9;
         App.UserData = [
             "focusOnSubmit",
             ["choice1", "choice2", "choice3egfgsxvdg", "choice4kd fkgkjknknknkn"],
