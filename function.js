@@ -81,8 +81,11 @@ var action = {
         $("#b" + (storageUnit.currentStage + 1)).addClass("inProgress");
     },
     showPreview() {
-        $('#preview_area').show();
-        $('#user_data_entry_box').hide();
+        if (storageUnit.currentStage > 0) {
+            $("#show_data_entry").text("Resume");
+        }
+        general.refresh();
+        helper.showView("preview");
         $('#resume').removeAttr('hidden');
         $('#preview').hide();
 
@@ -150,7 +153,7 @@ var dataInput = {
         if (storageUnit.currentStage == 7) {
             $("#i_response").hide();
             $("#decision_data").show();
-        
+
             for (var i = 0; i < storageUnit.userData[helper.pivot].length; i++) {
                 helper.choiceTemplate("choiceList", i, "notselected");
                 $('#choiceList' + i).attr('onclick', 'dataInput.decisionChoice(' + i + ')');
