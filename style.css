@@ -257,7 +257,7 @@ body {
     text-align: left;
 }
 
-.ibtn {
+.i_btn {
     display: none;
     margin: 5px;
     background-color: #3399ff;
@@ -340,7 +340,7 @@ body {
         border: none;
         margin: 0px;
     }
-    .ibtn {
+    .i_btn {
         font-size: small;
         min-width: 70%;
     }
