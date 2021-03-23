@@ -34,7 +34,7 @@ var helper = {
     ],
     choiceTemplate(id, index, classChoice) {
         var tempid = id + index;
-        $("#" + id + "s").append('<div class="main-block ' + classChoice + ' "  id="' + tempid + '"></div>');
+        $("#" + id + "s").append('<div class="main_block ' + classChoice + ' "  id="' + tempid + '"></div>');
         tempid = "#" + tempid;
         $(tempid).append('<h1>' + storageUnit.userData[1][index] + '</h1><div class = "choice_content"></div>');
         $(tempid + " .choice_content").append('<h3>Consequences</h3><ul class = "cons"></ul><h3>Values</h3><ul class = "values"></ul><h3>Feelings</h3><ul class = "feelings"></ul>');
@@ -50,7 +50,7 @@ var helper = {
         for (var i = 0; i < tempfeelings.length; i++) {
             $(tempid + " .feelings").append('<li>' + tempfeelings[i] + '</li>');
         }
-        /*rChoices =>.main-block #rChoices0
+        /*rChoices =>.main_block #rChoices0
         #rChoices0 => h1 choice_content
         #rChoices0 .choice_content => h3 tags +ul tags with their class
         #rChoices0 respective class=>li tags
@@ -88,8 +88,20 @@ var action = {
         helper.showView("preview");
         $('#resume').removeAttr('hidden');
         $('#preview').hide();
-
     },
+    showReport() {
+        $("#details").hide();
+        $('#show_report').hide();
+        $("#report").show();
+        var classChoice;
+        for (var i = 0; i < storageUnit.userData[1].length; i++) {
+            if (storageUnit.userData[1][i] == storageUnit.userData[7])
+                classChoice = "selected";
+            else
+                classChoice = "notselected";
+            helper.choiceTemplate("r_choice", i, classChoice);
+        }
+    }
 
     /*
     Start:-
@@ -148,15 +160,15 @@ var dataInput = {
      * 
      */
     setupUserDataEntryBox() {
-        $('#iQuestion').text(helper.questions[storageUnit.currentStage]);
+        $('#i_question').text(helper.questions[storageUnit.currentStage]);
         $('#i_response').focus();
         if (storageUnit.currentStage == 7) {
             $("#i_response").hide();
             $("#decision_data").show();
 
             for (var i = 0; i < storageUnit.userData[helper.pivot].length; i++) {
-                helper.choiceTemplate("choiceList", i, "notselected");
-                $('#choiceList' + i).attr('onclick', 'dataInput.decisionChoice(' + i + ')');
+                helper.choiceTemplate("choice_list", i, "notselected");
+                $('#choice_list' + i).attr('onclick', 'dataInput.decisionChoice(' + i + ')');
             }
             var addInfo = storageUnit.userData[5].split("\n");
             for (var i = 0; i < addInfo.length; i++) {
@@ -211,7 +223,15 @@ var dataInput = {
                 $('#i_response').val("");
                 storageUnit.currentStage++;
                 general.progress();
-                this.setupUserDataEntryBox();
+                if (storageUnit.currentStage == 9) {
+                    helper.showView("preview");
+                    general.refresh();
+                    $('#show_data_entry').hide();
+                    $('#show_preview').hide();
+                    $('#show_report').show();
+                }
+                else
+                    this.setupUserDataEntryBox();
             }
         }
     },
@@ -239,16 +259,14 @@ var dataInput = {
     },
 
     decisionChoice(choice) {
-
-
         storageUnit.userData[storageUnit.currentStage] = storageUnit.userData[helper.pivot][choice];
         storageUnit.currentStage++;
         general.progress();
         this.setupUserDataEntryBox();
-
-        $("#choiceLists .main-block").removeClass("selected");
-        $("#choiceList" + choice).addClass("selected");
+        $("#choice_lists .main_block").removeClass("selected");
+        $("#choice_list" + choice).addClass("selected");
         $("#i_response").show();
+        $('#i_response').focus();
         $("#decision_data").hide();
     }
 

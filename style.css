@@ -58,7 +58,7 @@ body {
     display: none;
 }
 
-#button_area {
+#labels {
     height: 100%;
     width: 24.5%;
     margin-right: 0.5%;
@@ -125,13 +125,14 @@ body {
     padding: 5px;
     font-size: 20px;
     width: 76%;
+    white-space: pre;
 }
 
 #p2 {
     width: 70%;
 }
 
-.editbutton, #backward, #forward {
+.edit_button, #backward, #forward {
     background: transparent;
     border: none;
     width: 3%;
@@ -166,11 +167,11 @@ body {
     text-align: left;
 }
 
-.main-block ul {
+.main_block ul {
     margin: 10px 0px;
 }
 
-#rEntries .main-block {
+#rEntries .main_block {
     min-height: 230px;
     text-align: left;
 }
@@ -182,7 +183,7 @@ body {
     height: 10%;
 }
 
-#iQuestion {
+#i_question {
     margin: 0%;
     width: 99.3%;
     background-color: #330099;
@@ -192,7 +193,7 @@ body {
     margin-bottom: 5px;
 }
 
-#iDecision {
+#i_decision {
     background-color: #330099;
     font-size: 2rem;
     padding: 5px 20px;
@@ -216,11 +217,11 @@ body {
     display: none;
 }
 
-#choiceLists .main-block {
+#choice_lists .main_block {
     cursor: pointer;
 }
 
-.main-block {
+.main_block {
     display: inline-flex;
     min-width: 250px;
     width: 20%;
@@ -232,14 +233,14 @@ body {
     color: #666;
 }
 
-.main-block h1 {
+.main_block h1 {
     border-radius: 10px 10px 0px 0px;
     background-color: #a7d9e0;
     font-size: larger;
     padding: 5px;
 }
 
-.main-block h1, .main-block h3 {
+.main_block h1, .main_block h3 {
     margin: 0;
     font-family: Roboto, Arial, sans-serif;
     font-size: 16px;
@@ -247,11 +248,11 @@ body {
     padding: 5px;
 }
 
-.main-block ul {
+.main_block ul {
     margin: 10px 0px;
 }
 
-#rEntries .main-block {
+#rEntries .main_block {
     min-height: 230px;
     text-align: left;
 }
@@ -274,6 +275,13 @@ body {
     display: none;
 }
 
+#show_report {
+    display: none;
+}
+
+#report {
+    display: none;
+}
 @media only screen and (max-width: 600px) {
     /*---------------------         header area        ----------------------------------*/
     #header_area {
@@ -292,7 +300,7 @@ body {
     #workspace {
         height: 82%;
     }
-    #button_area {
+    #labels {
         display: none;
     }
     #view_area {
@@ -315,14 +323,14 @@ body {
     #p2 {
         width: 38%;
     }
-    .editbutton, #backward, #forward {
+    .edit_button, #backward, #forward {
         width: 6%;
         display: none;
     }
-    #iQuestion {
+    #i_question {
         font-size: larger;
     }
-    #iQuestion h3 {
+    #i_question h3 {
         margin: 0px;
     }
     #i_response {
