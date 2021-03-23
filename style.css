@@ -162,6 +162,20 @@ body {
     color: white;
 }
 
+.choice_content {
+    text-align: left;
+}
+
+.main-block ul {
+    margin: 10px 0px;
+}
+
+#rEntries .main-block {
+    min-height: 230px;
+    text-align: left;
+}
+
+
 /*---------------------         footer area        ----------------------------------*/
 
 #footer_area {
@@ -179,11 +193,14 @@ body {
 }
 
 #iDecision {
-    margin-top: 30px;
-    margin-bottom: 100px;
+    background-color: #330099;
+    font-size: 2rem;
+    padding: 5px 20px;
+    width: fit-content;
+    color: white;
 }
 
-#iResponse {
+#i_response {
     font-size: 30px;
     background-color: white;
     margin: 50px;
@@ -195,7 +212,7 @@ body {
     max-height: 180px;
 }
 
-#decisionData {
+#decision_data {
     display: none;
 }
 
@@ -308,7 +325,7 @@ body {
     #iQuestion h3 {
         margin: 0px;
     }
-    #iResponse {
+    #i_response {
         max-width: 100%;
         width: 100%;
         font-size: 20px;
