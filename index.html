@@ -120,20 +120,18 @@
                         <h3 id="iQuestion"> </h3>
                         <div id="i_choices"> </div>
 
-                        <div id="iDecision" style="display: none;">
-                            <h3>Select from the given Choices</h3>
-                        </div>
-                        <textarea id="iResponse" style="text-align: center;"></textarea>
-                        <div id="decisionData">
+                        <textarea id="i_response" style="text-align: center;"></textarea>
+                        <div id="decision_data">
+                            <h3 id="iDecision">Select from the given Choices</h3>
                             <div id="choiceLists"></div>
                             <div>
                                 <div class="main-block">
                                     <h1>Additional info</h1>
-                                    <ul id="MoreInfo" class="rEntryData"></ul>
+                                    <ul id="more_info" ></ul>
                                 </div>
                                 <div class="main-block">
                                     <h1>Who Can Help</h1>
-                                    <ul id="Help"></ul>
+                                    <ul id="help"></ul>
                                 </div>
                             </div>
                         </div>
@@ -142,7 +140,7 @@
                         <div style="text-align: center;">
                             <button class="ibtn" type="button" id="add_more" onclick="dataInput.addChoices()"> Add
                                 More </button>
-                            <button class="ibtn" type="button" id="InputNextBtn"
+                            <button class="ibtn" type="button" id="input_next_btn"
                                 onclick="dataInput.nextChoice()">&nbsp; Next
                                 &nbsp;</button>
                             <button class="ibtn" type="button" id="cancel">Cancel</button>

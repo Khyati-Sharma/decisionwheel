@@ -20,6 +20,7 @@ var helper = {
     viewButton: { "preview": "#show_data_entry", "dataEntry": "#show_preview" },
     last_visible_view: "preview",
     currentChoice: 0,
+    incr: 0,
     questions: [
         "What is Problem ?",
         "What are the choices?",
@@ -35,23 +36,23 @@ var helper = {
         var tempid = id + index;
         $("#" + id + "s").append('<div class="main-block ' + classChoice + ' "  id="' + tempid + '"></div>');
         tempid = "#" + tempid;
-        $(tempid).append('<h1>' + this.UserData[1][index] + '</h1><div class = "choiceContent"></div>');
-        $(tempid + " .choiceContent").append('<h3>Consequences</h3><ul class = "cons"></ul><h3>Values</h3><ul class = "values"></ul><h3>Feelings</h3><ul class = "feelings"></ul>');
-        var tempconsequences = this.UserData[2][index].split("\n");
+        $(tempid).append('<h1>' + storageUnit.userData[1][index] + '</h1><div class = "choice_content"></div>');
+        $(tempid + " .choice_content").append('<h3>Consequences</h3><ul class = "cons"></ul><h3>Values</h3><ul class = "values"></ul><h3>Feelings</h3><ul class = "feelings"></ul>');
+        var tempconsequences = storageUnit.userData[2][index].split("\n");
         for (var i = 0; i < tempconsequences.length; i++) {
             $(tempid + " .cons").append('<li>' + tempconsequences[i] + '</li>');
         }
-        var tempvalues = this.UserData[3][index].split("\n");
+        var tempvalues = storageUnit.userData[3][index].split("\n");
         for (var i = 0; i < tempvalues.length; i++) {
             $(tempid + " .values").append('<li>' + tempvalues[i] + '</li>');
         }
-        var tempfeelings = this.UserData[4][index].split("\n");
+        var tempfeelings = storageUnit.userData[4][index].split("\n");
         for (var i = 0; i < tempfeelings.length; i++) {
             $(tempid + " .feelings").append('<li>' + tempfeelings[i] + '</li>');
         }
         /*rChoices =>.main-block #rChoices0
-        #rChoices0 => h1 choiceContent
-        #rChoices0 .choiceContent => h3 tags +ul tags with their class
+        #rChoices0 => h1 choice_content
+        #rChoices0 .choice_content => h3 tags +ul tags with their class
         #rChoices0 respective class=>li tags
     */
     },
@@ -63,10 +64,10 @@ var helper = {
         $(helper.viewButton[helper.last_visible_view]).show();
     },
     getResponse() {
-        var response = $.trim($("#iResponse").val());
+        var response = $.trim($("#i_response").val());
         if (response == "") {
             alert("Give some response");
-            $("#iResponse").focus();
+            $("#i_response").focus();
             return false;
         }
         return response;
@@ -80,8 +81,11 @@ var action = {
         $("#b" + (storageUnit.currentStage + 1)).addClass("inProgress");
     },
     showPreview() {
-        $('#preview_area').show();
-        $('#user_data_entry_box').hide();
+        if (storageUnit.currentStage > 0) {
+            $("#show_data_entry").text("Resume");
+        }
+        general.refresh();
+        helper.showView("preview");
         $('#resume').removeAttr('hidden');
         $('#preview').hide();
 
@@ -136,34 +140,43 @@ var dataInput = {
      *    -move to next level
      *    
      *    -special use(for edit)
-     * 
+     * Next 
+     *  - first of all store the data in current stage
+     *  - next i_choices print in consequences
+     *  - the next button show only (n-1) index of choices
+     *  - then after show submit button
      * 
      */
     setupUserDataEntryBox() {
         $('#iQuestion').text(helper.questions[storageUnit.currentStage]);
-        $('#iResponse').focus();
+        $('#i_response').focus();
         if (storageUnit.currentStage == 7) {
-            $("#iResponse").hide();
-            $("#iDecision").show();
-            for (var i = 0; i < storageUnit.UserData[helper.pivot].length; i++) {
+            $("#i_response").hide();
+            $("#decision_data").show();
+
+            for (var i = 0; i < storageUnit.userData[helper.pivot].length; i++) {
                 helper.choiceTemplate("choiceList", i, "notselected");
-                $('#choiceList' + i).attr('onclick', 'DataEntryPane.decisionChoice(' + i + ')');
+                $('#choiceList' + i).attr('onclick', 'dataInput.decisionChoice(' + i + ')');
             }
-            var addInfo = App.UserData[5].split("\n");
+            var addInfo = storageUnit.userData[5].split("\n");
             for (var i = 0; i < addInfo.length; i++) {
-                $("#MoreInfo").append('<li>' + addInfo[i] + '</li>');
+                $("#more_info").append('<li>' + addInfo[i] + '</li>');
             }
-            var Help = App.UserData[6].split("\n");
-            for (var i = 0; i < Help.length; i++) {
-                $("#Help").append('<li>' + Help[i] + '</li>');
+            var help = storageUnit.userData[6].split("\n");
+            for (var i = 0; i < help.length; i++) {
+                $("#help").append('<li>' + help[i] + '</li>');
             }
         }
         else if (storageUnit.currentStage == helper.pivot) {
             $("#add_more").show();
         }
         else if (helper.dependentList[storageUnit.currentStage]) {
-            $("#InputNextBtn").show();
-            $("#i_choices").text(storageUnit.userData[helper.pivot][0]);
+            if (helper.currentChoice == helper.incr)
+                $("#submit_response").show();
+            else
+                $("#input_next_btn").show();
+            $("#i_choices").text(storageUnit.userData[helper.pivot][helper.incr]);
+            $("#i_choices").show();
         }
         else {
             $("#submit_response").show();
@@ -171,8 +184,8 @@ var dataInput = {
     },
 
     submitResponse() {
-        var tempresponse = $.trim($("#iResponse").val());
-        if (this.currentChoice > 1 && tempresponse == "") {
+        var tempresponse = $.trim($("#i_response").val());
+        if (helper.currentChoice > 1 && tempresponse == "") {
             $("#submit_response").hide();
             $("#add_more").hide();
             storageUnit.currentStage++;
@@ -186,14 +199,16 @@ var dataInput = {
             if (storageUnit.currentStage == helper.pivot || helper.dependentList[storageUnit.currentStage]) {
                 storageUnit.userData[storageUnit.currentStage][helper.currentChoice] = response;
                 $("#add_more").hide();
-                $("#iResponse").val("");
+                $("#i_response").val("");
                 storageUnit.currentStage++;
+                helper.incr = 0;
+                $("#i_choices").hide();
                 this.setupUserDataEntryBox();
                 general.progress();
             }
             else {
                 storageUnit.userData[storageUnit.currentStage] = response;
-                $('#iResponse').val("");
+                $('#i_response').val("");
                 storageUnit.currentStage++;
                 general.progress();
                 this.setupUserDataEntryBox();
@@ -201,18 +216,42 @@ var dataInput = {
         }
     },
     addChoices() {
-        $('#iResponse').focus();
+        $('#i_response').focus();
         var response = helper.getResponse();
         if (response != false) {
             storageUnit.userData[storageUnit.currentStage][helper.currentChoice] = response;
-            $('#iResponse').val("");
+            $('#i_response').val("");
             helper.currentChoice++;
             $("#submit_response").show();
         }
     },
+
     nextChoice() {
-        
+        $('#i_response').focus();
+        var response = helper.getResponse();
+        if (response != false) {
+            storageUnit.userData[storageUnit.currentStage][helper.incr] = response;
+            $('#i_response').val("");
+            helper.incr++;
+            $("#input_next_btn").hide();
+            this.setupUserDataEntryBox();
+        }
+    },
+
+    decisionChoice(choice) {
+
+
+        storageUnit.userData[storageUnit.currentStage] = storageUnit.userData[helper.pivot][choice];
+        storageUnit.currentStage++;
+        general.progress();
+        this.setupUserDataEntryBox();
+
+        $("#choiceLists .main-block").removeClass("selected");
+        $("#choiceList" + choice).addClass("selected");
+        $("#i_response").show();
+        $("#decision_data").hide();
     }
+
 }
 
 var TestSuite =
@@ -233,9 +272,8 @@ var TestSuite =
     },
 
     focusOnDecision() {
-        MainButtons.toggleButton(storageUnit.currentStage, false);
         storageUnit.currentStage = 7;
-        App.UserData = [
+        storageUnit.userData = [
             "focusOnDecision",
             ["choice1", "choice2", "choice3"],
             ["con1", "con2", "con3"],
@@ -246,12 +284,11 @@ var TestSuite =
             "",
             ""
         ];
-        App.Beginning();
     },
     focusOnChoice() {
         MainButtons.toggleButton(storageUnit.currentStage, false);
         storageUnit.currentStage = 1;
-        App.UserData = [
+        storageUnit.userData = [
             "focusOnChoice",
             [],
             [],
@@ -267,7 +304,7 @@ var TestSuite =
     focusOnDependentChoice() {
         MainButtons.toggleButton(storageUnit.currentStage, false);
         storageUnit.currentStage = 2;
-        App.UserData = [
+        storageUnit.userData = [
             "focusOnDependentChoice",
             ["choice1", "choice2", "choice3"],
             [],
@@ -283,7 +320,7 @@ var TestSuite =
     focusOnAddInfo() {
         MainButtons.toggleButton(storageUnit.currentStage, false);
         storageUnit.currentStage = 5;
-        App.UserData = [
+        storageUnit.userData = [
             "focusOnAddInfo",
             ["choice1", "choice2", "choice3"],
             ["con1", "con2", "con3"],
@@ -299,7 +336,7 @@ var TestSuite =
     focusOnSubmit() {
         MainButtons.toggleButton(storageUnit.currentStage, false);
         storageUnit.currentStage = 9;
-        App.UserData = [
+        storageUnit.userData = [
             "focusOnSubmit",
             ["choice1", "choice2", "choice3egfgsxvdg", "choice4kd fkgkjknknknkn"],
             ["con1", "con2", "con3vbmdbdm", "choice3"],
