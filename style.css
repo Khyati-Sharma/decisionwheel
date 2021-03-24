@@ -260,6 +260,8 @@ body {
 }
 
 #send_report{
+    
+    display: none;
     position: fixed;
     left: 0;
     bottom: 0;
@@ -273,6 +275,36 @@ body {
     background-image: radial-gradient(blue, transparent);
 }
 
+#r_problem {
+    width: 100%;
+    background-color: #330099;
+    color: white;
+    padding: 4px;
+    font-size: x-large;
+    border-radius: 5px 60px;
+}
+
+.not_selected h1 {
+    background-color: tomato;
+    color: white;
+}
+
+.not_selected {
+    box-shadow: 5px 5px 5px tomato;
+}
+
+.selected {
+    box-shadow: 5px 5px 5px green;
+}
+
+.selected h1 {
+    background-color: #7fe77f;
+    color: #666;
+}
+
+#thankYou{
+    display:none;
+}
 
 @media only screen and (max-width: 600px) {
     /*---------------------         workspace        ----------------------------------*/

@@ -200,14 +200,13 @@
                     </div>
                 </div>
             </div>
-            <div class="input-group" id="send_report">
-                <input type="email" id="send_reportInt" class="form-control" placeholder="name@example.com"
-                    aria-label="Recipient's username" aria-describedby="button-addon2" />
-                <button type="button" id="send_report_btn" class="btn btn-primary" onclick="MainButtons.sendEmail()">
-                    <div id="send_text">Send Report Via Email</div>
-                    <i class="fas fa-paper-plane"></i>
-                </button>
-            </div>
+        </div>
+        <div id="thankYou">
+            <i class="fas fa-check-circle" id="success"></i>
+            <h1>Thank You</h1>
+            <h2>Report of your data has been sent to your email</h2>
+            <button type="button" class="btn btn-primary" onclick="MainButtons.reloadPage()">Go for another
+                Problem</button>
         </div>
     </div>
     <div id="footer_area">
@@ -221,6 +220,14 @@
         <button type="button" id="show_report" class="btn btn-primary btn-lg btn-block" onclick="action.showReport()">
             Show Report
         </button>
+        <div class="input-group" id="send_report">
+            <input type="email" id="send_reportint" class="form-control" placeholder="name@example.com"
+                aria-label="Recipient's username" aria-describedby="button-addon2" />
+            <button type="button" id="send_report_btn" class="btn btn-primary" onclick="action.sendEmail()">
+                <div id="send_text">Send Report Via Email</div>
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
@@ -229,6 +236,13 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
         crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/emailjs-com@2/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function () {
+            // https://dashboard.emailjs.com/admin/integration
+            emailjs.init('user_AT5nORStcFhAPLlCR9Xy2');
+        })();
+    </script>
     <script src="function.js"></script>
 </body>
 

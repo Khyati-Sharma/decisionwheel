@@ -574,5 +574,5 @@ var MainButtons = {
 
 $(document).ready(function () {
   App.Beginning();
-  //TestSuite.focusOnSubmit();
+  TestSuite.focusOnSubmit();
 });
