@@ -2,27 +2,25 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
-        integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+        integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
         integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
-    <link rel="stylesheet" href="style.css">
+
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="style/header_area.css" />
     <link rel="icon" href="Images/skillpill_200x200.png" />
     <title>Decision Making Tool</title>
 </head>
 
 <body>
     <div id="header_area">
-        <div style="width: 10%; height: 100%;">
-            <img id="logo" src="Images/skillpill_200x200.png">
+        <div style="width: 10%; height: 100%">
+            <img id="logo" src="Images/skillpill_200x200.png" />
         </div>
         <h1 id="head">Decision Making Tool</h1>
-        <div style="width: 10%;">
-            <i id="eye" onclick='PreviewPane.showPreview()' class="fa picon">&#xf06e;</i>
-            <i id="eye_slash" onclick='PreviewPane.hidePreview()' class='fas picon'>&#xf070;</i>
-        </div>
     </div>
     <div id="workspace">
         <div id="details">
@@ -49,80 +47,108 @@
                             <div class="preview_steps">
                                 <h4 class="step_head">Problem</h4>
                                 <h4 class="colon">:</h4>
-                                <div class="content" id="p1">Problem Of the user.</div>
-                                <button class="edit_button" id="e1" onclick="PreviewPane.edit(0)"><i
-                                        class="fas fa-edit"></i></button>
+                                <div class="content" id="p1">
+                                    Problem Of the user.
+                                </div>
+                                <button class="edit_button" id="e1" onclick="PreviewPane.edit(0)">
+                                    <i class="fas fa-edit"></i>
+                                </button>
                             </div>
                             <div class="preview_steps">
                                 <h4 class="step_head">Choices</h4>
                                 <h4 class="colon">:</h4>
                                 <div class="content" id="p2">Choice</div>
-                                <button id="backward" class="topAlign" onclick="PreviewPane.choice('backward')"><i
-                                        class="fas fa-angle-left"></i></button>
-                                <button id="forward" onclick="PreviewPane.choice('forward')"><i
-                                        class="fas fa-angle-right"></i></button>
-                                <button class="edit_button" id="e2" onclick="PreviewPane.edit(1)"><i
-                                        class="fas fa-edit"></i></button>
+                                <button id="backward" class="topAlign" onclick="PreviewPane.choice('backward')">
+                                    <i class="fas fa-angle-left"></i>
+                                </button>
+                                <button id="forward" onclick="PreviewPane.choice('forward')">
+                                    <i class="fas fa-angle-right"></i>
+                                </button>
+                                <button class="edit_button" id="e2" onclick="PreviewPane.edit(1)">
+                                    <i class="fas fa-edit"></i>
+                                </button>
                             </div>
                             <div class="preview_steps">
                                 <h4 class="step_head">Consequences</h4>
                                 <h4 class="colon">:</h4>
-                                <div class="content" id="p3">Consequences regarding Choice</div>
-                                <button class="edit_button" id="e3" onclick="PreviewPane.edit(2)"><i
-                                        class="fas fa-edit"></i></button>
+                                <div class="content" id="p3">
+                                    Consequences regarding Choice
+                                </div>
+                                <button class="edit_button" id="e3" onclick="PreviewPane.edit(2)">
+                                    <i class="fas fa-edit"></i>
+                                </button>
                             </div>
                             <div class="preview_steps">
                                 <h4 class="step_head">Values</h4>
                                 <h4 class="colon">:</h4>
-                                <div class="content" id="p4">Values regarding choice</div>
-                                <button class="edit_button" id="e4" onclick="PreviewPane.edit(3)"><i
-                                        class="fas fa-edit"></i></button>
+                                <div class="content" id="p4">
+                                    Values regarding choice
+                                </div>
+                                <button class="edit_button" id="e4" onclick="PreviewPane.edit(3)">
+                                    <i class="fas fa-edit"></i>
+                                </button>
                             </div>
                             <div class="preview_steps">
                                 <h4 class="step_head">Feelings</h4>
                                 <h4 class="colon">:</h4>
-                                <div class="content" id="p5">Feeling regarding choice</div>
-                                <button class="edit_button" id="e5" onclick="PreviewPane.edit(4)"><i
-                                        class="fas fa-edit"></i></button>
+                                <div class="content" id="p5">
+                                    Feeling regarding choice
+                                </div>
+                                <button class="edit_button" id="e5" onclick="PreviewPane.edit(4)">
+                                    <i class="fas fa-edit"></i>
+                                </button>
                             </div>
                             <div class="preview_steps">
                                 <h4 class="step_head">More Info</h4>
                                 <h4 class="colon">:</h4>
-                                <div class="content" id="p6">More Information about Problem</div>
-                                <button class="edit_button" id="e6" onclick="PreviewPane.edit(5)"><i
-                                        class="fas fa-edit"></i></button>
+                                <div class="content" id="p6">
+                                    More Information about Problem
+                                </div>
+                                <button class="edit_button" id="e6" onclick="PreviewPane.edit(5)">
+                                    <i class="fas fa-edit"></i>
+                                </button>
                             </div>
                             <div class="preview_steps">
                                 <h4 class="step_head">Who can help?</h4>
                                 <h4 class="colon">:</h4>
-                                <div class="content" id="p7">Who else can help ??</div>
-                                <button class="edit_button" id="e7" onclick="PreviewPane.edit(6)"><i
-                                        class="fas fa-edit"></i></button>
+                                <div class="content" id="p7">
+                                    Who else can help ??
+                                </div>
+                                <button class="edit_button" id="e7" onclick="PreviewPane.edit(6)">
+                                    <i class="fas fa-edit"></i>
+                                </button>
                             </div>
                             <div class="preview_steps">
                                 <h4 class="step_head">Decision</h4>
                                 <h4 class="colon">:</h4>
-                                <div class="content" id="p8">Decision of the user</div>
-                                <button class="edit_button" id="e8" onclick="PreviewPane.edit(7)"><i
-                                        class="fas fa-edit"></i></button>
+                                <div class="content" id="p8">
+                                    Decision of the user
+                                </div>
+                                <button class="edit_button" id="e8" onclick="PreviewPane.edit(7)">
+                                    <i class="fas fa-edit"></i>
+                                </button>
                             </div>
                             <div class="preview_steps">
                                 <h4 class="step_head">Assessment</h4>
                                 <h4 class="colon">:</h4>
-                                <div class="content" id="p9">Assess your Decision</div>
-                                <button class="edit_button" id="e9" onclick="PreviewPane.edit(8)"><i
-                                        class="fas fa-edit"></i></button>
+                                <div class="content" id="p9">
+                                    Assess your Decision
+                                </div>
+                                <button class="edit_button" id="e9" onclick="PreviewPane.edit(8)">
+                                    <i class="fas fa-edit"></i>
+                                </button>
                             </div>
                         </div>
-
                     </div>
-                    <div id="user_data_entry_box" style=" text-align: center;">
-                        <h3 id="i_question"> </h3>
-                        <div id="i_choices"> </div>
+                    <div id="user_data_entry_box" style="text-align: center">
+                        <h3 id="i_question"></h3>
+                        <div id="i_choices"></div>
 
-                        <textarea id="i_response" style="text-align: center;"></textarea>
+                        <textarea id="i_response" style="text-align: center"></textarea>
                         <div id="decision_data">
-                            <h3 id="i_decision">Select from the given Choices</h3>
+                            <h3 id="i_decision">
+                                Select from the given Choices
+                            </h3>
                             <div id="choice_lists"></div>
                             <div>
                                 <div class="main_block">
@@ -136,16 +162,19 @@
                             </div>
                         </div>
 
-
-                        <div style="text-align: center;">
-                            <button class="i_btn" type="button" id="add_more" onclick="dataInput.addChoices()"> Add
-                                More </button>
-                            <button class="i_btn" type="button" id="input_next_btn"
-                                onclick="dataInput.nextChoice()">&nbsp; Next
-                                &nbsp;</button>
-                            <button class="i_btn" type="button" id="cancel">Cancel</button>
+                        <div style="text-align: center">
+                            <button class="i_btn" type="button" id="add_more" onclick="dataInput.addChoices()">
+                                Add More
+                            </button>
+                            <button class="i_btn" type="button" id="input_next_btn" onclick="dataInput.nextChoice()">
+                                &nbsp; Next &nbsp;
+                            </button>
+                            <button class="i_btn" type="button" id="cancel">
+                                Cancel
+                            </button>
                             <button class="i_btn" type="button" id="submit_response"
-                                onclick="dataInput.submitResponse()">Submit
+                                onclick="dataInput.submitResponse()">
+                                Submit
                             </button>
                         </div>
                     </div>
@@ -154,7 +183,7 @@
         </div>
         <div id="report">
             <div id="sub_report">
-                <h1 id="r_problem">Problem of The user </h1>
+                <h1 id="r_problem">Problem of The user</h1>
                 <div id="r_choices"></div>
                 <div id="r_entries">
                     <div class="main_block">
@@ -173,21 +202,25 @@
             </div>
             <div class="input-group" id="send_report">
                 <input type="email" id="send_reportInt" class="form-control" placeholder="name@example.com"
-                    aria-label="Recipient's username" aria-describedby="button-addon2">
-                <button type="button" id="send_report_btn" class="btn btn-primary " onclick="MainButtons.sendEmail()">
-                    <div id="send_text"> Send Report Via Email </div><i class="fas fa-paper-plane"></i>
+                    aria-label="Recipient's username" aria-describedby="button-addon2" />
+                <button type="button" id="send_report_btn" class="btn btn-primary" onclick="MainButtons.sendEmail()">
+                    <div id="send_text">Send Report Via Email</div>
+                    <i class="fas fa-paper-plane"></i>
                 </button>
             </div>
         </div>
     </div>
     <div id="footer_area">
         <button type="button" id="show_data_entry" class="btn btn-primary btn-lg btn-block"
-            onclick="action.showDataEntry()">Start</button>
-        <button type="button" id="show_preview" class="btn btn-primary btn-lg btn-block"
-            onclick="action.showPreview()">Preview</button>
-        <button type="button" id="show_report" class="btn btn-primary btn-lg btn-block"
-            onclick="action.showReport()">Show Report</button>
-
+            onclick="action.showDataEntry()">
+            Start
+        </button>
+        <button type="button" id="show_preview" class="btn btn-primary btn-lg btn-block" onclick="action.showPreview()">
+            Preview
+        </button>
+        <button type="button" id="show_report" class="btn btn-primary btn-lg btn-block" onclick="action.showReport()">
+            Show Report
+        </button>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
