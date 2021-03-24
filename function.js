@@ -93,6 +93,7 @@ var action = {
         $("#details").hide();
         $('#show_report').hide();
         $("#report").show();
+        $("#r_problem").text(storageUnit.userData[0]);
         var classChoice;
         for (var i = 0; i < storageUnit.userData[1].length; i++) {
             if (storageUnit.userData[1][i] == storageUnit.userData[7])
@@ -101,6 +102,14 @@ var action = {
                 classChoice = "not_selected";
             helper.choiceTemplate("r_choice", i, classChoice);
         }
+        $("#r_more_info").text(storageUnit.userData[5]);
+        var tempHelp = storageUnit.userData[6].split("\n")
+        for (var i = 0; i < tempHelp.length; i++) {
+            $("#r_help").append('<li>' + tempHelp[i] + '</li>')
+        }
+        $("#r_assess").text(storageUnit.userData[8]);
+        
+
     }
 
     /*

@@ -255,9 +255,25 @@ body {
     display: none;
 }
 
+#send_text {
+    display: inline;
+}
+
+#send_report{
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    margin: 0px;
+}
 #report {
     display: none;
+    min-height: 85vh;
+    text-align: center;
+    background-image: radial-gradient(blue, transparent);
 }
+
+
 @media only screen and (max-width: 600px) {
     /*---------------------         workspace        ----------------------------------*/
     #workspace {
