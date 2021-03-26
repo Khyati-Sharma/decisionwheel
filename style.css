@@ -3,14 +3,8 @@ body {
     width: 100vw;
 }
 
-/*---------------------         header area        ----------------------------------*/
-
-
-
-/*---------------------         workspace        ----------------------------------*/
-
 #workspace {
-    height: 82%;
+    height: 84%;
 }
 
 #details {
@@ -121,7 +115,7 @@ body {
     background-color: #5deb72;
 }
 
-.inProgress {
+.in_progress {
     background-image: linear-gradient(180deg, #5deb72, transparent);
 }
 
@@ -156,7 +150,13 @@ body {
 /*---------------------         footer area        ----------------------------------*/
 
 #footer_area {
-    height: 10%;
+    height: 6%;
+}
+
+.footer_buttons{
+    height: 100%;
+    padding: 0;
+    margin: auto;
 }
 
 #i_question {
@@ -309,7 +309,10 @@ body {
 @media only screen and (max-width: 600px) {
     /*---------------------         workspace        ----------------------------------*/
     #workspace {
-        height: 82%;
+        height: 86%;
+    }
+    .progress{
+        height: 2%;
     }
     #labels {
         display: none;

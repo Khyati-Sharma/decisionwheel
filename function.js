@@ -10,7 +10,8 @@ var storageUnit = {
         "",
         "",
         ""
-    ]
+    ],
+    tempUserData:""
 }
 var helper = {
     pivot: 1,
@@ -19,7 +20,6 @@ var helper = {
     viewMap: { "preview": "#preview_area", "dataEntry": "#user_data_entry_box" },
     viewButton: { "preview": "#show_data_entry", "dataEntry": "#show_preview" },
     lastVisibleView: "preview",
-    currentChoice: 0,
     incr: 0,
     questions: [
         "What is Problem ?",
@@ -72,6 +72,20 @@ var helper = {
         }
         return response;
     },
+    createDecisionView(){
+        for (var i = 0; i < storageUnit.userData[helper.pivot].length; i++) {
+            helper.choiceTemplate("choice_list", i, "not_selected");
+            $('#choice_list' + i).attr('onclick', 'dataInput.decisionChoice(' + i + ')');
+        }
+        var addInfo = storageUnit.userData[5].split("\n");
+        for (var i = 0; i < addInfo.length; i++) {
+            $("#more_info").append('<li>' + addInfo[i] + '</li>');
+        }
+        var help = storageUnit.userData[6].split("\n");
+        for (var i = 0; i < help.length; i++) {
+            $("#help").append('<li>' + help[i] + '</li>');
+        }
+    }
 }
 
 var action = {
@@ -86,8 +100,11 @@ var action = {
         }
         general.refresh();
         helper.showView("preview");
-        $('#resume').removeAttr('hidden');
-        $('#preview').hide();
+        storageUnit.tempUserData=$.trim($("#i_response").val());
+        $(".i_btn").hide();
+        $("#i_response").show();
+        $("#i_choices").hide();
+        $("#decision_data").hide();
     },
     showReport() {
         $("#details").hide();
@@ -226,19 +243,6 @@ var dataInput = {
         if (storageUnit.currentStage == 7) {
             $("#i_response").hide();
             $("#decision_data").show();
-
-            for (var i = 0; i < storageUnit.userData[helper.pivot].length; i++) {
-                helper.choiceTemplate("choice_list", i, "not_selected");
-                $('#choice_list' + i).attr('onclick', 'dataInput.decisionChoice(' + i + ')');
-            }
-            var addInfo = storageUnit.userData[5].split("\n");
-            for (var i = 0; i < addInfo.length; i++) {
-                $("#more_info").append('<li>' + addInfo[i] + '</li>');
-            }
-            var help = storageUnit.userData[6].split("\n");
-            for (var i = 0; i < help.length; i++) {
-                $("#help").append('<li>' + help[i] + '</li>');
-            }
         }
         else if (storageUnit.currentStage == helper.pivot) {
             $("#add_more").show();
@@ -284,6 +288,8 @@ var dataInput = {
                 $('#i_response').val("");
                 storageUnit.currentStage++;
                 general.progress();
+                if(storageUnit.currentStage==7)
+                helper.createDecisionView();
                 if (storageUnit.currentStage == 9) {
                     helper.showView("preview");
                     general.refresh();
