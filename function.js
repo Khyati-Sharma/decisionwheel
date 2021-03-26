@@ -93,6 +93,9 @@ var action = {
         helper.showView("dataEntry");
         dataInput.setupUserDataEntryBox();
         $("#b" + (storageUnit.currentStage + 1)).addClass("in_progress");
+        if(helper.viewMap.dataEntry){
+            $("#i_response").val(storageUnit.tempUserData);
+        }
     },
     showPreview() {
         if (storageUnit.currentStage > 0) {
@@ -101,6 +104,7 @@ var action = {
         general.refresh();
         helper.showView("preview");
         storageUnit.tempUserData=$.trim($("#i_response").val());
+        $("#i_response").text("");
         $(".i_btn").hide();
         $("#i_response").show();
         $("#i_choices").hide();
