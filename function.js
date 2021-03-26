@@ -10,7 +10,8 @@ var storageUnit = {
         "",
         "",
         ""
-    ]
+    ],
+    tempUserData:""
 }
 var helper = {
     pivot: 1,
@@ -18,8 +19,7 @@ var helper = {
     currentChoice: 0,
     viewMap: { "preview": "#preview_area", "dataEntry": "#user_data_entry_box" },
     viewButton: { "preview": "#show_data_entry", "dataEntry": "#show_preview" },
-    last_visible_view: "preview",
-    currentChoice: 0,
+    lastVisibleView: "preview",
     incr: 0,
     questions: [
         "What is Problem ?",
@@ -33,35 +33,35 @@ var helper = {
         "Assess Decision"
     ],
     choiceTemplate(id, index, classChoice) {
-        var tempid = id + index;
-        $("#" + id + "s").append('<div class="main-block ' + classChoice + ' "  id="' + tempid + '"></div>');
-        tempid = "#" + tempid;
-        $(tempid).append('<h1>' + storageUnit.userData[1][index] + '</h1><div class = "choice_content"></div>');
-        $(tempid + " .choice_content").append('<h3>Consequences</h3><ul class = "cons"></ul><h3>Values</h3><ul class = "values"></ul><h3>Feelings</h3><ul class = "feelings"></ul>');
-        var tempconsequences = storageUnit.userData[2][index].split("\n");
-        for (var i = 0; i < tempconsequences.length; i++) {
-            $(tempid + " .cons").append('<li>' + tempconsequences[i] + '</li>');
+        var tempId = id + index;
+        $("#" + id + "s").append('<div class="main_block ' + classChoice + ' "  id="' + tempId + '"></div>');
+        tempId = "#" + tempId;
+        $(tempId).append('<h1>' + storageUnit.userData[1][index] + '</h1><div class = "choice_content"></div>');
+        $(tempId + " .choice_content").append('<h3>Consequences</h3><ul class = "cons"></ul><h3>Values</h3><ul class = "values"></ul><h3>Feelings</h3><ul class = "feelings"></ul>');
+        var tempConsequences = storageUnit.userData[2][index].split("\n");
+        for (var i = 0; i < tempConsequences.length; i++) {
+            $(tempId + " .cons").append('<li>' + tempConsequences[i] + '</li>');
         }
-        var tempvalues = storageUnit.userData[3][index].split("\n");
-        for (var i = 0; i < tempvalues.length; i++) {
-            $(tempid + " .values").append('<li>' + tempvalues[i] + '</li>');
+        var tempValues = storageUnit.userData[3][index].split("\n");
+        for (var i = 0; i < tempValues.length; i++) {
+            $(tempId + " .values").append('<li>' + tempValues[i] + '</li>');
         }
-        var tempfeelings = storageUnit.userData[4][index].split("\n");
-        for (var i = 0; i < tempfeelings.length; i++) {
-            $(tempid + " .feelings").append('<li>' + tempfeelings[i] + '</li>');
+        var tempFeelings = storageUnit.userData[4][index].split("\n");
+        for (var i = 0; i < tempFeelings.length; i++) {
+            $(tempId + " .feelings").append('<li>' + tempFeelings[i] + '</li>');
         }
-        /*rChoices =>.main-block #rChoices0
+        /*rChoices =>.main_block #rChoices0
         #rChoices0 => h1 choice_content
         #rChoices0 .choice_content => h3 tags +ul tags with their class
         #rChoices0 respective class=>li tags
     */
     },
     showView(viewName) {
-        $(helper.viewMap[helper.last_visible_view]).hide();
-        $(helper.viewButton[helper.last_visible_view]).hide();
-        helper.last_visible_view = viewName;
-        $(helper.viewMap[helper.last_visible_view]).show();
-        $(helper.viewButton[helper.last_visible_view]).show();
+        $(helper.viewMap[helper.lastVisibleView]).hide();
+        $(helper.viewButton[helper.lastVisibleView]).hide();
+        helper.lastVisibleView = viewName;
+        $(helper.viewMap[helper.lastVisibleView]).show();
+        $(helper.viewButton[helper.lastVisibleView]).show();
     },
     getResponse() {
         var response = $.trim($("#i_response").val());
@@ -72,13 +72,30 @@ var helper = {
         }
         return response;
     },
+    createDecisionView(){
+        for (var i = 0; i < storageUnit.userData[helper.pivot].length; i++) {
+            helper.choiceTemplate("choice_list", i, "not_selected");
+            $('#choice_list' + i).attr('onclick', 'dataInput.decisionChoice(' + i + ')');
+        }
+        var addInfo = storageUnit.userData[5].split("\n");
+        for (var i = 0; i < addInfo.length; i++) {
+            $("#more_info").append('<li>' + addInfo[i] + '</li>');
+        }
+        var help = storageUnit.userData[6].split("\n");
+        for (var i = 0; i < help.length; i++) {
+            $("#help").append('<li>' + help[i] + '</li>');
+        }
+    }
 }
 
 var action = {
     showDataEntry() {
         helper.showView("dataEntry");
         dataInput.setupUserDataEntryBox();
-        $("#b" + (storageUnit.currentStage + 1)).addClass("inProgress");
+        $("#b" + (storageUnit.currentStage + 1)).addClass("in_progress");
+        if(helper.viewMap.dataEntry){
+            $("#i_response").val(storageUnit.tempUserData);
+        }
     },
     showPreview() {
         if (storageUnit.currentStage > 0) {
@@ -86,8 +103,33 @@ var action = {
         }
         general.refresh();
         helper.showView("preview");
-        $('#resume').removeAttr('hidden');
-        $('#preview').hide();
+        storageUnit.tempUserData=$.trim($("#i_response").val());
+        $("#i_response").text("");
+        $(".i_btn").hide();
+        $("#i_response").show();
+        $("#i_choices").hide();
+        $("#decision_data").hide();
+    },
+    showReport() {
+        $("#details").hide();
+        $('#show_report').hide();
+        $("#report").show();
+        $("#r_problem").text(storageUnit.userData[0]);
+        var classChoice;
+        for (var i = 0; i < storageUnit.userData[1].length; i++) {
+            if (storageUnit.userData[1][i] == storageUnit.userData[7])
+                classChoice = "selected";
+            else
+                classChoice = "not_selected";
+            helper.choiceTemplate("r_choice", i, classChoice);
+        }
+        $("#r_more_info").text(storageUnit.userData[5]);
+        var tempHelp = storageUnit.userData[6].split("\n")
+        for (var i = 0; i < tempHelp.length; i++) {
+            $("#r_help").append('<li>' + tempHelp[i] + '</li>')
+        }
+        $("#r_assess").text(storageUnit.userData[8]);
+        $("#send_report").show();
 
     },
 
@@ -102,14 +144,66 @@ var action = {
       -replace itself with start button
       -preservence of user_data_entry_box
     */
+   sendEmail(){
+    var emailGt =$.trim($("#send_reportint").val());
+    if (emailGt== "") {
+      alert("Please enter the Email");
+      return;
+    }
+    var width=75/storageUnit.userData[1].length;
+    var Choices='',cons='',val='',feel='',help='';
+    for(var c=0;c<storageUnit.userData[1].length;c++){
+      Choices+='<td style="border: 1px solid black; width:'+width+'%;">'+storageUnit.userData[1][c]+'</td>';
+    }
+    for(var c=0;c<storageUnit.userData[1].length;c++){
+      cons+='<td style="border: 1px solid black; width:'+width+'%;"><ul>';
+      var tempcons = storageUnit.userData[2][c].split("\n");
+      for (var i = 0; i < tempcons.length; i++) {
+        cons+='<li>'+tempcons[i]+'</li>';
+      }
+      cons+='</ul></td>';
+    }
+    for(var c=0;c<storageUnit.userData[1].length;c++){
+      val+='<td style="border: 1px solid black; width:'+width+'%;"><ul>';
+      var tempvals = storageUnit.userData[3][c].split("\n");
+      for (var i = 0; i < tempvals.length; i++) {
+        val+='<li>'+tempvals[i]+'</li>';
+      }
+      val+='</ul></td>';
+    }
+    for(var c=0;c<storageUnit.userData[1].length;c++){
+      feel+='<td style="border: 1px solid black; width:'+width+'%;"><ul>';
+      var tempcons = storageUnit.userData[4][c].split("\n");
+      for (var i = 0; i < tempcons.length; i++) {
+        feel+='<li>'+tempcons[i]+'</li>';
+      }
+      feel+='</ul></td>';
+    }
+    var wcHelp = storageUnit.userData[6].split("\n");
+    for (var i = 0; i < wcHelp.length; i++) {
+      help+='<li>'+wcHelp[i]+'</li>';
+    }
+    var templateParams = {
+      Problem: storageUnit.userData[0],
+      reply_to: emailGt,
+      reportData:'<!DOCTYPE html><html><body><table style="width:100%; border: 1px solid black;"><tr><th style="border: 1px solid black; width: 25%;">Problem</th><th style="border: 1px solid black; width: 75%;" colspan="'+storageUnit.userData[1].length+'">'+storageUnit.userData[0]+'</th></tr><tr><td style="border: 1px solid black; width: 25%;">Choices</td>'+Choices+'</tr><tr><td style="border: 1px solid black; width: 25%;">Consequences</td>'+cons+'</tr><tr><td style="border: 1px solid black; width: 25%;">Values</td>'+val+'</tr><tr><td style="border: 1px solid black; width: 25%;">Feelings</td>'+feel+'</tr><tr><td style="border: 1px solid black; width: 25%;">Additional Info</td><td style="border: 1px solid black; width: 75%;" colspan="'+storageUnit.userData[1].length+'">'+storageUnit.userData[5]+'</td></tr><tr><td style="border: 1px solid black; width: 25%;">Who Can Help</td><td style="border: 1px solid black; width: 75%;" colspan="'+storageUnit.userData[1].length+'"><ul>'+help+'</ul></td></tr><tr><td style="border: 1px solid black; width: 25%;">Decision</td><td style="border: 1px solid black; width: 75%;" colspan="'+storageUnit.userData[1].length+'">'+storageUnit.userData[7]+'</td></tr><tr><td style="border: 1px solid black; width: 25%;">Assessment</td><td style="border: 1px solid black; width: 75%;" colspan="'+storageUnit.userData[1].length+'">'+storageUnit.userData[8]+'</td></tr></table></body></html>'
+  }; 
+    emailjs.send("default_service", "template_2rkf4re", templateParams)
+    .then(function() {
+      $("#finalReport").hide();
+      $("#thankYou").show();
+    }, function(error) {
+        alert("Sorry,We can't send your email currently, you can save report by downloading the webpage");
+    });
+  }
 }
 
 var general = {
     progress() {
         $("#completed_bar").width(storageUnit.currentStage / 9 * 100 + "%");
-        $("#b" + (storageUnit.currentStage)).removeClass("inProgress");
+        $("#b" + (storageUnit.currentStage)).removeClass("in_progress");
         $("#b" + (storageUnit.currentStage)).addClass("completed");
-        $("#b" + (storageUnit.currentStage + 1)).addClass("inProgress");
+        $("#b" + (storageUnit.currentStage + 1)).addClass("in_progress");
     },
 
     refresh() {
@@ -148,24 +242,11 @@ var dataInput = {
      * 
      */
     setupUserDataEntryBox() {
-        $('#iQuestion').text(helper.questions[storageUnit.currentStage]);
+        $('#i_question').text(helper.questions[storageUnit.currentStage]);
         $('#i_response').focus();
         if (storageUnit.currentStage == 7) {
             $("#i_response").hide();
             $("#decision_data").show();
-
-            for (var i = 0; i < storageUnit.userData[helper.pivot].length; i++) {
-                helper.choiceTemplate("choiceList", i, "notselected");
-                $('#choiceList' + i).attr('onclick', 'dataInput.decisionChoice(' + i + ')');
-            }
-            var addInfo = storageUnit.userData[5].split("\n");
-            for (var i = 0; i < addInfo.length; i++) {
-                $("#more_info").append('<li>' + addInfo[i] + '</li>');
-            }
-            var help = storageUnit.userData[6].split("\n");
-            for (var i = 0; i < help.length; i++) {
-                $("#help").append('<li>' + help[i] + '</li>');
-            }
         }
         else if (storageUnit.currentStage == helper.pivot) {
             $("#add_more").show();
@@ -211,7 +292,17 @@ var dataInput = {
                 $('#i_response').val("");
                 storageUnit.currentStage++;
                 general.progress();
-                this.setupUserDataEntryBox();
+                if(storageUnit.currentStage==7)
+                helper.createDecisionView();
+                if (storageUnit.currentStage == 9) {
+                    helper.showView("preview");
+                    general.refresh();
+                    $('#show_data_entry').hide();
+                    $('#show_preview').hide();
+                    $('#show_report').show();
+                }
+                else
+                    this.setupUserDataEntryBox();
             }
         }
     },
@@ -239,16 +330,14 @@ var dataInput = {
     },
 
     decisionChoice(choice) {
-
-
         storageUnit.userData[storageUnit.currentStage] = storageUnit.userData[helper.pivot][choice];
         storageUnit.currentStage++;
         general.progress();
         this.setupUserDataEntryBox();
-
-        $("#choiceLists .main-block").removeClass("selected");
-        $("#choiceList" + choice).addClass("selected");
+        $("#choice_lists .main_block").removeClass("selected");
+        $("#choice_list" + choice).addClass("selected");
         $("#i_response").show();
+        $('#i_response').focus();
         $("#decision_data").hide();
     }
 
@@ -256,21 +345,6 @@ var dataInput = {
 
 var TestSuite =
 {
-    focusOnDecision1() {
-        storageUnit.currentStage = 7;
-        storageUnit.userData = [
-            "focusOnDecision",
-            ["choice1", "choice2", "choice3"],
-            ["con1", "con2", "con3"],
-            ["val1", "val2", "val3"],
-            ["feel1", "feel2", "feel3"],
-            "Additionalinfo",
-            "Whocanhelp",
-            "",
-            ""
-        ];
-    },
-
     focusOnDecision() {
         storageUnit.currentStage = 7;
         storageUnit.userData = [
@@ -286,7 +360,6 @@ var TestSuite =
         ];
     },
     focusOnChoice() {
-        MainButtons.toggleButton(storageUnit.currentStage, false);
         storageUnit.currentStage = 1;
         storageUnit.userData = [
             "focusOnChoice",
@@ -299,10 +372,8 @@ var TestSuite =
             "",
             ""
         ];
-        App.Beginning();
     },
     focusOnDependentChoice() {
-        MainButtons.toggleButton(storageUnit.currentStage, false);
         storageUnit.currentStage = 2;
         storageUnit.userData = [
             "focusOnDependentChoice",
@@ -315,10 +386,8 @@ var TestSuite =
             "",
             ""
         ];
-        App.Beginning();
     },
     focusOnAddInfo() {
-        MainButtons.toggleButton(storageUnit.currentStage, false);
         storageUnit.currentStage = 5;
         storageUnit.userData = [
             "focusOnAddInfo",
@@ -331,10 +400,8 @@ var TestSuite =
             "",
             ""
         ];
-        App.Beginning();
     },
     focusOnSubmit() {
-        MainButtons.toggleButton(storageUnit.currentStage, false);
         storageUnit.currentStage = 9;
         storageUnit.userData = [
             "focusOnSubmit",
@@ -347,7 +414,6 @@ var TestSuite =
             "choice2",
             "ADecisionf hrhf,vjjjtopwok  lcmgdllbd gdbnbnmn"
         ];
-        App.Beginning();
     }
 
 }
