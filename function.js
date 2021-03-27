@@ -93,9 +93,7 @@ var action = {
         helper.showView("dataEntry");
         dataInput.setupUserDataEntryBox();
         $("#b" + (storageUnit.currentStage + 1)).addClass("in_progress");
-        if(helper.viewMap.dataEntry){
-            $("#i_response").val(storageUnit.tempUserData);
-        }
+        $("#i_response").val(storageUnit.tempUserData);
     },
     showPreview() {
         if (storageUnit.currentStage > 0) {
@@ -104,7 +102,7 @@ var action = {
         general.refresh();
         helper.showView("preview");
         storageUnit.tempUserData=$.trim($("#i_response").val());
-        $("#i_response").text("");
+        $("#i_response").val("");
         $(".i_btn").hide();
         $("#i_response").show();
         $("#i_choices").hide();
@@ -195,6 +193,11 @@ var action = {
     }, function(error) {
         alert("Sorry,We can't send your email currently, you can save report by downloading the webpage");
     });
+  },
+  edit(){
+      $("#e" +(storageUnit.currentStage+1));
+      
+
   }
 }
 
@@ -250,6 +253,8 @@ var dataInput = {
         }
         else if (storageUnit.currentStage == helper.pivot) {
             $("#add_more").show();
+            if (helper.currentChoice >= 1) 
+                $("#submit_response").show();
         }
         else if (helper.dependentList[storageUnit.currentStage]) {
             if (helper.currentChoice == helper.incr)
@@ -280,16 +285,15 @@ var dataInput = {
             if (storageUnit.currentStage == helper.pivot || helper.dependentList[storageUnit.currentStage]) {
                 storageUnit.userData[storageUnit.currentStage][helper.currentChoice] = response;
                 $("#add_more").hide();
-                $("#i_response").val("");
                 storageUnit.currentStage++;
                 helper.incr = 0;
                 $("#i_choices").hide();
                 this.setupUserDataEntryBox();
+                $("#i_response").val("");
                 general.progress();
             }
             else {
                 storageUnit.userData[storageUnit.currentStage] = response;
-                $('#i_response').val("");
                 storageUnit.currentStage++;
                 general.progress();
                 if(storageUnit.currentStage==7)
@@ -303,6 +307,7 @@ var dataInput = {
                 }
                 else
                     this.setupUserDataEntryBox();
+                    $('#i_response').val("");
             }
         }
     },
