@@ -20,6 +20,7 @@ var helper = {
     viewMap: { "preview": "#preview_area", "dataEntry": "#user_data_entry_box" },
     viewButton: { "preview": "#show_data_entry", "dataEntry": "#show_preview" },
     lastVisibleView: "preview",
+    viewEdit:-1,
     incr: 0,
     questions: [
         "What is Problem ?",
@@ -194,9 +195,10 @@ var action = {
         alert("Sorry,We can't send your email currently, you can save report by downloading the webpage");
     });
   },
-  edit(){
-      $("#e" +(storageUnit.currentStage+1));
-      
+  edit(viewEdit){
+    storageUnit.currentStage=viewEdit;
+    helper.showView("dataEntry");
+    alert("thbt");
 
   }
 }
