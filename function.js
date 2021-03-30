@@ -91,7 +91,7 @@ var helper = {
 var action = {
     showDataEntry() {
         helper.showView("dataEntry");
-        dataInput.setupUserDataEntryBox();
+        dataInput.setupUserDataEntryBox(storageUnit.currentStage);
         $("#b" + (storageUnit.currentStage + 1)).addClass("in_progress");
         $("#i_response").val(storageUnit.tempUserData);
     },
@@ -194,9 +194,9 @@ var action = {
         alert("Sorry,We can't send your email currently, you can save report by downloading the webpage");
     });
   },
-  edit(){
-      $("#e" +(storageUnit.currentStage+1));
-      
+  edit(viewEdit){
+    helper.showView("dataEntry");
+    dataInput.setupUserDataEntryBox(viewEdit);
 
   }
 }
@@ -244,19 +244,19 @@ var dataInput = {
      *  - then after show submit button
      * 
      */
-    setupUserDataEntryBox() {
-        $('#i_question').text(helper.questions[storageUnit.currentStage]);
+    setupUserDataEntryBox(setupStage) {
+        $('#i_question').text(helper.questions[setupStage]);
         $('#i_response').focus();
-        if (storageUnit.currentStage == 7) {
+        if (setupStage == 7) {
             $("#i_response").hide();
             $("#decision_data").show();
         }
-        else if (storageUnit.currentStage == helper.pivot) {
+        else if (setupStage == helper.pivot) {
             $("#add_more").show();
             if (helper.currentChoice >= 1) 
                 $("#submit_response").show();
         }
-        else if (helper.dependentList[storageUnit.currentStage]) {
+        else if (helper.dependentList[setupStage]) {
             if (helper.currentChoice == helper.incr)
                 $("#submit_response").show();
             else
@@ -275,7 +275,7 @@ var dataInput = {
             $("#submit_response").hide();
             $("#add_more").hide();
             storageUnit.currentStage++;
-            this.setupUserDataEntryBox();
+            this.setupUserDataEntryBox(storageUnit.currentStage);
             general.progress();
             return;
         }
@@ -288,7 +288,7 @@ var dataInput = {
                 storageUnit.currentStage++;
                 helper.incr = 0;
                 $("#i_choices").hide();
-                this.setupUserDataEntryBox();
+                this.setupUserDataEntryBox(storageUnit.currentStage);
                 $("#i_response").val("");
                 general.progress();
             }
@@ -306,7 +306,7 @@ var dataInput = {
                     $('#show_report').show();
                 }
                 else
-                    this.setupUserDataEntryBox();
+                    this.setupUserDataEntryBox(storageUnit.currentStage);
                     $('#i_response').val("");
             }
         }
@@ -330,7 +330,7 @@ var dataInput = {
             $('#i_response').val("");
             helper.incr++;
             $("#input_next_btn").hide();
-            this.setupUserDataEntryBox();
+            this.setupUserDataEntryBox(storageUnit.currentStage);
         }
     },
 
@@ -338,7 +338,7 @@ var dataInput = {
         storageUnit.userData[storageUnit.currentStage] = storageUnit.userData[helper.pivot][choice];
         storageUnit.currentStage++;
         general.progress();
-        this.setupUserDataEntryBox();
+        this.setupUserDataEntryBox(storageUnit.currentStage);
         $("#choice_lists .main_block").removeClass("selected");
         $("#choice_list" + choice).addClass("selected");
         $("#i_response").show();
@@ -363,6 +363,7 @@ var TestSuite =
             "",
             ""
         ];
+    helper.createDecisionView();
     },
     focusOnChoice() {
         storageUnit.currentStage = 1;
