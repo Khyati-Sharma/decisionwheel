@@ -21,6 +21,7 @@ var helper = {
     viewButton: { "preview": "#show_data_entry", "dataEntry": "#show_preview" },
     viewSubmit: { true: "#submit_editted_response", false: "#submit_response" },
     editMode: false,
+    edit: -1,
     lastVisibleView: "preview",
     incr: 0,
     choicePosition: 0,
@@ -100,12 +101,23 @@ var action = {
         $("#i_response").val(storageUnit.tempUserData);
     },
     showPreview() {
-        if (storageUnit.currentStage > 0) {
-            $("#show_data_entry").text("Resume");
+        if (helper.editMode) {
+            helper.editMode = false;
+            $("#show_preview").text("Preview");
         }
-        general.refresh();
+        else {
+            if (storageUnit.currentStage > 0) {
+                $("#show_data_entry").text("Resume");
+            }
+            general.refresh();
+            storageUnit.tempUserData = $.trim($("#i_response").val());
+            $("#b" + (storageUnit.currentStage + 1)).removeClass("in_progress");
+        }
         helper.showView("preview");
-        storageUnit.tempUserData = $.trim($("#i_response").val());
+        if (storageUnit.currentStage == 9) {
+            $('#show_data_entry').hide();
+            $('#show_report').show();
+        }
         $("#i_response").val("");
         $(".i_btn").hide();
         $("#i_response").show();
@@ -213,8 +225,8 @@ var action = {
         helper.showView("dataEntry");
         helper.editMode = true;
         dataInput.setupUserDataEntryBox(viewEdit);
-            $('#show_preview').text("Cancel");
-
+        $('#show_preview').text("Cancel");
+        helper.edit = viewEdit;
     }
 }
 
@@ -297,8 +309,8 @@ var dataInput = {
         }
         else {
             $(helper.viewSubmit[helper.editMode]).show();
-            if(helper.editMode)
-            $('#i_response').val(storageUnit.userData[setupStage]);
+            if (helper.editMode)
+                $('#i_response').val(storageUnit.userData[setupStage]);
         }
 
     },
@@ -336,7 +348,6 @@ var dataInput = {
                     helper.showView("preview");
                     general.refresh();
                     $('#show_data_entry').hide();
-                    $('#show_preview').hide();
                     $('#show_report').show();
                 }
                 else
@@ -369,10 +380,23 @@ var dataInput = {
     },
 
     decisionChoice(choice) {
-        storageUnit.userData[storageUnit.currentStage] = storageUnit.userData[helper.pivot][choice];
-        storageUnit.currentStage++;
-        general.progress();
-        this.setupUserDataEntryBox(storageUnit.currentStage);
+        if (helper.editMode) {
+            storageUnit.userData[helper.edit] = storageUnit.userData[helper.pivot][choice];
+            helper.showView("preview");
+            if (storageUnit.currentStage == 9) {
+                $('#show_data_entry').hide();
+                $('#show_report').show();
+            }
+            general.refresh();
+            helper.editMode = false;
+            $("#show_preview").text("Preview");
+        }
+        else {
+            storageUnit.userData[storageUnit.currentStage] = storageUnit.userData[helper.pivot][choice];
+            storageUnit.currentStage++;
+            general.progress();
+            this.setupUserDataEntryBox(storageUnit.currentStage);
+        }
         $("#choice_lists .main_block").removeClass("selected");
         $("#choice_list" + choice).addClass("selected");
         $("#i_response").show();
@@ -380,7 +404,26 @@ var dataInput = {
         $("#decision_data").hide();
     },
     editSubmit() {
-        
+        var response = helper.getResponse();
+        if (response != false) {
+            $("#submit_editted_response").hide();
+            if (helper.edit == helper.pivot || helper.dependentList[helper.edit]) {
+                storageUnit.userData[helper.edit][helper.choicePosition] = response;
+                $("#i_choices").hide();
+            }
+            else {
+                storageUnit.userData[helper.edit] = response;
+            }
+            $('#i_response').val("");
+            helper.showView("preview");
+            if (storageUnit.currentStage == 9) {
+                $('#show_data_entry').hide();
+                $('#show_report').show();
+            }
+            general.refresh();
+            helper.editMode = false;
+            $("#show_preview").text("Preview");
+        }
     }
 
 }
