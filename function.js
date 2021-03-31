@@ -271,6 +271,7 @@ var dataInput = {
         else if (setupStage == helper.pivot) {
             if (helper.editMode) {
                 $(helper.viewSubmit[helper.editMode]).show();
+                $('#i_response').val(storageUnit.userData[setupStage]);
             }
             else {
                 $("#add_more").show();
@@ -295,6 +296,8 @@ var dataInput = {
         }
         else {
             $(helper.viewSubmit[helper.editMode]).show();
+            if(helper.editMode)
+            $('#i_response').val(storageUnit.userData[setupStage]);
         }
 
     },
@@ -376,7 +379,7 @@ var dataInput = {
         $("#decision_data").hide();
     },
     editSubmit() {
-        alert("hljs");
+        
     }
 
 }
