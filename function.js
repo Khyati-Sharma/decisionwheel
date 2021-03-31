@@ -213,7 +213,7 @@ var action = {
         helper.showView("dataEntry");
         helper.editMode = true;
         dataInput.setupUserDataEntryBox(viewEdit);
-
+            $('#show_preview').text("Cancel");
 
     }
 }
@@ -271,7 +271,7 @@ var dataInput = {
         else if (setupStage == helper.pivot) {
             if (helper.editMode) {
                 $(helper.viewSubmit[helper.editMode]).show();
-                $('#i_response').val(storageUnit.userData[setupStage]);
+                $('#i_response').val(storageUnit.userData[setupStage][helper.choicePosition]);
             }
             else {
                 $("#add_more").show();
@@ -284,6 +284,7 @@ var dataInput = {
             if (helper.editMode) {
                 $(helper.viewSubmit[helper.editMode]).show();
                 $("#i_choices").text(storageUnit.userData[helper.pivot][helper.choicePosition]);
+                $('#i_response').val(storageUnit.userData[setupStage][helper.choicePosition]);
             }
             else {
                 if (helper.currentChoice == helper.incr)
