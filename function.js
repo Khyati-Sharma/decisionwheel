@@ -23,6 +23,7 @@ var helper = {
     editMode: false,
     lastVisibleView: "preview",
     incr: 0,
+    choicePosition: 0,
     questions: [
         "What is Problem ?",
         "What are the choices?",
@@ -133,7 +134,18 @@ var action = {
         $("#send_report").show();
 
     },
-
+    choice(choiceAction) {
+        if (choiceAction == "forward") {
+            helper.choicePosition++;
+            helper.choicePosition = helper.choicePosition % (storageUnit.userData[helper.pivot].length);
+        }
+        else {
+            helper.choicePosition--;
+            if (helper.choicePosition < 0)
+                helper.choicePosition = storageUnit.userData[helper.pivot].length - 1;
+        }
+        general.refresh();
+    },
     /*
     Start:-
       -change view from preview to user_data_entry_box
@@ -217,7 +229,7 @@ var general = {
     refresh() {
         for (var i = 0; i < storageUnit.currentStage; i++) {
             if (helper.pivot == i || helper.dependentList[i]) {
-                $("#p" + (i + 1)).text(storageUnit.userData[i][helper.currentChoice]);
+                $("#p" + (i + 1)).text(storageUnit.userData[i][helper.choicePosition]);
             }
             else {
                 $("#p" + (i + 1)).text(storageUnit.userData[i]);
@@ -268,11 +280,17 @@ var dataInput = {
             }
         }
         else if (helper.dependentList[setupStage]) {
-            if (helper.currentChoice == helper.incr)
+            if (helper.editMode) {
                 $(helper.viewSubmit[helper.editMode]).show();
-            else
-                $("#input_next_btn").show();
-            $("#i_choices").text(storageUnit.userData[helper.pivot][helper.incr]);
+                $("#i_choices").text(storageUnit.userData[helper.pivot][helper.choicePosition]);
+            }
+            else {
+                if (helper.currentChoice == helper.incr)
+                    $(helper.viewSubmit[helper.editMode]).show();
+                else
+                    $("#input_next_btn").show();
+                $("#i_choices").text(storageUnit.userData[helper.pivot][helper.incr]);
+            }
             $("#i_choices").show();
         }
         else {
