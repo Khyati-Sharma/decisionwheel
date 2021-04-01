@@ -90,6 +90,12 @@ var helper = {
         for (var i = 0; i < help.length; i++) {
             $("#help").append('<li>' + help[i] + '</li>');
         }
+    },
+    inProgressLabel(show){
+        if(show)
+        $("#b" + (storageUnit.currentStage + 1)).addClass("in_progress");
+        else
+        $("#b" + (storageUnit.currentStage + 1)).removeClass("in_progress");
     }
 }
 
@@ -97,8 +103,8 @@ var action = {
     showDataEntry() {
         helper.showView("dataEntry");
         dataInput.setupUserDataEntryBox(storageUnit.currentStage);
-        $("#b" + (storageUnit.currentStage + 1)).addClass("in_progress");
-        $("#i_response").val(storageUnit.tempUserData);
+        helper.inProgressLabel(true);
+        dataInput.showTemporaryData();
     },
     showPreview() {
         if (helper.editMode) {
@@ -421,8 +427,10 @@ var dataInput = {
             helper.editMode = false;
             $("#show_preview").text("Preview");
         }
+    },
+    showTemporaryData(){
+        $("#i_response").val(storageUnit.tempUserData);
     }
-
 }
 
 var TestSuite =
