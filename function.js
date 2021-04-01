@@ -11,7 +11,7 @@ var storageUnit = {
         "",
         ""
     ],
-    tempUserData:""
+    tempUserData: ""
 }
 var helper = {
     pivot: 1,
@@ -19,8 +19,11 @@ var helper = {
     currentChoice: 0,
     viewMap: { "preview": "#preview_area", "dataEntry": "#user_data_entry_box" },
     viewButton: { "preview": "#show_data_entry", "dataEntry": "#show_preview" },
+    viewSubmit: { true: "#submit_editted_response", false: "#submit_response" },
+    editMode: false,
     lastVisibleView: "preview",
     incr: 0,
+    choicePosition: 0,
     questions: [
         "What is Problem ?",
         "What are the choices?",
@@ -62,6 +65,7 @@ var helper = {
         helper.lastVisibleView = viewName;
         $(helper.viewMap[helper.lastVisibleView]).show();
         $(helper.viewButton[helper.lastVisibleView]).show();
+
     },
     getResponse() {
         var response = $.trim($("#i_response").val());
@@ -72,7 +76,7 @@ var helper = {
         }
         return response;
     },
-    createDecisionView(){
+    createDecisionView() {
         for (var i = 0; i < storageUnit.userData[helper.pivot].length; i++) {
             helper.choiceTemplate("choice_list", i, "not_selected");
             $('#choice_list' + i).attr('onclick', 'dataInput.decisionChoice(' + i + ')');
@@ -101,7 +105,7 @@ var action = {
         }
         general.refresh();
         helper.showView("preview");
-        storageUnit.tempUserData=$.trim($("#i_response").val());
+        storageUnit.tempUserData = $.trim($("#i_response").val());
         $("#i_response").val("");
         $(".i_btn").hide();
         $("#i_response").show();
@@ -130,7 +134,18 @@ var action = {
         $("#send_report").show();
 
     },
-
+    choice(choiceAction) {
+        if (choiceAction == "forward") {
+            helper.choicePosition++;
+            helper.choicePosition = helper.choicePosition % (storageUnit.userData[helper.pivot].length);
+        }
+        else {
+            helper.choicePosition--;
+            if (helper.choicePosition < 0)
+                helper.choicePosition = storageUnit.userData[helper.pivot].length - 1;
+        }
+        general.refresh();
+    },
     /*
     Start:-
       -change view from preview to user_data_entry_box
@@ -142,63 +157,65 @@ var action = {
       -replace itself with start button
       -preservence of user_data_entry_box
     */
-   sendEmail(){
-    var emailGt =$.trim($("#send_reportint").val());
-    if (emailGt== "") {
-      alert("Please enter the Email");
-      return;
-    }
-    var width=75/storageUnit.userData[1].length;
-    var Choices='',cons='',val='',feel='',help='';
-    for(var c=0;c<storageUnit.userData[1].length;c++){
-      Choices+='<td style="border: 1px solid black; width:'+width+'%;">'+storageUnit.userData[1][c]+'</td>';
-    }
-    for(var c=0;c<storageUnit.userData[1].length;c++){
-      cons+='<td style="border: 1px solid black; width:'+width+'%;"><ul>';
-      var tempcons = storageUnit.userData[2][c].split("\n");
-      for (var i = 0; i < tempcons.length; i++) {
-        cons+='<li>'+tempcons[i]+'</li>';
-      }
-      cons+='</ul></td>';
-    }
-    for(var c=0;c<storageUnit.userData[1].length;c++){
-      val+='<td style="border: 1px solid black; width:'+width+'%;"><ul>';
-      var tempvals = storageUnit.userData[3][c].split("\n");
-      for (var i = 0; i < tempvals.length; i++) {
-        val+='<li>'+tempvals[i]+'</li>';
-      }
-      val+='</ul></td>';
-    }
-    for(var c=0;c<storageUnit.userData[1].length;c++){
-      feel+='<td style="border: 1px solid black; width:'+width+'%;"><ul>';
-      var tempcons = storageUnit.userData[4][c].split("\n");
-      for (var i = 0; i < tempcons.length; i++) {
-        feel+='<li>'+tempcons[i]+'</li>';
-      }
-      feel+='</ul></td>';
-    }
-    var wcHelp = storageUnit.userData[6].split("\n");
-    for (var i = 0; i < wcHelp.length; i++) {
-      help+='<li>'+wcHelp[i]+'</li>';
-    }
-    var templateParams = {
-      Problem: storageUnit.userData[0],
-      reply_to: emailGt,
-      reportData:'<!DOCTYPE html><html><body><table style="width:100%; border: 1px solid black;"><tr><th style="border: 1px solid black; width: 25%;">Problem</th><th style="border: 1px solid black; width: 75%;" colspan="'+storageUnit.userData[1].length+'">'+storageUnit.userData[0]+'</th></tr><tr><td style="border: 1px solid black; width: 25%;">Choices</td>'+Choices+'</tr><tr><td style="border: 1px solid black; width: 25%;">Consequences</td>'+cons+'</tr><tr><td style="border: 1px solid black; width: 25%;">Values</td>'+val+'</tr><tr><td style="border: 1px solid black; width: 25%;">Feelings</td>'+feel+'</tr><tr><td style="border: 1px solid black; width: 25%;">Additional Info</td><td style="border: 1px solid black; width: 75%;" colspan="'+storageUnit.userData[1].length+'">'+storageUnit.userData[5]+'</td></tr><tr><td style="border: 1px solid black; width: 25%;">Who Can Help</td><td style="border: 1px solid black; width: 75%;" colspan="'+storageUnit.userData[1].length+'"><ul>'+help+'</ul></td></tr><tr><td style="border: 1px solid black; width: 25%;">Decision</td><td style="border: 1px solid black; width: 75%;" colspan="'+storageUnit.userData[1].length+'">'+storageUnit.userData[7]+'</td></tr><tr><td style="border: 1px solid black; width: 25%;">Assessment</td><td style="border: 1px solid black; width: 75%;" colspan="'+storageUnit.userData[1].length+'">'+storageUnit.userData[8]+'</td></tr></table></body></html>'
-  }; 
-    emailjs.send("default_service", "template_2rkf4re", templateParams)
-    .then(function() {
-      $("#finalReport").hide();
-      $("#thankYou").show();
-    }, function(error) {
-        alert("Sorry,We can't send your email currently, you can save report by downloading the webpage");
-    });
-  },
-  edit(viewEdit){
-    helper.showView("dataEntry");
-    dataInput.setupUserDataEntryBox(viewEdit);
+    sendEmail() {
+        var emailGt = $.trim($("#send_reportint").val());
+        if (emailGt == "") {
+            alert("Please enter the Email");
+            return;
+        }
+        var width = 75 / storageUnit.userData[1].length;
+        var Choices = '', cons = '', val = '', feel = '', help = '';
+        for (var c = 0; c < storageUnit.userData[1].length; c++) {
+            Choices += '<td style="border: 1px solid black; width:' + width + '%;">' + storageUnit.userData[1][c] + '</td>';
+        }
+        for (var c = 0; c < storageUnit.userData[1].length; c++) {
+            cons += '<td style="border: 1px solid black; width:' + width + '%;"><ul>';
+            var tempcons = storageUnit.userData[2][c].split("\n");
+            for (var i = 0; i < tempcons.length; i++) {
+                cons += '<li>' + tempcons[i] + '</li>';
+            }
+            cons += '</ul></td>';
+        }
+        for (var c = 0; c < storageUnit.userData[1].length; c++) {
+            val += '<td style="border: 1px solid black; width:' + width + '%;"><ul>';
+            var tempvals = storageUnit.userData[3][c].split("\n");
+            for (var i = 0; i < tempvals.length; i++) {
+                val += '<li>' + tempvals[i] + '</li>';
+            }
+            val += '</ul></td>';
+        }
+        for (var c = 0; c < storageUnit.userData[1].length; c++) {
+            feel += '<td style="border: 1px solid black; width:' + width + '%;"><ul>';
+            var tempcons = storageUnit.userData[4][c].split("\n");
+            for (var i = 0; i < tempcons.length; i++) {
+                feel += '<li>' + tempcons[i] + '</li>';
+            }
+            feel += '</ul></td>';
+        }
+        var wcHelp = storageUnit.userData[6].split("\n");
+        for (var i = 0; i < wcHelp.length; i++) {
+            help += '<li>' + wcHelp[i] + '</li>';
+        }
+        var templateParams = {
+            Problem: storageUnit.userData[0],
+            reply_to: emailGt,
+            reportData: '<!DOCTYPE html><html><body><table style="width:100%; border: 1px solid black;"><tr><th style="border: 1px solid black; width: 25%;">Problem</th><th style="border: 1px solid black; width: 75%;" colspan="' + storageUnit.userData[1].length + '">' + storageUnit.userData[0] + '</th></tr><tr><td style="border: 1px solid black; width: 25%;">Choices</td>' + Choices + '</tr><tr><td style="border: 1px solid black; width: 25%;">Consequences</td>' + cons + '</tr><tr><td style="border: 1px solid black; width: 25%;">Values</td>' + val + '</tr><tr><td style="border: 1px solid black; width: 25%;">Feelings</td>' + feel + '</tr><tr><td style="border: 1px solid black; width: 25%;">Additional Info</td><td style="border: 1px solid black; width: 75%;" colspan="' + storageUnit.userData[1].length + '">' + storageUnit.userData[5] + '</td></tr><tr><td style="border: 1px solid black; width: 25%;">Who Can Help</td><td style="border: 1px solid black; width: 75%;" colspan="' + storageUnit.userData[1].length + '"><ul>' + help + '</ul></td></tr><tr><td style="border: 1px solid black; width: 25%;">Decision</td><td style="border: 1px solid black; width: 75%;" colspan="' + storageUnit.userData[1].length + '">' + storageUnit.userData[7] + '</td></tr><tr><td style="border: 1px solid black; width: 25%;">Assessment</td><td style="border: 1px solid black; width: 75%;" colspan="' + storageUnit.userData[1].length + '">' + storageUnit.userData[8] + '</td></tr></table></body></html>'
+        };
+        emailjs.send("default_service", "template_2rkf4re", templateParams)
+            .then(function () {
+                $("#finalReport").hide();
+                $("#thankYou").show();
+            }, function (error) {
+                alert("Sorry,We can't send your email currently, you can save report by downloading the webpage");
+            });
+    },
+    edit(viewEdit) {
+        helper.showView("dataEntry");
+        helper.editMode = true;
+        dataInput.setupUserDataEntryBox(viewEdit);
+            $('#show_preview').text("Cancel");
 
-  }
+    }
 }
 
 var general = {
@@ -212,7 +229,7 @@ var general = {
     refresh() {
         for (var i = 0; i < storageUnit.currentStage; i++) {
             if (helper.pivot == i || helper.dependentList[i]) {
-                $("#p" + (i + 1)).text(storageUnit.userData[i][helper.currentChoice]);
+                $("#p" + (i + 1)).text(storageUnit.userData[i][helper.choicePosition]);
             }
             else {
                 $("#p" + (i + 1)).text(storageUnit.userData[i]);
@@ -252,21 +269,38 @@ var dataInput = {
             $("#decision_data").show();
         }
         else if (setupStage == helper.pivot) {
-            $("#add_more").show();
-            if (helper.currentChoice >= 1) 
-                $("#submit_response").show();
+            if (helper.editMode) {
+                $(helper.viewSubmit[helper.editMode]).show();
+                $('#i_response').val(storageUnit.userData[setupStage][helper.choicePosition]);
+            }
+            else {
+                $("#add_more").show();
+                if (helper.currentChoice >= 1) {
+                    $(helper.viewSubmit[helper.editMode]).show();
+                }
+            }
         }
         else if (helper.dependentList[setupStage]) {
-            if (helper.currentChoice == helper.incr)
-                $("#submit_response").show();
-            else
-                $("#input_next_btn").show();
-            $("#i_choices").text(storageUnit.userData[helper.pivot][helper.incr]);
+            if (helper.editMode) {
+                $(helper.viewSubmit[helper.editMode]).show();
+                $("#i_choices").text(storageUnit.userData[helper.pivot][helper.choicePosition]);
+                $('#i_response').val(storageUnit.userData[setupStage][helper.choicePosition]);
+            }
+            else {
+                if (helper.currentChoice == helper.incr)
+                    $(helper.viewSubmit[helper.editMode]).show();
+                else
+                    $("#input_next_btn").show();
+                $("#i_choices").text(storageUnit.userData[helper.pivot][helper.incr]);
+            }
             $("#i_choices").show();
         }
         else {
-            $("#submit_response").show();
+            $(helper.viewSubmit[helper.editMode]).show();
+            if(helper.editMode)
+            $('#i_response').val(storageUnit.userData[setupStage]);
         }
+
     },
 
     submitResponse() {
@@ -296,8 +330,8 @@ var dataInput = {
                 storageUnit.userData[storageUnit.currentStage] = response;
                 storageUnit.currentStage++;
                 general.progress();
-                if(storageUnit.currentStage==7)
-                helper.createDecisionView();
+                if (storageUnit.currentStage == 7)
+                    helper.createDecisionView();
                 if (storageUnit.currentStage == 9) {
                     helper.showView("preview");
                     general.refresh();
@@ -307,7 +341,7 @@ var dataInput = {
                 }
                 else
                     this.setupUserDataEntryBox(storageUnit.currentStage);
-                    $('#i_response').val("");
+                $('#i_response').val("");
             }
         }
     },
@@ -344,6 +378,9 @@ var dataInput = {
         $("#i_response").show();
         $('#i_response').focus();
         $("#decision_data").hide();
+    },
+    editSubmit() {
+        
     }
 
 }
@@ -363,7 +400,7 @@ var TestSuite =
             "",
             ""
         ];
-    helper.createDecisionView();
+        helper.createDecisionView();
     },
     focusOnChoice() {
         storageUnit.currentStage = 1;
