@@ -497,6 +497,11 @@ var TestSuite =
             "choice2",
             "ADecisionf hrhf,vjjjtopwok  lcmgdllbd gdbnbnmn"
         ];
+        helper.showView("preview");
+                    general.refresh();
+                    $('#show_data_entry').hide();
+                    $('#show_report').show();
     }
-
+    
 }
+//TestSuite.focusOnSubmit();
