@@ -68,7 +68,7 @@ body {
     height: 93%;
     overflow-y: scroll;
     background-image: url("Images/choice2.jpg");
-    background-repeat: no-repeat; /* Do not repeat the image */
+    background-repeat: no-repeat;
     background-size: cover;
 }
 
@@ -76,8 +76,8 @@ body {
     background-color: rgba(248, 247, 244, 0.849);
     border-radius: 4px;
     text-align: left;
-    display: flex;
     margin: 0.7%;
+    display: none;
 }
 
 .step_head {
@@ -113,7 +113,6 @@ body {
     width: 3%;
     padding: 0;
     margin: 0;
-    display: none;
 }
 
 .completed {
