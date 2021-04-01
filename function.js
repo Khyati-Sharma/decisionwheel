@@ -246,12 +246,9 @@ var general = {
             else {
                 $("#p" + (i + 1)).text(storageUnit.userData[i]);
             }
-            $("#e" + (i + 1)).show();
+            $("#ps" + (i + 1)).css("display", "flex");
         }
-        if (helper.pivot < storageUnit.currentStage) {
-            $("#backward").show();
-            $("#forward").show();
-        }
+        
         this.progress();
     }
 }
