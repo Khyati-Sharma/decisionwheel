@@ -1,0 +1,31 @@
+#header_area {
+    height: 10%;
+    display: flex;
+    background-image: linear-gradient(45deg, transparent, blue, transparent);
+    color: aliceblue;
+    text-align: center;
+    font-size: xx-large;
+}
+
+#logo {
+    height: 100%;
+}
+
+#head {
+    width: 80%;
+    font-weight: 600;
+    margin: auto;
+}
+@media only screen and (max-width: 600px) {
+    #header_area {
+        height: 8%;
+        font-size: x-large;
+    }
+    #logo {
+        height: 90%;
+        margin: auto;
+    }
+    #head {
+        font-size: 26px;
+    }
+}

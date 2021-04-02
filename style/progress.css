@@ -1,0 +1,43 @@
+.progress {
+    height: 3%;
+}
+
+#completed_bar {
+    background-color: #33c733;
+}
+
+#labels {
+    height: 100%;
+    width: 24.5%;
+    margin-right: 0.5%;
+    background-image: linear-gradient(blue, lightblue);
+    flex-direction: column;
+    justify-content: space-around;
+    display: flex;
+}
+
+.lbl {
+    width: 92%;
+    padding: 10px 5px;
+    text-align: center;
+    font-size: large;
+    font-weight: 700;
+    margin: 0% 4%;
+}
+
+.in_progress {
+    background-image: linear-gradient(180deg, #5deb72, transparent);
+}
+
+.completed {
+    background-color: #5deb72;
+}
+
+@media only screen and (max-width: 600px) {
+    .progress {
+        height: 2%;
+    }
+    #labels {
+        display: none;
+    }
+}
