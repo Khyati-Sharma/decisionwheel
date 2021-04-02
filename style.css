@@ -43,7 +43,6 @@ body {
 .footer_buttons {
     height: 100%;
     padding: 0;
-    margin: auto;
 }
 
 
@@ -87,10 +86,12 @@ body {
 
 #show_preview {
     display: none;
+    margin: 0;
 }
 
 #show_report {
     display: none;
+    margin: 0;
 }
 
 #send_text {
@@ -99,12 +100,12 @@ body {
 
 #send_report {
     display: none;
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    margin: 0px;
 }
+
+#send_reportinp {
+    height: 100%;
+}
+
 #report {
     display: none;
     min-height: 85vh;

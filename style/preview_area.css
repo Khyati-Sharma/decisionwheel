@@ -3,10 +3,14 @@
 }
 
 #preview_heading {
-    margin: 0%;
-    text-align: center;
     background-image: linear-gradient(#9797e8, blue);
     color: white;
+    height: 7%;
+    display: flex;
+}
+
+#preview_heading h2{
+    margin: auto;
 }
 
 #preview_division {
@@ -62,7 +66,6 @@
 
 @media only screen and (max-width: 600px) {
     #preview_heading {
-        padding: 1%;
         font-size: 27px;
     }
     #preview_division {
