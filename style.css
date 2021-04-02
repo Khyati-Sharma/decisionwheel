@@ -59,7 +59,6 @@ body {
 #preview_heading {
     margin: 0%;
     text-align: center;
-    height: 7%;
     background-image: linear-gradient(#9797e8, blue);
     color: white;
 }
@@ -67,14 +66,17 @@ body {
 #preview_division {
     height: 93%;
     overflow-y: scroll;
+    background-image: url("Images/choice2.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .preview_steps {
     background-color: rgba(248, 247, 244, 0.849);
     border-radius: 4px;
     text-align: left;
-    display: flex;
     margin: 0.7%;
+    display: none;
 }
 
 .step_head {
@@ -102,13 +104,14 @@ body {
     width: 70%;
 }
 
-.edit_button, #backward, #forward {
+.edit_button,
+#backward,
+#forward {
     background: transparent;
     border: none;
     width: 3%;
     padding: 0;
     margin: 0;
-    display: none;
 }
 
 .completed {
@@ -146,14 +149,13 @@ body {
     text-align: left;
 }
 
-
 /*---------------------         footer area        ----------------------------------*/
 
 #footer_area {
     height: 6%;
 }
 
-.footer_buttons{
+.footer_buttons {
     height: 100%;
     padding: 0;
     margin: auto;
@@ -216,7 +218,8 @@ body {
     padding: 5px;
 }
 
-.main_block h1, .main_block h3 {
+.main_block h1,
+.main_block h3 {
     margin: 0;
     font-family: Roboto, Arial, sans-serif;
     font-size: 16px;
@@ -259,8 +262,7 @@ body {
     display: inline;
 }
 
-#send_report{
-    
+#send_report {
     display: none;
     position: fixed;
     left: 0;
@@ -302,8 +304,8 @@ body {
     color: #666;
 }
 
-#thankYou{
-    display:none;
+#thankYou {
+    display: none;
 }
 
 @media only screen and (max-width: 600px) {
@@ -311,7 +313,7 @@ body {
     #workspace {
         height: 86%;
     }
-    .progress{
+    .progress {
         height: 2%;
     }
     #labels {
@@ -321,8 +323,12 @@ body {
         width: 100%;
     }
     #preview_heading {
+        padding: 1%;
         font-size: 27px;
-        padding-top: 5px;
+    }
+    #preview_division{
+        background-image: url(Images/choice3.jpg);
+        background-size: 100% 100%;
     }
     .step_head {
         font-size: 19px;
@@ -337,9 +343,10 @@ body {
     #p2 {
         width: 38%;
     }
-    .edit_button, #backward, #forward {
+    .edit_button,
+    #backward,
+    #forward {
         width: 6%;
-        display: none;
     }
     #i_question {
         font-size: larger;
