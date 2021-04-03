@@ -277,7 +277,6 @@ var general = {
         $("#b" + (storageUnit.currentStage)).addClass("completed");
         helper.inProgressLabel(false,(storageUnit.currentStage + 1));
         helper.inProgressLabel(true,(storageUnit.currentStage));
-
     },
 
     refresh() {
