@@ -109,7 +109,22 @@ var helper = {
             return true;
         }
         return false;
+    },
+    submitForDependentChoices(response){
+        if (storageUnit.currentStage == helper.pivot || helper.dependentList[storageUnit.currentStage]) {
+            storageUnit.userData[storageUnit.currentStage][helper.currentChoice] = response;
+            $("#add_more").hide();
+            helper.incr = 0;
+            $("#i_choices").hide();
+            return true;
+        }
+        return false;
+    },
+    submitREntries(response){
+        storageUnit.userData[storageUnit.currentStage] = response;
+    return true;
     }
+    
 }
 
 var action = {
@@ -338,14 +353,8 @@ var dataInput = {
             return;
         var response = helper.getResponse();
         if (response != false) {
-            if (storageUnit.currentStage == helper.pivot || helper.dependentList[storageUnit.currentStage]) {
-                storageUnit.userData[storageUnit.currentStage][helper.currentChoice] = response;
-                $("#add_more").hide();
-                helper.incr = 0;
-                $("#i_choices").hide();
-            }
-            else
-                storageUnit.userData[storageUnit.currentStage] = response;
+            if(helper.submitForDependentChoices(response))
+            helper.submitREntries(response);
             $("#submit_response").hide();
             storageUnit.currentStage++;
             if (storageUnit.currentStage == 7)
