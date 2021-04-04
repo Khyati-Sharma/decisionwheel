@@ -1,20 +1,6 @@
 #preview_area {
     height: 100%;
-}
-
-#preview_heading {
-    margin: 0%;
-    text-align: center;
-    background-image: linear-gradient(#9797e8, blue);
-    color: white;
-}
-
-#preview_division {
-    height: 93%;
     overflow-y: auto;
-    background-image: url("../Images/choice2.jpg");
-    background-repeat: no-repeat;
-    background-size: cover;
 }
 
 .preview_steps {
@@ -62,13 +48,9 @@
 
 @media only screen and (max-width: 600px) {
     #preview_heading {
-        padding: 1%;
         font-size: 27px;
     }
-    #preview_division {
-        background-image: url(../Images/choice3.jpg);
-        background-size: 100% 100%;
-    }
+    
     .step_head {
         font-size: 19px;
         width: 42%;
