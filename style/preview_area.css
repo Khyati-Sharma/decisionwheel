@@ -1,24 +1,6 @@
 #preview_area {
     height: 100%;
-}
-
-#preview_heading {
-    background-image: linear-gradient(#9797e8, blue);
-    color: white;
-    height: 7%;
-    display: flex;
-}
-
-#preview_heading h2{
-    margin: auto;
-}
-
-#preview_division {
-    height: 93%;
     overflow-y: auto;
-    background-image: url("../Images/choice2.jpg");
-    background-repeat: no-repeat;
-    background-size: cover;
 }
 
 .preview_steps {
@@ -68,10 +50,7 @@
     #preview_heading {
         font-size: 27px;
     }
-    #preview_division {
-        background-image: url(../Images/choice3.jpg);
-        background-size: 100% 100%;
-    }
+    
     .step_head {
         font-size: 19px;
         width: 42%;

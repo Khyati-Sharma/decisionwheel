@@ -103,21 +103,21 @@ var helper = {
         if (this.currentChoice > 1 && tempresponse == "") {
             $("#add_more").hide();
             helper.currentChoice--;
-            helper.preparreForNextStage();
+            helper.prepareForNextStage();
             return true;
         }
         return false;
     },
     submitForMultipleInput(response){
-            storageUnit.userData[storageUnit.currentStage][helper.currentChoice] = response;
+            helper.saveResponseForMultiInput(helper.currentChoice, response);
             $("#add_more").hide();
             helper.incr = 0;
             $("#i_choices").hide();
     },
     submitREntries(response){
-        storageUnit.userData[storageUnit.currentStage] = response;
+        helper.saveResponseForMultiInput(null,response);
     },
-    preparreForNextStage(){
+    prepareForNextStage(){
         $("#submit_response").hide();
         storageUnit.currentStage++;
         dataInput.setupUserDataEntryBox(storageUnit.currentStage);
@@ -129,8 +129,13 @@ var helper = {
         general.refresh();
         $('#show_data_entry').hide();
         $('#show_report').show();
+    },
+    saveResponseForMultiInput(i,response){
+        if(i !=null)
+            storageUnit.userData[storageUnit.currentStage][i] = response;
+        else
+            storageUnit.userData[storageUnit.currentStage]= response; 
     }
-
     
 }
 
@@ -275,8 +280,8 @@ var general = {
     progress() {
         $("#completed_bar").width(storageUnit.currentStage / 9 * 100 + "%");
         $("#b" + (storageUnit.currentStage)).addClass("completed");
-        helper.inProgressLabel(false,(storageUnit.currentStage + 1));
-        helper.inProgressLabel(true,(storageUnit.currentStage));
+        helper.inProgressLabel(true,(storageUnit.currentStage + 1));
+        helper.inProgressLabel(false,(storageUnit.currentStage));
     },
 
     refresh() {
@@ -363,7 +368,7 @@ var dataInput = {
             helper.submitForMultipleInput(response);
             else
             helper.submitREntries(response);
-            helper.preparreForNextStage();
+            helper.prepareForNextStage();
             if (storageUnit.currentStage == 7)
                 helper.createDecisionView();
             if (storageUnit.currentStage == 9) 
@@ -374,7 +379,7 @@ var dataInput = {
         $('#i_response').focus();
         var response = helper.getResponse();
         if (response != false) {
-            storageUnit.userData[storageUnit.currentStage][helper.currentChoice] = response;
+            helper.saveResponseForMultiInput(helper.currentChoice,response)
             $('#i_response').val("");
             helper.currentChoice++;
             $("#submit_response").show();
@@ -385,7 +390,7 @@ var dataInput = {
         $('#i_response').focus();
         var response = helper.getResponse();
         if (response != false) {
-            storageUnit.userData[storageUnit.currentStage][helper.incr] = response;
+            helper.saveResponseForMultiInput(helper.incr,response);
             $('#i_response').val("");
             helper.incr++;
             $("#input_next_btn").hide();
@@ -406,7 +411,7 @@ var dataInput = {
             $("#show_preview").text("Preview");
         }
         else {
-            storageUnit.userData[storageUnit.currentStage] = storageUnit.userData[helper.pivot][choice];
+            helper.saveResponseForMultiInput(null,storageUnit.userData[helper.pivot][choice]);
             storageUnit.currentStage++;
             general.progress();
             this.setupUserDataEntryBox(storageUnit.currentStage);
