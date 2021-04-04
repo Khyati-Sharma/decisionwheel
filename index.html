@@ -11,6 +11,9 @@
 
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="style/header_area.css" />
+    <link rel="stylesheet" href="style/progress.css" />
+    <link rel="stylesheet" href="style/preview_area.css" />
+    <link rel="stylesheet" href="style/data_entry.css" />
     <link rel="icon" href="Images/skillpill_200x200.png" />
     <title>Decision Making Tool</title>
 </head>
@@ -42,7 +45,7 @@
                 </div>
                 <div id="view_area">
                     <div id="preview_area">
-                        <h2 id="preview_heading">Preview</h2>
+                        <div id="preview_heading"><h2>Preview</h2></div>
                         <div id="preview_division">
                             <div class="preview_steps" id="ps1">
                                 <h4 class="step_head">Problem</h4>
@@ -205,7 +208,7 @@
         <button type="button" id="show_report" class="btn btn-primary btn-lg btn-block footer_buttons"
             onclick="action.showReport()">Show Report</button>
         <div class="input-group footer_buttons" id="send_report">
-            <input type="email" id="send_reportint" class="form-control" placeholder="name@example.com"
+            <input type="email" id="send_reportinp" class="form-control" placeholder="name@example.com"
                 aria-label="Recipient's username" aria-describedby="button-addon2" />
             <button type="button" id="send_report_btn" class="btn btn-primary" onclick="action.sendEmail()">
                 <div id="send_text">Send Report Via Email</div>
