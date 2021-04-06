@@ -109,13 +109,13 @@ var helper = {
         return false;
     },
     submitForMultipleInput(response){
-            helper.saveResponseForMultiInput(helper.currentChoice, response);
+            helper.saveResponse(storageUnit.currentStage,helper.currentChoice, response);
             $("#add_more").hide();
             helper.incr = 0;
             $("#i_choices").hide();
     },
     submitREntries(response){
-        helper.saveResponseForMultiInput(null,response);
+        helper.saveResponse(storageUnit.currentStage,null,response);
     },
     prepareForNextStage(){
         $("#submit_response").hide();
@@ -130,11 +130,11 @@ var helper = {
         $('#show_data_entry').hide();
         $('#show_report').show();
     },
-    saveResponseForMultiInput(i,response){
-        if(i !=null)
-            storageUnit.userData[storageUnit.currentStage][i] = response;
+    saveResponse(i,j,response){
+        if(j !=null)
+            storageUnit.userData[i][j] = response;
         else
-            storageUnit.userData[storageUnit.currentStage]= response; 
+            storageUnit.userData[i]= response; 
     }
     
 }
@@ -379,28 +379,26 @@ var dataInput = {
         $('#i_response').focus();
         var response = helper.getResponse();
         if (response != false) {
-            helper.saveResponseForMultiInput(helper.currentChoice,response)
+            helper.saveResponse(helper.currentChoice,response)
             $('#i_response').val("");
             helper.currentChoice++;
             $("#submit_response").show();
         }
     },
-
     nextChoice() {
         $('#i_response').focus();
         var response = helper.getResponse();
         if (response != false) {
-            helper.saveResponseForMultiInput(helper.incr,response);
+            helper.saveResponse(storageUnit.currentStage,helper.incr,response);
             $('#i_response').val("");
             helper.incr++;
             $("#input_next_btn").hide();
             this.setupUserDataEntryBox(storageUnit.currentStage);
         }
     },
-
     decisionChoice(choice) {
         if (helper.editMode) {
-            storageUnit.userData[helper.edit] = storageUnit.userData[helper.pivot][choice];
+            helper.saveResponse(helper.edit,null,storageUnit.userData[helper.pivot][choice]);
             helper.showView("preview");
             if (storageUnit.currentStage == 9) {
                 $('#show_data_entry').hide();
@@ -411,7 +409,7 @@ var dataInput = {
             $("#show_preview").text("Preview");
         }
         else {
-            helper.saveResponseForMultiInput(null,storageUnit.userData[helper.pivot][choice]);
+            helper.saveResponse(storageUnit.currentStage,null,storageUnit.userData[helper.pivot][choice]);
             storageUnit.currentStage++;
             general.progress();
             this.setupUserDataEntryBox(storageUnit.currentStage);
@@ -427,11 +425,11 @@ var dataInput = {
         if (response != false) {
             $("#submit_editted_response").hide();
             if (helper.edit == helper.pivot || helper.dependentList[helper.edit]) {
-                storageUnit.userData[helper.edit][helper.choicePosition] = response;
+                helper.saveResponse(helper.edit,helper.choicePosition,response);
                 $("#i_choices").hide();
             }
             else {
-                storageUnit.userData[helper.edit] = response;
+                helper.saveResponse(helper.edit,null,response);
             }
             $('#i_response').val("");
             helper.showView("preview");
