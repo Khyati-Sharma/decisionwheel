@@ -16,7 +16,7 @@ var storageUnit = {
 var helper = {
     pivot: 1,
     dependentList: [false, false, true, true, true, false, false, false, false],
-    currentChoice: 0,
+    totalChoices: 0,
     viewMap: { "preview": "#preview_area", "dataEntry": "#user_data_entry_box" },
     viewButton: { "preview": "#show_data_entry", "dataEntry": "#show_preview" },
     viewSubmit: { true: "#submit_editted_response", false: "#submit_response" },
@@ -98,18 +98,18 @@ var helper = {
             $("#b" + (labelNum)).removeClass("in_progress");
             
     },
+
     submitForBlankChoice() {
         var tempresponse = $.trim($("#i_response").val());
-        if (this.currentChoice > 1 && tempresponse == "") {
+        if (helper.totalChoices > 1 && tempresponse == "") {
             $("#add_more").hide();
-            helper.currentChoice--;
             helper.prepareForNextStage();
             return true;
         }
         return false;
     },
     submitForMultipleInput(response){
-            helper.saveResponse(storageUnit.currentStage,helper.currentChoice, response);
+            helper.saveResponse(storageUnit.currentStage,helper.totalChoices, response);
             $("#add_more").hide();
             helper.incr = 0;
             $("#i_choices").hide();
@@ -331,7 +331,7 @@ var dataInput = {
             }
             else {
                 $("#add_more").show();
-                if (helper.currentChoice >= 1) {
+                if (helper.totalChoices >= 1) {
                     $(helper.viewSubmit[helper.editMode]).show();
                 }
             }
@@ -343,7 +343,7 @@ var dataInput = {
                 $('#i_response').val(storageUnit.userData[setupStage][helper.choicePosition]);
             }
             else {
-                if (helper.currentChoice == helper.incr)
+                if (helper.totalChoices == helper.incr)
                     $(helper.viewSubmit[helper.editMode]).show();
                 else
                     $("#input_next_btn").show();
@@ -379,14 +379,14 @@ var dataInput = {
         $('#i_response').focus();
         var response = helper.getResponse();
         if (response != false) {
-            helper.saveResponse(helper.currentChoice,response)
+            helper.saveResponse(helper.totalChoices,response)
             $('#i_response').val("");
-            helper.currentChoice++;
+            helper.totalChoices++;
             $("#submit_response").show();
         }
     },
     nextChoice() {
-        $('#i_response').focus();
+        $('#i_response').focus(); 
         var response = helper.getResponse();
         if (response != false) {
             helper.saveResponse(storageUnit.currentStage,helper.incr,response);
