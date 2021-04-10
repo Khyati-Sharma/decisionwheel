@@ -66,7 +66,6 @@ var helper = {
         helper.lastVisibleView = viewName;
         $(helper.viewMap[helper.lastVisibleView]).show();
         $(helper.viewButton[helper.lastVisibleView]).show();
-
     },
     getResponse() {
         var response = $.trim($("#i_response").val());
@@ -139,6 +138,16 @@ var helper = {
             storageUnit.userData[i][j] = response;
         else
             storageUnit.userData[i] = response;
+    },
+    showDataEntryToshowReport() {
+        if (storageUnit.currentStage == 9) {
+            $('#show_data_entry').hide();
+            $('#show_report').show();
+        }
+    },
+    changeDecision(choice){
+        $("#choice_lists .main_block").removeClass("selected");
+        $("#choice_list" + choice).addClass("selected");
     }
 
 }
@@ -164,10 +173,7 @@ var action = {
             helper.inProgressLabel(false, (storageUnit.currentStage + 1));
         }
         helper.showView("preview");
-        if (storageUnit.currentStage == 9) {
-            $('#show_data_entry').hide();
-            $('#show_report').show();
-        }
+        helper.showDataEntryToshowReport();
         $("#i_response").val("");
         $(".i_btn").hide();
         $("#i_response").show();
@@ -406,10 +412,7 @@ var dataInput = {
         if (helper.editMode) {
             helper.saveResponse(helper.edit, null, storageUnit.userData[helper.pivot][choice]);
             helper.showView("preview");
-            if (storageUnit.currentStage == 9) {
-                $('#show_data_entry').hide();
-                $('#show_report').show();
-            }
+            helper.showDataEntryToshowReport();
             general.refresh();
             helper.editMode = false;
             $("#show_preview").text("Preview");
@@ -420,8 +423,7 @@ var dataInput = {
             general.progress();
             this.setupUserDataEntryBox(storageUnit.currentStage);
         }
-        $("#choice_lists .main_block").removeClass("selected");
-        $("#choice_list" + choice).addClass("selected");
+        helper.changeDecision(choice);
         $("#i_response").show();
         $('#i_response').focus();
         $("#decision_data").hide();
@@ -439,10 +441,7 @@ var dataInput = {
             }
             $('#i_response').val("");
             helper.showView("preview");
-            if (storageUnit.currentStage == 9) {
-                $('#show_data_entry').hide();
-                $('#show_report').show();
-            }
+            helper.showDataEntryToshowReport();
             general.refresh();
             helper.editMode = false;
             $("#show_preview").text("Preview");
