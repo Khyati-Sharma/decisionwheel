@@ -114,7 +114,7 @@ var helper = {
         helper.totalChoices++;
     },
     submitForDependentlist(response){
-        helper.saveResponse(storageUnit.currentStage, helper.totalChoices, response);
+        helper.saveResponse(storageUnit.currentStage, helper.incr, response);
         helper.incr = 0;
         $("#i_choices").hide();
     },
