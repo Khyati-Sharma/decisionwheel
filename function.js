@@ -16,7 +16,7 @@ var storageUnit = {
 var helper = {
     pivot: 1,
     dependentList: [false, false, true, true, true, false, false, false, false],
-    currentChoice: 0,
+    totalChoices: 0,
     viewMap: { "preview": "#preview_area", "dataEntry": "#user_data_entry_box" },
     viewButton: { "preview": "#show_data_entry", "dataEntry": "#show_preview" },
     viewSubmit: { true: "#submit_editted_response", false: "#submit_response" },
@@ -91,59 +91,63 @@ var helper = {
             $("#help").append('<li>' + help[i] + '</li>');
         }
     },
-    inProgressLabel(show,labelNum) {
+    inProgressLabel(show, labelNum) {
         if (show)
             $("#b" + (labelNum)).addClass("in_progress");
         else
             $("#b" + (labelNum)).removeClass("in_progress");
-            
+
     },
+
     submitForBlankChoice() {
         var tempresponse = $.trim($("#i_response").val());
-        if (this.currentChoice > 1 && tempresponse == "") {
+        if (helper.totalChoices > 1 && tempresponse == "") {
             $("#add_more").hide();
-            helper.currentChoice--;
             helper.prepareForNextStage();
             return true;
         }
         return false;
     },
-    submitForMultipleInput(response){
-            helper.saveResponse(storageUnit.currentStage,helper.currentChoice, response);
-            $("#add_more").hide();
-            helper.incr = 0;
-            $("#i_choices").hide();
+    submitForChoice(response){
+        helper.saveResponse(storageUnit.currentStage, helper.totalChoices, response);
+        $("#add_more").hide();
+        helper.totalChoices++;
     },
-    submitREntries(response){
-        helper.saveResponse(storageUnit.currentStage,null,response);
+    submitForDependentlist(response){
+        helper.saveResponse(storageUnit.currentStage, helper.totalChoices, response);
+        helper.incr = 0;
+        $("#i_choices").hide();
     },
-    prepareForNextStage(){
+    submitForRemainingEntries(response) {
+        helper.saveResponse(storageUnit.currentStage, null, response);
+    },
+    prepareForNextStage() {
         $("#submit_response").hide();
         storageUnit.currentStage++;
         dataInput.setupUserDataEntryBox(storageUnit.currentStage);
         $("#i_response").val("");
         general.progress();
     },
-    finalSubmit(){
+    finalSubmit() {
         helper.showView("preview");
         general.refresh();
         $('#show_data_entry').hide();
         $('#show_report').show();
     },
-    saveResponse(i,j,response){
-        if(j !=null)
+    saveResponse(i, j, response) {
+        if (j != null)
             storageUnit.userData[i][j] = response;
         else
-            storageUnit.userData[i]= response; 
+            storageUnit.userData[i] = response;
     }
-    
+
 }
 
 var action = {
     showDataEntry() {
         helper.showView("dataEntry");
         dataInput.setupUserDataEntryBox(storageUnit.currentStage);
-        helper.inProgressLabel(true,(storageUnit.currentStage + 1));
+        helper.inProgressLabel(true, (storageUnit.currentStage + 1));
         dataInput.showTemporaryData();
     },
     showPreview() {
@@ -157,7 +161,7 @@ var action = {
             }
             general.refresh();
             storageUnit.tempUserData = $.trim($("#i_response").val());
-            helper.inProgressLabel(false,(storageUnit.currentStage + 1));
+            helper.inProgressLabel(false, (storageUnit.currentStage + 1));
         }
         helper.showView("preview");
         if (storageUnit.currentStage == 9) {
@@ -280,8 +284,8 @@ var general = {
     progress() {
         $("#completed_bar").width(storageUnit.currentStage / 9 * 100 + "%");
         $("#b" + (storageUnit.currentStage)).addClass("completed");
-        helper.inProgressLabel(true,(storageUnit.currentStage + 1));
-        helper.inProgressLabel(false,(storageUnit.currentStage));
+        helper.inProgressLabel(true, (storageUnit.currentStage + 1));
+        helper.inProgressLabel(false, (storageUnit.currentStage));
     },
 
     refresh() {
@@ -331,7 +335,7 @@ var dataInput = {
             }
             else {
                 $("#add_more").show();
-                if (helper.currentChoice >= 1) {
+                if (helper.totalChoices >= 1) {
                     $(helper.viewSubmit[helper.editMode]).show();
                 }
             }
@@ -343,7 +347,7 @@ var dataInput = {
                 $('#i_response').val(storageUnit.userData[setupStage][helper.choicePosition]);
             }
             else {
-                if (helper.currentChoice == helper.incr)
+                if (helper.totalChoices == (helper.incr + 1))
                     $(helper.viewSubmit[helper.editMode]).show();
                 else
                     $("#input_next_btn").show();
@@ -364,24 +368,26 @@ var dataInput = {
             return;
         var response = helper.getResponse();
         if (response != false) {
-            if (storageUnit.currentStage == helper.pivot || helper.dependentList[storageUnit.currentStage])
-            helper.submitForMultipleInput(response);
+            if (storageUnit.currentStage == helper.pivot) 
+                helper.submitForChoice(response);
+            else if (helper.dependentList[storageUnit.currentStage]) 
+                helper.submitForDependentlist(response);
             else
-            helper.submitREntries(response);
+                helper.submitForRemainingEntries(response);
             helper.prepareForNextStage();
             if (storageUnit.currentStage == 7)
                 helper.createDecisionView();
-            if (storageUnit.currentStage == 9) 
-              helper.finalSubmit();
+            if (storageUnit.currentStage == 9)
+                helper.finalSubmit();
         }
     },
     addChoices() {
         $('#i_response').focus();
         var response = helper.getResponse();
         if (response != false) {
-            helper.saveResponse(helper.currentChoice,response)
+            helper.saveResponse(storageUnit.currentStage, helper.totalChoices, response);
             $('#i_response').val("");
-            helper.currentChoice++;
+            helper.totalChoices++;
             $("#submit_response").show();
         }
     },
@@ -389,16 +395,16 @@ var dataInput = {
         $('#i_response').focus();
         var response = helper.getResponse();
         if (response != false) {
-            helper.saveResponse(storageUnit.currentStage,helper.incr,response);
+            helper.saveResponse(storageUnit.currentStage, helper.incr, response);
             $('#i_response').val("");
             helper.incr++;
             $("#input_next_btn").hide();
-            this.setupUserDataEntryBox(storageUnit.currentStage);
+            dataInput.setupUserDataEntryBox(storageUnit.currentStage);
         }
     },
     decisionChoice(choice) {
         if (helper.editMode) {
-            helper.saveResponse(helper.edit,null,storageUnit.userData[helper.pivot][choice]);
+            helper.saveResponse(helper.edit, null, storageUnit.userData[helper.pivot][choice]);
             helper.showView("preview");
             if (storageUnit.currentStage == 9) {
                 $('#show_data_entry').hide();
@@ -409,7 +415,7 @@ var dataInput = {
             $("#show_preview").text("Preview");
         }
         else {
-            helper.saveResponse(storageUnit.currentStage,null,storageUnit.userData[helper.pivot][choice]);
+            helper.saveResponse(storageUnit.currentStage, null, storageUnit.userData[helper.pivot][choice]);
             storageUnit.currentStage++;
             general.progress();
             this.setupUserDataEntryBox(storageUnit.currentStage);
@@ -425,11 +431,11 @@ var dataInput = {
         if (response != false) {
             $("#submit_editted_response").hide();
             if (helper.edit == helper.pivot || helper.dependentList[helper.edit]) {
-                helper.saveResponse(helper.edit,helper.choicePosition,response);
+                helper.saveResponse(helper.edit, helper.choicePosition, response);
                 $("#i_choices").hide();
             }
             else {
-                helper.saveResponse(helper.edit,null,response);
+                helper.saveResponse(helper.edit, null, response);
             }
             $('#i_response').val("");
             helper.showView("preview");
