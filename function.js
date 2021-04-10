@@ -108,13 +108,17 @@ var helper = {
         }
         return false;
     },
-    submitForMultipleInput(response) {
+    submitForChoice(response){
         helper.saveResponse(storageUnit.currentStage, helper.totalChoices, response);
         $("#add_more").hide();
+        helper.totalChoices++;
+    },
+    submitForDependentlist(response){
+        helper.saveResponse(storageUnit.currentStage, helper.totalChoices, response);
         helper.incr = 0;
         $("#i_choices").hide();
     },
-    submitREntries(response) {
+    submitForRemainingEntries(response) {
         helper.saveResponse(storageUnit.currentStage, null, response);
     },
     prepareForNextStage() {
@@ -343,7 +347,7 @@ var dataInput = {
                 $('#i_response').val(storageUnit.userData[setupStage][helper.choicePosition]);
             }
             else {
-                if (helper.totalChoices == helper.incr)
+                if (helper.totalChoices == (helper.incr + 1))
                     $(helper.viewSubmit[helper.editMode]).show();
                 else
                     $("#input_next_btn").show();
@@ -364,14 +368,12 @@ var dataInput = {
             return;
         var response = helper.getResponse();
         if (response != false) {
-            if (storageUnit.currentStage == helper.pivot) {
-                helper.submitForMultipleInput(response);
-                helper.totalChoices++;
-            }
-            else if (helper.dependentList[storageUnit.currentStage])
-                helper.submitForMultipleInput(response);
+            if (storageUnit.currentStage == helper.pivot) 
+                helper.submitForChoice(response);
+            else if (helper.dependentList[storageUnit.currentStage]) 
+                helper.submitForDependentlist(response);
             else
-                helper.submitREntries(response);
+                helper.submitForRemainingEntries(response);
             helper.prepareForNextStage();
             if (storageUnit.currentStage == 7)
                 helper.createDecisionView();
@@ -397,7 +399,7 @@ var dataInput = {
             $('#i_response').val("");
             helper.incr++;
             $("#input_next_btn").hide();
-            this.setupUserDataEntryBox(storageUnit.currentStage);
+            dataInput.setupUserDataEntryBox(storageUnit.currentStage);
         }
     },
     decisionChoice(choice) {
