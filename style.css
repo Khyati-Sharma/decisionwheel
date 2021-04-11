@@ -22,7 +22,10 @@ body {
 
 #view_area {
     width: 75%;
-    background-image: linear-gradient(blue, lightblue);
+    background-image: url("../images/choice2.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    
 }
 
 
@@ -150,6 +153,8 @@ body {
     }
     #view_area {
         width: 100%;
+        background-image: url(../images/choice3.jpg);
+        background-size: 100% 100%;
     }
     #Start {
         position: fixed;

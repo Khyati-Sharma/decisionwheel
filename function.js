@@ -16,7 +16,7 @@ var storageUnit = {
 var helper = {
     pivot: 1,
     dependentList: [false, false, true, true, true, false, false, false, false],
-    currentChoice: 0,
+    totalChoices: 0,
     viewMap: { "preview": "#preview_area", "dataEntry": "#user_data_entry_box" },
     viewButton: { "preview": "#show_data_entry", "dataEntry": "#show_preview" },
     viewSubmit: { true: "#submit_editted_response", false: "#submit_response" },
@@ -66,7 +66,6 @@ var helper = {
         helper.lastVisibleView = viewName;
         $(helper.viewMap[helper.lastVisibleView]).show();
         $(helper.viewButton[helper.lastVisibleView]).show();
-
     },
     getResponse() {
         var response = $.trim($("#i_response").val());
@@ -91,32 +90,85 @@ var helper = {
             $("#help").append('<li>' + help[i] + '</li>');
         }
     },
-    inProgressLabel(show) {
+    inProgressLabel(show, labelNum) {
         if (show)
-            $("#b" + (storageUnit.currentStage + 1)).addClass("in_progress");
+            $("#b" + (labelNum)).addClass("in_progress");
         else
-            $("#b" + (storageUnit.currentStage + 1)).removeClass("in_progress");
+            $("#b" + (labelNum)).removeClass("in_progress");
+
     },
+
     submitForBlankChoice() {
         var tempresponse = $.trim($("#i_response").val());
-        if (this.currentChoice > 1 && tempresponse == "") {
-            $("#submit_response").hide();
+        if (helper.totalChoices > 1 && tempresponse == "") {
             $("#add_more").hide();
-            storageUnit.currentStage++;
-            helper.currentChoice--;
-            dataInput.setupUserDataEntryBox(storageUnit.currentStage);
-            general.progress();
+            helper.prepareForNextStage();
             return true;
         }
         return false;
+    },
+    submitForChoice(response) {
+        helper.saveResponse(storageUnit.currentStage, helper.totalChoices, response);
+        $("#add_more").hide();
+        helper.totalChoices++;
+    },
+    submitForDependentlist(response) {
+        helper.saveResponse(storageUnit.currentStage, helper.incr, response);
+        helper.incr = 0;
+        $("#i_choices").hide();
+    },
+    submitForRemainingEntries(response) {
+        helper.saveResponse(storageUnit.currentStage, null, response);
+    },
+    prepareForNextStage() {
+        $("#submit_response").hide();
+        storageUnit.currentStage++;
+        dataInput.setupUserDataEntryBox(storageUnit.currentStage);
+        $("#i_response").val("");
+        general.progress();
+    },
+    finalSubmit() {
+        helper.showView("preview");
+        general.refresh();
+        $('#show_data_entry').hide();
+        $('#show_report').show();
+    },
+    saveResponse(i, j, response) {
+        if (j != null)
+            storageUnit.userData[i][j] = response;
+        else
+            storageUnit.userData[i] = response;
+    },
+    showReportIfApplicable() {
+        if (storageUnit.currentStage == 9) {
+            $('#show_data_entry').hide();
+            $('#show_report').show();
+        }
+    },
+    changeDecision(choice) {
+        $("#choice_lists .main_block").removeClass("selected");
+        $("#choice_list" + choice).addClass("selected");
+    },
+    editToInitialState() {
+        $("#submit_editted_response").hide();
+        $("#show_preview").text("Preview");
+    },
+    editSubmitForMultiInput(response) {
+        helper.saveResponse(helper.edit, helper.choicePosition, response);
+        $("#i_choices").hide();
+
+    },
+    editSubmitForRemainingEntries(response) {
+        helper.saveResponse(helper.edit, null, response);
     }
+
 }
 
 var action = {
     showDataEntry() {
         helper.showView("dataEntry");
         dataInput.setupUserDataEntryBox(storageUnit.currentStage);
-        helper.inProgressLabel(true);
+        helper.inProgressLabel(true, (storageUnit.currentStage + 1));
         dataInput.showTemporaryData();
     },
     showPreview() {
@@ -130,13 +182,10 @@ var action = {
             }
             general.refresh();
             storageUnit.tempUserData = $.trim($("#i_response").val());
-            $("#b" + (storageUnit.currentStage + 1)).removeClass("in_progress");
+            helper.inProgressLabel(false, (storageUnit.currentStage + 1));
         }
         helper.showView("preview");
-        if (storageUnit.currentStage == 9) {
-            $('#show_data_entry').hide();
-            $('#show_report').show();
-        }
+        helper.showReportIfApplicable();
         $("#i_response").val("");
         $(".i_btn").hide();
         $("#i_response").show();
@@ -252,9 +301,9 @@ var action = {
 var general = {
     progress() {
         $("#completed_bar").width(storageUnit.currentStage / 9 * 100 + "%");
-        $("#b" + (storageUnit.currentStage)).removeClass("in_progress");
         $("#b" + (storageUnit.currentStage)).addClass("completed");
-        $("#b" + (storageUnit.currentStage + 1)).addClass("in_progress");
+        helper.inProgressLabel(true, (storageUnit.currentStage + 1));
+        helper.inProgressLabel(false, (storageUnit.currentStage));
     },
 
     refresh() {
@@ -268,7 +317,6 @@ var general = {
             $("#ps" + (i + 1)).css("display", "flex");
         }
 
-        this.progress();
     }
 }
 
@@ -305,7 +353,7 @@ var dataInput = {
             }
             else {
                 $("#add_more").show();
-                if (helper.currentChoice >= 1) {
+                if (helper.totalChoices >= 1) {
                     $(helper.viewSubmit[helper.editMode]).show();
                 }
             }
@@ -317,7 +365,7 @@ var dataInput = {
                 $('#i_response').val(storageUnit.userData[setupStage][helper.choicePosition]);
             }
             else {
-                if (helper.currentChoice == helper.incr)
+                if (helper.totalChoices == (helper.incr + 1))
                     $(helper.viewSubmit[helper.editMode]).show();
                 else
                     $("#input_next_btn").show();
@@ -338,72 +386,56 @@ var dataInput = {
             return;
         var response = helper.getResponse();
         if (response != false) {
-            if (storageUnit.currentStage == helper.pivot || helper.dependentList[storageUnit.currentStage]) {
-                storageUnit.userData[storageUnit.currentStage][helper.currentChoice] = response;
-                $("#add_more").hide();
-                helper.incr = 0;
-                $("#i_choices").hide();
-            }
+            if (storageUnit.currentStage == helper.pivot)
+                helper.submitForChoice(response);
+            else if (helper.dependentList[storageUnit.currentStage])
+                helper.submitForDependentlist(response);
             else
-                storageUnit.userData[storageUnit.currentStage] = response;
-            $("#submit_response").hide();
-            storageUnit.currentStage++;
+                helper.submitForRemainingEntries(response);
+            helper.prepareForNextStage();
             if (storageUnit.currentStage == 7)
                 helper.createDecisionView();
-            if (storageUnit.currentStage == 9) {
-                helper.showView("preview");
-                general.refresh();
-                $('#show_data_entry').hide();
-                $('#show_report').show();
-            }
-            this.setupUserDataEntryBox(storageUnit.currentStage);
-            $("#i_response").val("");
-            general.progress();
+            if (storageUnit.currentStage == 9)
+                helper.finalSubmit();
         }
     },
     addChoices() {
         $('#i_response').focus();
         var response = helper.getResponse();
         if (response != false) {
-            storageUnit.userData[storageUnit.currentStage][helper.currentChoice] = response;
+            helper.saveResponse(storageUnit.currentStage, helper.totalChoices, response);
             $('#i_response').val("");
-            helper.currentChoice++;
+            helper.totalChoices++;
             $("#submit_response").show();
         }
     },
-
     nextChoice() {
         $('#i_response').focus();
         var response = helper.getResponse();
         if (response != false) {
-            storageUnit.userData[storageUnit.currentStage][helper.incr] = response;
+            helper.saveResponse(storageUnit.currentStage, helper.incr, response);
             $('#i_response').val("");
             helper.incr++;
             $("#input_next_btn").hide();
-            this.setupUserDataEntryBox(storageUnit.currentStage);
+            dataInput.setupUserDataEntryBox(storageUnit.currentStage);
         }
     },
-
     decisionChoice(choice) {
         if (helper.editMode) {
-            storageUnit.userData[helper.edit] = storageUnit.userData[helper.pivot][choice];
+            helper.saveResponse(helper.edit, null, storageUnit.userData[helper.pivot][choice]);
             helper.showView("preview");
-            if (storageUnit.currentStage == 9) {
-                $('#show_data_entry').hide();
-                $('#show_report').show();
-            }
+            helper.showReportIfApplicable();
             general.refresh();
             helper.editMode = false;
             $("#show_preview").text("Preview");
         }
         else {
-            storageUnit.userData[storageUnit.currentStage] = storageUnit.userData[helper.pivot][choice];
+            helper.saveResponse(storageUnit.currentStage, null, storageUnit.userData[helper.pivot][choice]);
             storageUnit.currentStage++;
             general.progress();
             this.setupUserDataEntryBox(storageUnit.currentStage);
         }
-        $("#choice_lists .main_block").removeClass("selected");
-        $("#choice_list" + choice).addClass("selected");
+        helper.changeDecision(choice);
         $("#i_response").show();
         $('#i_response').focus();
         $("#decision_data").hide();
@@ -411,23 +443,18 @@ var dataInput = {
     editSubmit() {
         var response = helper.getResponse();
         if (response != false) {
-            $("#submit_editted_response").hide();
             if (helper.edit == helper.pivot || helper.dependentList[helper.edit]) {
-                storageUnit.userData[helper.edit][helper.choicePosition] = response;
-                $("#i_choices").hide();
+                helper.editSubmitForMultiInput(response);
             }
             else {
-                storageUnit.userData[helper.edit] = response;
+                helper.editSubmitForRemainingEntries(response);
             }
             $('#i_response').val("");
             helper.showView("preview");
-            if (storageUnit.currentStage == 9) {
-                $('#show_data_entry').hide();
-                $('#show_report').show();
-            }
+            helper.showReportIfApplicable();
             general.refresh();
             helper.editMode = false;
-            $("#show_preview").text("Preview");
+            helper.editToInitialState();        
         }
     },
     showTemporaryData() {
