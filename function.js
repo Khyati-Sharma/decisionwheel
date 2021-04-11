@@ -18,7 +18,14 @@ var helper = {
     dependentList: [false, false, true, true, true, false, false, false, false],
     totalChoices: 0,
     viewMap: { "preview": "#preview_area", "dataEntry": "#user_data_entry_box" },
-    viewButton: { "preview": "#show_data_entry", "dataEntry": "#show_preview" },
+    viewButton: {
+        preview() {
+            if (storageUnit.currentStage == 9)
+                return "#show_report";
+            return "#show_data_entry";
+        },
+        "dataEntry": "#show_preview"
+    },
     viewSubmit: { true: "#submit_editted_response", false: "#submit_response" },
     editMode: false,
     edit: -1,
@@ -139,12 +146,6 @@ var helper = {
         else
             storageUnit.userData[i] = response;
     },
-    showReportIfApplicable() {
-        if (storageUnit.currentStage == 9) {
-            $('#show_data_entry').hide();
-            $('#show_report').show();
-        }
-    },
     changeDecision(choice) {
         $("#choice_lists .main_block").removeClass("selected");
         $("#choice_list" + choice).addClass("selected");
@@ -185,7 +186,6 @@ var action = {
             helper.inProgressLabel(false, (storageUnit.currentStage + 1));
         }
         helper.showView("preview");
-        helper.showReportIfApplicable();
         $("#i_response").val("");
         $(".i_btn").hide();
         $("#i_response").show();
@@ -424,7 +424,6 @@ var dataInput = {
         if (helper.editMode) {
             helper.saveResponse(helper.edit, null, storageUnit.userData[helper.pivot][choice]);
             helper.showView("preview");
-            helper.showReportIfApplicable();
             general.refresh();
             helper.editMode = false;
             $("#show_preview").text("Preview");
@@ -451,10 +450,9 @@ var dataInput = {
             }
             $('#i_response').val("");
             helper.showView("preview");
-            helper.showReportIfApplicable();
             general.refresh();
             helper.editMode = false;
-            helper.editToInitialState();        
+            helper.editToInitialState();
         }
     },
     showTemporaryData() {
