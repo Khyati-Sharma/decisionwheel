@@ -18,7 +18,14 @@ var helper = {
     dependentList: [false, false, true, true, true, false, false, false, false],
     totalChoices: 0,
     viewMap: { "preview": "#preview_area", "dataEntry": "#user_data_entry_box" },
-    viewButton: { "preview": "#show_data_entry", "dataEntry": "#show_preview" },
+    viewButton: {
+        preview() {
+            if (storageUnit.currentStage == 9)
+                return "#show_report";
+            return "#show_data_entry";
+        },
+        "dataEntry": "#show_preview"
+    },
     viewSubmit: { true: "#submit_editted_response", false: "#submit_response" },
     editMode: false,
     edit: -1,
@@ -66,7 +73,6 @@ var helper = {
         helper.lastVisibleView = viewName;
         $(helper.viewMap[helper.lastVisibleView]).show();
         $(helper.viewButton[helper.lastVisibleView]).show();
-
     },
     getResponse() {
         var response = $.trim($("#i_response").val());
@@ -108,13 +114,13 @@ var helper = {
         }
         return false;
     },
-    submitForChoice(response){
+    submitForChoice(response) {
         helper.saveResponse(storageUnit.currentStage, helper.totalChoices, response);
         $("#add_more").hide();
         helper.totalChoices++;
     },
-    submitForDependentlist(response){
-        helper.saveResponse(storageUnit.currentStage, helper.totalChoices, response);
+    submitForDependentlist(response) {
+        helper.saveResponse(storageUnit.currentStage, helper.incr, response);
         helper.incr = 0;
         $("#i_choices").hide();
     },
@@ -139,6 +145,22 @@ var helper = {
             storageUnit.userData[i][j] = response;
         else
             storageUnit.userData[i] = response;
+    },
+    changeDecision(choice) {
+        $("#choice_lists .main_block").removeClass("selected");
+        $("#choice_list" + choice).addClass("selected");
+    },
+    editToInitialState() {
+        $("#submit_editted_response").hide();
+        $("#show_preview").text("Preview");
+    },
+    editSubmitForMultiInput(response) {
+        helper.saveResponse(helper.edit, helper.choicePosition, response);
+        $("#i_choices").hide();
+
+    },
+    editSubmitForRemainingEntries(response) {
+        helper.saveResponse(helper.edit, null, response);
     }
 
 }
@@ -164,10 +186,6 @@ var action = {
             helper.inProgressLabel(false, (storageUnit.currentStage + 1));
         }
         helper.showView("preview");
-        if (storageUnit.currentStage == 9) {
-            $('#show_data_entry').hide();
-            $('#show_report').show();
-        }
         $("#i_response").val("");
         $(".i_btn").hide();
         $("#i_response").show();
@@ -368,9 +386,9 @@ var dataInput = {
             return;
         var response = helper.getResponse();
         if (response != false) {
-            if (storageUnit.currentStage == helper.pivot) 
+            if (storageUnit.currentStage == helper.pivot)
                 helper.submitForChoice(response);
-            else if (helper.dependentList[storageUnit.currentStage]) 
+            else if (helper.dependentList[storageUnit.currentStage])
                 helper.submitForDependentlist(response);
             else
                 helper.submitForRemainingEntries(response);
@@ -406,10 +424,6 @@ var dataInput = {
         if (helper.editMode) {
             helper.saveResponse(helper.edit, null, storageUnit.userData[helper.pivot][choice]);
             helper.showView("preview");
-            if (storageUnit.currentStage == 9) {
-                $('#show_data_entry').hide();
-                $('#show_report').show();
-            }
             general.refresh();
             helper.editMode = false;
             $("#show_preview").text("Preview");
@@ -420,8 +434,7 @@ var dataInput = {
             general.progress();
             this.setupUserDataEntryBox(storageUnit.currentStage);
         }
-        $("#choice_lists .main_block").removeClass("selected");
-        $("#choice_list" + choice).addClass("selected");
+        helper.changeDecision(choice);
         $("#i_response").show();
         $('#i_response').focus();
         $("#decision_data").hide();
@@ -429,23 +442,17 @@ var dataInput = {
     editSubmit() {
         var response = helper.getResponse();
         if (response != false) {
-            $("#submit_editted_response").hide();
             if (helper.edit == helper.pivot || helper.dependentList[helper.edit]) {
-                helper.saveResponse(helper.edit, helper.choicePosition, response);
-                $("#i_choices").hide();
+                helper.editSubmitForMultiInput(response);
             }
             else {
-                helper.saveResponse(helper.edit, null, response);
+                helper.editSubmitForRemainingEntries(response);
             }
             $('#i_response').val("");
             helper.showView("preview");
-            if (storageUnit.currentStage == 9) {
-                $('#show_data_entry').hide();
-                $('#show_report').show();
-            }
             general.refresh();
             helper.editMode = false;
-            $("#show_preview").text("Preview");
+            helper.editToInitialState();
         }
     },
     showTemporaryData() {
