@@ -159,13 +159,36 @@ var helper = {
     editSubmitForRemainingEntries(response) {
         helper.saveResponse(helper.edit, null, response);
     },
-    dataEntryToInitialState(){
+    dataEntryToInitialState() {
         $("#i_response").val("");
         $(".i_btn").hide();
         $("#i_response").show();
         $("#i_choices").hide();
         $("#decision_data").hide();
-    }
+    },
+    decisionReport(classChoice) {
+        for (var i = 0; i < storageUnit.userData[1].length; i++) {
+            if (storageUnit.userData[1][i] == storageUnit.userData[7])
+                classChoice = "selected";
+            else
+                classChoice = "not_selected";
+            helper.choiceTemplate("r_choice", i, classChoice);
+        }
+    },
+    reportView(){
+        $("#details").hide();
+        $('#show_report').hide();
+        $("#report").show();
+        $("#r_problem").text(storageUnit.userData[0]);
+    },
+    getEmail(){
+        var emailGt = $.trim($("#send_reportinp").val());
+        if (emailGt == "") {
+            alert("Please enter the Email");
+            return;
+        }
+        return emailGt;
+    },
 
 }
 
@@ -193,18 +216,9 @@ var action = {
         helper.dataEntryToInitialState();
     },
     showReport() {
-        $("#details").hide();
-        $('#show_report').hide();
-        $("#report").show();
-        $("#r_problem").text(storageUnit.userData[0]);
+       helper.reportView();
         var classChoice;
-        for (var i = 0; i < storageUnit.userData[1].length; i++) {
-            if (storageUnit.userData[1][i] == storageUnit.userData[7])
-                classChoice = "selected";
-            else
-                classChoice = "not_selected";
-            helper.choiceTemplate("r_choice", i, classChoice);
-        }
+        helper.decisionReport(classChoice);
         $("#r_more_info").text(storageUnit.userData[5]);
         var tempHelp = storageUnit.userData[6].split("\n")
         for (var i = 0; i < tempHelp.length; i++) {
@@ -238,11 +252,8 @@ var action = {
       -preservence of user_data_entry_box
     */
     sendEmail() {
-        var emailGt = $.trim($("#send_reportinp").val());
-        if (emailGt == "") {
-            alert("Please enter the Email");
-            return;
-        }
+        
+       var email=helper.getEmail();
         var width = 75 / storageUnit.userData[1].length;
         var Choices = '', cons = '', val = '', feel = '', help = '';
         for (var c = 0; c < storageUnit.userData[1].length; c++) {
@@ -283,8 +294,8 @@ var action = {
         };
         emailjs.send("default_service", "template_2rkf4re", templateParams)
             .then(function () {
-                $("#finalReport").hide();
-                $("#thankYou").show();
+                $("#report").hide();
+                $("#thank_you").show();
             }, function (error) {
                 alert("Sorry,We can't send your email currently, you can save report by downloading the webpage");
             });
