@@ -18,13 +18,12 @@ var helper = {
     dependentList: [false, false, true, true, true, false, false, false, false],
     totalChoices: 0,
     viewMap: { "preview": "#preview_area", "dataEntry": "#user_data_entry_box" },
-    viewButton: {
-        preview() {
-            if (storageUnit.currentStage == 9)
-                return "#show_report";
-            return "#show_data_entry";
-        },
-        "dataEntry": "#show_preview"
+    viewButton(button) {
+        if (button == "dataEntry")
+            return "#show_preview";
+        if (storageUnit.currentStage == 9)
+            return "#show_report";
+        return "#show_data_entry";
     },
     viewSubmit: { true: "#submit_editted_response", false: "#submit_response" },
     editMode: false,
@@ -69,10 +68,10 @@ var helper = {
     },
     showView(viewName) {
         $(helper.viewMap[helper.lastVisibleView]).hide();
-        $(helper.viewButton[helper.lastVisibleView]).hide();
+        $(helper.viewButton(helper.lastVisibleView)).hide();
         helper.lastVisibleView = viewName;
         $(helper.viewMap[helper.lastVisibleView]).show();
-        $(helper.viewButton[helper.lastVisibleView]).show();
+        $(helper.viewButton(helper.lastVisibleView)).show();
     },
     getResponse() {
         var response = $.trim($("#i_response").val());
@@ -137,8 +136,6 @@ var helper = {
     finalSubmit() {
         helper.showView("preview");
         general.refresh();
-        $('#show_data_entry').hide();
-        $('#show_report').show();
     },
     saveResponse(i, j, response) {
         if (j != null)
@@ -161,6 +158,13 @@ var helper = {
     },
     editSubmitForRemainingEntries(response) {
         helper.saveResponse(helper.edit, null, response);
+    },
+    dataEntryToInitialState(){
+        $("#i_response").val("");
+        $(".i_btn").hide();
+        $("#i_response").show();
+        $("#i_choices").hide();
+        $("#decision_data").hide();
     }
 
 }
@@ -186,11 +190,7 @@ var action = {
             helper.inProgressLabel(false, (storageUnit.currentStage + 1));
         }
         helper.showView("preview");
-        $("#i_response").val("");
-        $(".i_btn").hide();
-        $("#i_response").show();
-        $("#i_choices").hide();
-        $("#decision_data").hide();
+        helper.dataEntryToInitialState();
     },
     showReport() {
         $("#details").hide();
