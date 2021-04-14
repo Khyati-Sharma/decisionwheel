@@ -175,17 +175,22 @@ var helper = {
             helper.choiceTemplate("r_choice", i, classChoice);
         }
     },
-    reportView(){
+    reportView() {
         $("#details").hide();
         $('#show_report').hide();
         $("#report").show();
         $("#r_problem").text(storageUnit.userData[0]);
     },
-    getEmail(){
+    getEmail() {
         var emailGt = $.trim($("#send_reportinp").val());
         if (emailGt == "") {
             alert("Please enter the Email");
-            return;
+            return false;
+        }
+        var emailPattern=/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+        if (!emailPattern.test(emailGt)) {
+            alert("You have entered an invalid email address!");
+            return false;
         }
         return emailGt;
     },
@@ -216,7 +221,7 @@ var action = {
         helper.dataEntryToInitialState();
     },
     showReport() {
-       helper.reportView();
+        helper.reportView();
         var classChoice;
         helper.decisionReport(classChoice);
         $("#r_more_info").text(storageUnit.userData[5]);
@@ -252,53 +257,55 @@ var action = {
       -preservence of user_data_entry_box
     */
     sendEmail() {
-        
-       var email=helper.getEmail();
-        var width = 75 / storageUnit.userData[1].length;
-        var Choices = '', cons = '', val = '', feel = '', help = '';
-        for (var c = 0; c < storageUnit.userData[1].length; c++) {
-            Choices += '<td style="border: 1px solid black; width:' + width + '%;">' + storageUnit.userData[1][c] + '</td>';
-        }
-        for (var c = 0; c < storageUnit.userData[1].length; c++) {
-            cons += '<td style="border: 1px solid black; width:' + width + '%;"><ul>';
-            var tempcons = storageUnit.userData[2][c].split("\n");
-            for (var i = 0; i < tempcons.length; i++) {
-                cons += '<li>' + tempcons[i] + '</li>';
+
+        var email = helper.getEmail();
+        if (email != false) {
+            var width = 75 / storageUnit.userData[1].length;
+            var Choices = '', cons = '', val = '', feel = '', help = '';
+            for (var c = 0; c < storageUnit.userData[1].length; c++) {
+                Choices += '<td style="border: 1px solid black; width:' + width + '%;">' + storageUnit.userData[1][c] + '</td>';
             }
-            cons += '</ul></td>';
-        }
-        for (var c = 0; c < storageUnit.userData[1].length; c++) {
-            val += '<td style="border: 1px solid black; width:' + width + '%;"><ul>';
-            var tempvals = storageUnit.userData[3][c].split("\n");
-            for (var i = 0; i < tempvals.length; i++) {
-                val += '<li>' + tempvals[i] + '</li>';
+            for (var c = 0; c < storageUnit.userData[1].length; c++) {
+                cons += '<td style="border: 1px solid black; width:' + width + '%;"><ul>';
+                var tempcons = storageUnit.userData[2][c].split("\n");
+                for (var i = 0; i < tempcons.length; i++) {
+                    cons += '<li>' + tempcons[i] + '</li>';
+                }
+                cons += '</ul></td>';
             }
-            val += '</ul></td>';
-        }
-        for (var c = 0; c < storageUnit.userData[1].length; c++) {
-            feel += '<td style="border: 1px solid black; width:' + width + '%;"><ul>';
-            var tempcons = storageUnit.userData[4][c].split("\n");
-            for (var i = 0; i < tempcons.length; i++) {
-                feel += '<li>' + tempcons[i] + '</li>';
+            for (var c = 0; c < storageUnit.userData[1].length; c++) {
+                val += '<td style="border: 1px solid black; width:' + width + '%;"><ul>';
+                var tempvals = storageUnit.userData[3][c].split("\n");
+                for (var i = 0; i < tempvals.length; i++) {
+                    val += '<li>' + tempvals[i] + '</li>';
+                }
+                val += '</ul></td>';
             }
-            feel += '</ul></td>';
+            for (var c = 0; c < storageUnit.userData[1].length; c++) {
+                feel += '<td style="border: 1px solid black; width:' + width + '%;"><ul>';
+                var tempcons = storageUnit.userData[4][c].split("\n");
+                for (var i = 0; i < tempcons.length; i++) {
+                    feel += '<li>' + tempcons[i] + '</li>';
+                }
+                feel += '</ul></td>';
+            }
+            var wcHelp = storageUnit.userData[6].split("\n");
+            for (var i = 0; i < wcHelp.length; i++) {
+                help += '<li>' + wcHelp[i] + '</li>';
+            }
+            var templateParams = {
+                Problem: storageUnit.userData[0],
+                reply_to: email,
+                reportData: '<!DOCTYPE html><html><body><table style="width:100%; border: 1px solid black;"><tr><th style="border: 1px solid black; width: 25%;">Problem</th><th style="border: 1px solid black; width: 75%;" colspan="' + storageUnit.userData[1].length + '">' + storageUnit.userData[0] + '</th></tr><tr><td style="border: 1px solid black; width: 25%;">Choices</td>' + Choices + '</tr><tr><td style="border: 1px solid black; width: 25%;">Consequences</td>' + cons + '</tr><tr><td style="border: 1px solid black; width: 25%;">Values</td>' + val + '</tr><tr><td style="border: 1px solid black; width: 25%;">Feelings</td>' + feel + '</tr><tr><td style="border: 1px solid black; width: 25%;">Additional Info</td><td style="border: 1px solid black; width: 75%;" colspan="' + storageUnit.userData[1].length + '">' + storageUnit.userData[5] + '</td></tr><tr><td style="border: 1px solid black; width: 25%;">Who Can Help</td><td style="border: 1px solid black; width: 75%;" colspan="' + storageUnit.userData[1].length + '"><ul>' + help + '</ul></td></tr><tr><td style="border: 1px solid black; width: 25%;">Decision</td><td style="border: 1px solid black; width: 75%;" colspan="' + storageUnit.userData[1].length + '">' + storageUnit.userData[7] + '</td></tr><tr><td style="border: 1px solid black; width: 25%;">Assessment</td><td style="border: 1px solid black; width: 75%;" colspan="' + storageUnit.userData[1].length + '">' + storageUnit.userData[8] + '</td></tr></table></body></html>'
+            };
+            emailjs.send("default_service", "template_2rkf4re", templateParams)
+                .then(function () {
+                    $("#report").hide();
+                    $("#thank_you").show();
+                }, function (error) {
+                    alert("Sorry,We can't send your email currently, you can save report by downloading the webpage");
+                });
         }
-        var wcHelp = storageUnit.userData[6].split("\n");
-        for (var i = 0; i < wcHelp.length; i++) {
-            help += '<li>' + wcHelp[i] + '</li>';
-        }
-        var templateParams = {
-            Problem: storageUnit.userData[0],
-            reply_to: emailGt,
-            reportData: '<!DOCTYPE html><html><body><table style="width:100%; border: 1px solid black;"><tr><th style="border: 1px solid black; width: 25%;">Problem</th><th style="border: 1px solid black; width: 75%;" colspan="' + storageUnit.userData[1].length + '">' + storageUnit.userData[0] + '</th></tr><tr><td style="border: 1px solid black; width: 25%;">Choices</td>' + Choices + '</tr><tr><td style="border: 1px solid black; width: 25%;">Consequences</td>' + cons + '</tr><tr><td style="border: 1px solid black; width: 25%;">Values</td>' + val + '</tr><tr><td style="border: 1px solid black; width: 25%;">Feelings</td>' + feel + '</tr><tr><td style="border: 1px solid black; width: 25%;">Additional Info</td><td style="border: 1px solid black; width: 75%;" colspan="' + storageUnit.userData[1].length + '">' + storageUnit.userData[5] + '</td></tr><tr><td style="border: 1px solid black; width: 25%;">Who Can Help</td><td style="border: 1px solid black; width: 75%;" colspan="' + storageUnit.userData[1].length + '"><ul>' + help + '</ul></td></tr><tr><td style="border: 1px solid black; width: 25%;">Decision</td><td style="border: 1px solid black; width: 75%;" colspan="' + storageUnit.userData[1].length + '">' + storageUnit.userData[7] + '</td></tr><tr><td style="border: 1px solid black; width: 25%;">Assessment</td><td style="border: 1px solid black; width: 75%;" colspan="' + storageUnit.userData[1].length + '">' + storageUnit.userData[8] + '</td></tr></table></body></html>'
-        };
-        emailjs.send("default_service", "template_2rkf4re", templateParams)
-            .then(function () {
-                $("#report").hide();
-                $("#thank_you").show();
-            }, function (error) {
-                alert("Sorry,We can't send your email currently, you can save report by downloading the webpage");
-            });
     },
     edit(viewEdit) {
         helper.showView("dataEntry");
