@@ -213,30 +213,36 @@ var helper = {
             for (var c = 0; c < storageUnit.userData[1].length; c++) {
                 Choices += '<td style="border: 1px solid black; width:' + width + '%;">' + storageUnit.userData[1][c] + '</td>';
             }
-            for (var c = 0; c < storageUnit.userData[1].length; c++) {
-                cons += '<td style="border: 1px solid black; width:' + width + '%;"><ul>';
-                var tempcons = storageUnit.userData[2][c].split("\n");
-                for (var i = 0; i < tempcons.length; i++) {
-                    cons += '<li>' + tempcons[i] + '</li>';
-                }
-                cons += '</ul></td>';
-            }
-            for (var c = 0; c < storageUnit.userData[1].length; c++) {
-                val += '<td style="border: 1px solid black; width:' + width + '%;"><ul>';
-                var tempvals = storageUnit.userData[3][c].split("\n");
-                for (var i = 0; i < tempvals.length; i++) {
-                    val += '<li>' + tempvals[i] + '</li>';
-                }
-                val += '</ul></td>';
-            }
-            for (var c = 0; c < storageUnit.userData[1].length; c++) {
-                feel += '<td style="border: 1px solid black; width:' + width + '%;"><ul>';
-                var tempcons = storageUnit.userData[4][c].split("\n");
-                for (var i = 0; i < tempcons.length; i++) {
-                    feel += '<li>' + tempcons[i] + '</li>';
-                }
-                feel += '</ul></td>';
-            }
+
+            // for (var c = 0; c < storageUnit.userData[1].length; c++) {
+            //     cons += '<td style="border: 1px solid black; width:' + width + '%;"><ul>';
+            //     var tempcons = storageUnit.userData[2][c].split("\n");
+            //     for (var i = 0; i < tempcons.length; i++) {
+            //         cons += '<li>' + tempcons[i] + '</li>';
+            //     }
+            //     cons += '</ul></td>';
+            cons=helper.emailTemplateForDependentList(width,2);
+
+            // }
+            // for (var c = 0; c < storageUnit.userData[1].length; c++) {
+            //     val += '<td style="border: 1px solid black; width:' + width + '%;"><ul>';
+            //     var tempvals = storageUnit.userData[3][c].split("\n");
+            //     for (var i = 0; i < tempvals.length; i++) {
+            //         val += '<li>' + tempvals[i] + '</li>';
+            //     }
+            //     val += '</ul></td>';
+            // }
+            val=helper.emailTemplateForDependentList(width,3);
+
+            // for (var c = 0; c < storageUnit.userData[1].length; c++) {
+            //     feel += '<td style="border: 1px solid black; width:' + width + '%;"><ul>';
+            //     var tempcons = storageUnit.userData[4][c].split("\n");
+            //     for (var i = 0; i < tempcons.length; i++) {
+            //         feel += '<li>' + tempcons[i] + '</li>';
+            //     }
+            //     feel += '</ul></td>';
+            // }
+            feel=helper.emailTemplateForDependentList(width,4);
             var wcHelp = storageUnit.userData[6].split("\n");
             for (var i = 0; i < wcHelp.length; i++) {
                 help += '<li>' + wcHelp[i] + '</li>';
@@ -244,16 +250,17 @@ var helper = {
             
         return '<!DOCTYPE html><html><body><table style="width:100%; border: 1px solid black;"><tr><th style="border: 1px solid black; width: 25%;">Problem</th><th style="border: 1px solid black; width: 75%;" colspan="' + storageUnit.userData[1].length + '">' + storageUnit.userData[0] + '</th></tr><tr><td style="border: 1px solid black; width: 25%;">Choices</td>' + Choices + '</tr><tr><td style="border: 1px solid black; width: 25%;">Consequences</td>' + cons + '</tr><tr><td style="border: 1px solid black; width: 25%;">Values</td>' + val + '</tr><tr><td style="border: 1px solid black; width: 25%;">Feelings</td>' + feel + '</tr><tr><td style="border: 1px solid black; width: 25%;">Additional Info</td><td style="border: 1px solid black; width: 75%;" colspan="' + storageUnit.userData[1].length + '">' + storageUnit.userData[5] + '</td></tr><tr><td style="border: 1px solid black; width: 25%;">Who Can Help</td><td style="border: 1px solid black; width: 75%;" colspan="' + storageUnit.userData[1].length + '"><ul>' + help + '</ul></td></tr><tr><td style="border: 1px solid black; width: 25%;">Decision</td><td style="border: 1px solid black; width: 75%;" colspan="' + storageUnit.userData[1].length + '">' + storageUnit.userData[7] + '</td></tr><tr><td style="border: 1px solid black; width: 25%;">Assessment</td><td style="border: 1px solid black; width: 75%;" colspan="' + storageUnit.userData[1].length + '">' + storageUnit.userData[8] + '</td></tr></table></body></html>'
     },
-    emailTemplateForDependentList(dependList){
-        var width = 75 / storageUnit.userData[1].length;
+    emailTemplateForDependentList(width,reportStage){
+        var dependList = '' ;
         for (var c = 0; c < storageUnit.userData[1].length; c++) {
             dependList += '<td style="border: 1px solid black; width:' + width + '%;"><ul>';
-            var tempdependList = storageUnit.userData[storageUnit.currentStage][c].split("\n");
+            var tempdependList = storageUnit.userData[reportStage][c].split("\n");
             for (var i = 0; i < tempdependList.length; i++) {
                 dependList += '<li>' + tempdependList[i] + '</li>';
             }
             dependList += '</ul></td>';
         }
+        return dependList;
     }
 
 }
