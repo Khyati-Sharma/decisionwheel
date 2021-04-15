@@ -42,9 +42,9 @@ var helper = {
         "What is your Decision ?",
         "Assess Decision"
     ],
-    choiceTemplate(id, index, classChoice) {
+    choiceTemplate(id, index, decisionChoiceCandidate) {
         var tempId = id + index;
-        $("#" + id + "s").append('<div class="main_block ' + classChoice + ' "  id="' + tempId + '"></div>');
+        $("#" + id + "s").append('<div class="main_block ' + decisionChoiceCandidate + ' "  id="' + tempId + '"></div>');
         tempId = "#" + tempId;
         $(tempId).append('<h1>' + storageUnit.userData[1][index] + '</h1><div class = "choice_content"></div>');
         $(tempId + " .choice_content").append('<h3>Consequences</h3><ul class = "cons"></ul><h3>Values</h3><ul class = "values"></ul><h3>Feelings</h3><ul class = "feelings"></ul>');
@@ -166,23 +166,23 @@ var helper = {
         $("#i_choices").hide();
         $("#decision_data").hide();
     },
-    decisionReport(classChoice) {
+    choiceCreationAndShowDecision() {
+        var decisionChoiceCandidate;
         for (var i = 0; i < storageUnit.userData[1].length; i++) {
             if (storageUnit.userData[1][i] == storageUnit.userData[7])
-                classChoice = "selected";
+                decisionChoiceCandidate = "selected";
             else
-                classChoice = "not_selected";
-            helper.choiceTemplate("r_choice", i, classChoice);
+                decisionChoiceCandidate = "not_selected";
+            helper.choiceTemplate("r_choice", i, decisionChoiceCandidate);
         }
     },
     reportView() {
         $("#details").hide();
         $('#show_report').hide();
         $("#report").show();
-        $("#r_problem").text(storageUnit.userData[0]);
     },
     getEmail() {
-        var emailGt = $.trim($("#send_reportinp").val());
+        var emailGt = $.trim($("#mail_reportinp").val());
         if (emailGt == "") {
             alert("Please enter the Email");
             return false;
@@ -194,6 +194,74 @@ var helper = {
         }
         return emailGt;
     },
+    createReportTemplate(){
+        $("#r_problem").text(storageUnit.userData[0]);
+        helper.choiceCreationAndShowDecision();
+        $("#r_more_info").text(storageUnit.userData[5]);
+        var tempHelp = storageUnit.userData[6].split("\n")
+        for (var i = 0; i < tempHelp.length; i++) {
+            $("#r_help").append('<li>' + tempHelp[i] + '</li>')
+        }
+        $("#r_assess").text(storageUnit.userData[8]);
+    },
+    showMailReport(){
+        $("#mail_report").css("display", "flex");
+    },
+    reportHTMLTemplate(){
+        var width = 75 / storageUnit.userData[1].length;
+            var Choices = '', cons = '', val = '', feel = '', help = '';
+            for (var c = 0; c < storageUnit.userData[1].length; c++) {
+                Choices += '<td style="border: 1px solid black; width:' + width + '%;">' + storageUnit.userData[1][c] + '</td>';
+            }
+
+            // for (var c = 0; c < storageUnit.userData[1].length; c++) {
+            //     cons += '<td style="border: 1px solid black; width:' + width + '%;"><ul>';
+            //     var tempcons = storageUnit.userData[2][c].split("\n");
+            //     for (var i = 0; i < tempcons.length; i++) {
+            //         cons += '<li>' + tempcons[i] + '</li>';
+            //     }
+            //     cons += '</ul></td>';
+            cons=helper.emailTemplateForDependentList(width,2);
+
+            // }
+            // for (var c = 0; c < storageUnit.userData[1].length; c++) {
+            //     val += '<td style="border: 1px solid black; width:' + width + '%;"><ul>';
+            //     var tempvals = storageUnit.userData[3][c].split("\n");
+            //     for (var i = 0; i < tempvals.length; i++) {
+            //         val += '<li>' + tempvals[i] + '</li>';
+            //     }
+            //     val += '</ul></td>';
+            // }
+            val=helper.emailTemplateForDependentList(width,3);
+
+            // for (var c = 0; c < storageUnit.userData[1].length; c++) {
+            //     feel += '<td style="border: 1px solid black; width:' + width + '%;"><ul>';
+            //     var tempcons = storageUnit.userData[4][c].split("\n");
+            //     for (var i = 0; i < tempcons.length; i++) {
+            //         feel += '<li>' + tempcons[i] + '</li>';
+            //     }
+            //     feel += '</ul></td>';
+            // }
+            feel=helper.emailTemplateForDependentList(width,4);
+            var wcHelp = storageUnit.userData[6].split("\n");
+            for (var i = 0; i < wcHelp.length; i++) {
+                help += '<li>' + wcHelp[i] + '</li>';
+            }
+            
+        return '<!DOCTYPE html><html><body><table style="width:100%; border: 1px solid black;"><tr><th style="border: 1px solid black; width: 25%;">Problem</th><th style="border: 1px solid black; width: 75%;" colspan="' + storageUnit.userData[1].length + '">' + storageUnit.userData[0] + '</th></tr><tr><td style="border: 1px solid black; width: 25%;">Choices</td>' + Choices + '</tr><tr><td style="border: 1px solid black; width: 25%;">Consequences</td>' + cons + '</tr><tr><td style="border: 1px solid black; width: 25%;">Values</td>' + val + '</tr><tr><td style="border: 1px solid black; width: 25%;">Feelings</td>' + feel + '</tr><tr><td style="border: 1px solid black; width: 25%;">Additional Info</td><td style="border: 1px solid black; width: 75%;" colspan="' + storageUnit.userData[1].length + '">' + storageUnit.userData[5] + '</td></tr><tr><td style="border: 1px solid black; width: 25%;">Who Can Help</td><td style="border: 1px solid black; width: 75%;" colspan="' + storageUnit.userData[1].length + '"><ul>' + help + '</ul></td></tr><tr><td style="border: 1px solid black; width: 25%;">Decision</td><td style="border: 1px solid black; width: 75%;" colspan="' + storageUnit.userData[1].length + '">' + storageUnit.userData[7] + '</td></tr><tr><td style="border: 1px solid black; width: 25%;">Assessment</td><td style="border: 1px solid black; width: 75%;" colspan="' + storageUnit.userData[1].length + '">' + storageUnit.userData[8] + '</td></tr></table></body></html>'
+    },
+    emailTemplateForDependentList(width,reportStage){
+        var dependList = '' ;
+        for (var c = 0; c < storageUnit.userData[1].length; c++) {
+            dependList += '<td style="border: 1px solid black; width:' + width + '%;"><ul>';
+            var tempdependList = storageUnit.userData[reportStage][c].split("\n");
+            for (var i = 0; i < tempdependList.length; i++) {
+                dependList += '<li>' + tempdependList[i] + '</li>';
+            }
+            dependList += '</ul></td>';
+        }
+        return dependList;
+    }
 
 }
 
@@ -222,16 +290,8 @@ var action = {
     },
     showReport() {
         helper.reportView();
-        var classChoice;
-        helper.decisionReport(classChoice);
-        $("#r_more_info").text(storageUnit.userData[5]);
-        var tempHelp = storageUnit.userData[6].split("\n")
-        for (var i = 0; i < tempHelp.length; i++) {
-            $("#r_help").append('<li>' + tempHelp[i] + '</li>')
-        }
-        $("#r_assess").text(storageUnit.userData[8]);
-        $("#send_report").css("display", "flex");
-
+        helper.createReportTemplate();
+        helper.showMailReport();
     },
     choice(choiceAction) {
         if (choiceAction == "forward") {
@@ -260,43 +320,10 @@ var action = {
 
         var email = helper.getEmail();
         if (email != false) {
-            var width = 75 / storageUnit.userData[1].length;
-            var Choices = '', cons = '', val = '', feel = '', help = '';
-            for (var c = 0; c < storageUnit.userData[1].length; c++) {
-                Choices += '<td style="border: 1px solid black; width:' + width + '%;">' + storageUnit.userData[1][c] + '</td>';
-            }
-            for (var c = 0; c < storageUnit.userData[1].length; c++) {
-                cons += '<td style="border: 1px solid black; width:' + width + '%;"><ul>';
-                var tempcons = storageUnit.userData[2][c].split("\n");
-                for (var i = 0; i < tempcons.length; i++) {
-                    cons += '<li>' + tempcons[i] + '</li>';
-                }
-                cons += '</ul></td>';
-            }
-            for (var c = 0; c < storageUnit.userData[1].length; c++) {
-                val += '<td style="border: 1px solid black; width:' + width + '%;"><ul>';
-                var tempvals = storageUnit.userData[3][c].split("\n");
-                for (var i = 0; i < tempvals.length; i++) {
-                    val += '<li>' + tempvals[i] + '</li>';
-                }
-                val += '</ul></td>';
-            }
-            for (var c = 0; c < storageUnit.userData[1].length; c++) {
-                feel += '<td style="border: 1px solid black; width:' + width + '%;"><ul>';
-                var tempcons = storageUnit.userData[4][c].split("\n");
-                for (var i = 0; i < tempcons.length; i++) {
-                    feel += '<li>' + tempcons[i] + '</li>';
-                }
-                feel += '</ul></td>';
-            }
-            var wcHelp = storageUnit.userData[6].split("\n");
-            for (var i = 0; i < wcHelp.length; i++) {
-                help += '<li>' + wcHelp[i] + '</li>';
-            }
             var templateParams = {
                 Problem: storageUnit.userData[0],
                 reply_to: email,
-                reportData: '<!DOCTYPE html><html><body><table style="width:100%; border: 1px solid black;"><tr><th style="border: 1px solid black; width: 25%;">Problem</th><th style="border: 1px solid black; width: 75%;" colspan="' + storageUnit.userData[1].length + '">' + storageUnit.userData[0] + '</th></tr><tr><td style="border: 1px solid black; width: 25%;">Choices</td>' + Choices + '</tr><tr><td style="border: 1px solid black; width: 25%;">Consequences</td>' + cons + '</tr><tr><td style="border: 1px solid black; width: 25%;">Values</td>' + val + '</tr><tr><td style="border: 1px solid black; width: 25%;">Feelings</td>' + feel + '</tr><tr><td style="border: 1px solid black; width: 25%;">Additional Info</td><td style="border: 1px solid black; width: 75%;" colspan="' + storageUnit.userData[1].length + '">' + storageUnit.userData[5] + '</td></tr><tr><td style="border: 1px solid black; width: 25%;">Who Can Help</td><td style="border: 1px solid black; width: 75%;" colspan="' + storageUnit.userData[1].length + '"><ul>' + help + '</ul></td></tr><tr><td style="border: 1px solid black; width: 25%;">Decision</td><td style="border: 1px solid black; width: 75%;" colspan="' + storageUnit.userData[1].length + '">' + storageUnit.userData[7] + '</td></tr><tr><td style="border: 1px solid black; width: 25%;">Assessment</td><td style="border: 1px solid black; width: 75%;" colspan="' + storageUnit.userData[1].length + '">' + storageUnit.userData[8] + '</td></tr></table></body></html>'
+                reportData: helper.reportHTMLTemplate()
             };
             emailjs.send("default_service", "template_2rkf4re", templateParams)
                 .then(function () {
