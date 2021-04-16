@@ -101,11 +101,11 @@ body {
     display: inline;
 }
 
-#send_report {
+#mail_report {
     display: none;
 }
 
-#send_reportinp {
+#mail_reportinp {
     height: 100%;
 }
 
@@ -143,7 +143,7 @@ body {
     color: #666;
 }
 
-#thankYou {
+#thank_you {
     display: none;
 }
 
