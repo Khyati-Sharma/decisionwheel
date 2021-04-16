@@ -261,7 +261,7 @@ var helper = {
             dependList += '</ul></td>';
         }
         return dependList;
-    }
+    },
 
 }
 
@@ -333,6 +333,7 @@ var action = {
                     alert("Sorry,We can't send your email currently, you can save report by downloading the webpage");
                 });
         }
+        $("#footer_area").hide();
     },
     edit(viewEdit) {
         helper.showView("dataEntry");
@@ -340,6 +341,9 @@ var action = {
         dataInput.setupUserDataEntryBox(viewEdit);
         $('#show_preview').text("Cancel");
         helper.edit = viewEdit;
+    },
+    reloadPage(){
+        location.reload();
     }
 }
 
