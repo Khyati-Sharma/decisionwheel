@@ -283,11 +283,13 @@ var action = {
     },
     sendEmail() {
         var email = helper.getEmail();
+        var data = {"problem": storageUnit.userData[0]};
+        var result = Mustache.render(template, data);
         if (email != false) {
             var templateParams = {
                 Problem: storageUnit.userData[0],
                 reply_to: email,
-                reportData: helper.reportHTMLTemplate()
+                reportData: result
             };
             emailjs.send(siteConfiguration.email.service, siteConfiguration.email.templateId, templateParams)
                 .then(
