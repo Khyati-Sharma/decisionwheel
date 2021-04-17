@@ -60,11 +60,6 @@ var helper = {
         for (var i = 0; i < tempFeelings.length; i++) {
             $(tempId + " .feelings").append('<li>' + tempFeelings[i] + '</li>');
         }
-        /*rChoices =>.main_block #rChoices0
-        #rChoices0 => h1 choice_content
-        #rChoices0 .choice_content => h3 tags +ul tags with their class
-        #rChoices0 respective class=>li tags
-    */
     },
     showView(viewName) {
         $(helper.viewMap[helper.lastVisibleView]).hide();
@@ -187,14 +182,14 @@ var helper = {
             alert("Please enter the Email");
             return false;
         }
-        var emailPattern=/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+        var emailPattern = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
         if (!emailPattern.test(emailGt)) {
             alert("You have entered an invalid email address!");
             return false;
         }
         return emailGt;
     },
-    createReportTemplate(){
+    createReportTemplate() {
         $("#r_problem").text(storageUnit.userData[0]);
         helper.choiceCreationAndShowDecision();
         $("#r_more_info").text(storageUnit.userData[5]);
@@ -204,65 +199,46 @@ var helper = {
         }
         $("#r_assess").text(storageUnit.userData[8]);
     },
-    showMailReport(){
+    showMailReport() {
         $("#mail_report").css("display", "flex");
     },
-    reportHTMLTemplate(){
+    reportHTMLTemplate() {
         var width = 75 / storageUnit.userData[1].length;
-            var Choices = '', cons = '', val = '', feel = '', help = '';
-            for (var c = 0; c < storageUnit.userData[1].length; c++) {
-                Choices += '<td style="border: 1px solid black; width:' + width + '%;">' + storageUnit.userData[1][c] + '</td>';
-            }
-
-            // for (var c = 0; c < storageUnit.userData[1].length; c++) {
-            //     cons += '<td style="border: 1px solid black; width:' + width + '%;"><ul>';
-            //     var tempcons = storageUnit.userData[2][c].split("\n");
-            //     for (var i = 0; i < tempcons.length; i++) {
-            //         cons += '<li>' + tempcons[i] + '</li>';
-            //     }
-            //     cons += '</ul></td>';
-            cons=helper.emailTemplateForDependentList(width,2);
-
-            // }
-            // for (var c = 0; c < storageUnit.userData[1].length; c++) {
-            //     val += '<td style="border: 1px solid black; width:' + width + '%;"><ul>';
-            //     var tempvals = storageUnit.userData[3][c].split("\n");
-            //     for (var i = 0; i < tempvals.length; i++) {
-            //         val += '<li>' + tempvals[i] + '</li>';
-            //     }
-            //     val += '</ul></td>';
-            // }
-            val=helper.emailTemplateForDependentList(width,3);
-
-            // for (var c = 0; c < storageUnit.userData[1].length; c++) {
-            //     feel += '<td style="border: 1px solid black; width:' + width + '%;"><ul>';
-            //     var tempcons = storageUnit.userData[4][c].split("\n");
-            //     for (var i = 0; i < tempcons.length; i++) {
-            //         feel += '<li>' + tempcons[i] + '</li>';
-            //     }
-            //     feel += '</ul></td>';
-            // }
-            feel=helper.emailTemplateForDependentList(width,4);
-            var wcHelp = storageUnit.userData[6].split("\n");
-            for (var i = 0; i < wcHelp.length; i++) {
-                help += '<li>' + wcHelp[i] + '</li>';
-            }
-            
+        var Choices = '', cons = '', val = '', feel = '', help = '';
+        for (var c = 0; c < storageUnit.userData[1].length; c++) {
+            Choices += '<td style="border: 1px solid black; width:' + width + '%;">' + storageUnit.userData[1][c] + '</td>';
+        }
+        cons = helper.emailTemplateForDependentList(width, 2);
+        val = helper.emailTemplateForDependentList(width, 3);
+        feel = helper.emailTemplateForDependentList(width, 4);
+        help = helper.stringToList(6, null);
         return '<!DOCTYPE html><html><body><table style="width:100%; border: 1px solid black;"><tr><th style="border: 1px solid black; width: 25%;">Problem</th><th style="border: 1px solid black; width: 75%;" colspan="' + storageUnit.userData[1].length + '">' + storageUnit.userData[0] + '</th></tr><tr><td style="border: 1px solid black; width: 25%;">Choices</td>' + Choices + '</tr><tr><td style="border: 1px solid black; width: 25%;">Consequences</td>' + cons + '</tr><tr><td style="border: 1px solid black; width: 25%;">Values</td>' + val + '</tr><tr><td style="border: 1px solid black; width: 25%;">Feelings</td>' + feel + '</tr><tr><td style="border: 1px solid black; width: 25%;">Additional Info</td><td style="border: 1px solid black; width: 75%;" colspan="' + storageUnit.userData[1].length + '">' + storageUnit.userData[5] + '</td></tr><tr><td style="border: 1px solid black; width: 25%;">Who Can Help</td><td style="border: 1px solid black; width: 75%;" colspan="' + storageUnit.userData[1].length + '"><ul>' + help + '</ul></td></tr><tr><td style="border: 1px solid black; width: 25%;">Decision</td><td style="border: 1px solid black; width: 75%;" colspan="' + storageUnit.userData[1].length + '">' + storageUnit.userData[7] + '</td></tr><tr><td style="border: 1px solid black; width: 25%;">Assessment</td><td style="border: 1px solid black; width: 75%;" colspan="' + storageUnit.userData[1].length + '">' + storageUnit.userData[8] + '</td></tr></table></body></html>'
     },
-    emailTemplateForDependentList(width,reportStage){
-        var dependList = '' ;
+    emailTemplateForDependentList(width, reportStage) {
+        var dependList = '';
         for (var c = 0; c < storageUnit.userData[1].length; c++) {
             dependList += '<td style="border: 1px solid black; width:' + width + '%;"><ul>';
-            var tempdependList = storageUnit.userData[reportStage][c].split("\n");
-            for (var i = 0; i < tempdependList.length; i++) {
-                dependList += '<li>' + tempdependList[i] + '</li>';
-            }
+            dependList += helper.stringToList(reportStage, c);
             dependList += '</ul></td>';
         }
         return dependList;
+    },
+    stringToList(i, j) {
+        if (j != null)
+            var splittedStrings = storageUnit.userData[i][j].split("\n");
+        else
+            var splittedStrings = storageUnit.userData[i].split("\n");
+        var listHTML = '';
+        for (var k = 0; k < splittedStrings.length; k++) {
+            listHTML += '<li>' + splittedStrings[k] + '</li>';
+        }
+        return listHTML;
+    },
+    showThankYouPage() {
+        $("#report").hide();
+        $("#footer_area").hide();
+        $("#thank_you").show();
     }
-
 }
 
 var action = {
@@ -305,19 +281,7 @@ var action = {
         }
         general.refresh();
     },
-    /*
-    Start:-
-      -change view from preview to user_data_entry_box
-      -replace itself with preview button
-      -setup userdataentrybox based on storageUnit
-      -change name from start->resume->view report
-    Home:-
-      -change view from \user_data_entry_box to preview
-      -replace itself with start button
-      -preservence of user_data_entry_box
-    */
     sendEmail() {
-
         var email = helper.getEmail();
         if (email != false) {
             var templateParams = {
@@ -325,13 +289,14 @@ var action = {
                 reply_to: email,
                 reportData: helper.reportHTMLTemplate()
             };
-            emailjs.send("default_service", "template_2rkf4re", templateParams)
-                .then(function () {
-                    $("#report").hide();
-                    $("#thank_you").show();
-                }, function (error) {
-                    alert("Sorry,We can't send your email currently, you can save report by downloading the webpage");
-                });
+            emailjs.send(siteConfiguration.email.service, siteConfiguration.email.templateId, templateParams)
+                .then(
+                    helper.showThankYouPage(),
+                    function (error) {
+                        alert("Sorry,We can't send your email currently, you can save report by downloading the webpage");
+                        console.log(error);
+                    }
+                );
         }
     },
     edit(viewEdit) {
@@ -340,6 +305,9 @@ var action = {
         dataInput.setupUserDataEntryBox(viewEdit);
         $('#show_preview').text("Cancel");
         helper.edit = viewEdit;
+    },
+    reloadPage() {
+        location.reload();
     }
 }
 
@@ -366,22 +334,7 @@ var general = {
 }
 
 var dataInput = {
-    /**
-     *  Submit
-     *    -store current value
-     *      -special case choice multiple
-     *    -call refresh
-     *    -blank text area
-     *    -move to next level
-     *    
-     *    -special use(for edit)
-     * Next 
-     *  - first of all store the data in current stage
-     *  - next i_choices print in consequences
-     *  - the next button show only (n-1) index of choices
-     *  - then after show submit button
-     * 
-     */
+
     setupUserDataEntryBox(setupStage) {
         if (setupStage == storageUnit.userData.length)
             return;
@@ -582,6 +535,4 @@ var TestSuite =
         $('#show_data_entry').hide();
         $('#show_report').show();
     }
-
 }
-//TestSuite.focusOnSubmit();
