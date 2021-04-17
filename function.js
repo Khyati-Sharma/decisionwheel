@@ -18,13 +18,12 @@ var helper = {
     dependentList: [false, false, true, true, true, false, false, false, false],
     totalChoices: 0,
     viewMap: { "preview": "#preview_area", "dataEntry": "#user_data_entry_box" },
-    viewButton: {
-        preview() {
-            if (storageUnit.currentStage == 9)
-                return "#show_report";
-            return "#show_data_entry";
-        },
-        "dataEntry": "#show_preview"
+    viewButton(button) {
+        if (button == "dataEntry")
+            return "#show_preview";
+        if (storageUnit.currentStage == 9)
+            return "#show_report";
+        return "#show_data_entry";
     },
     viewSubmit: { true: "#submit_editted_response", false: "#submit_response" },
     editMode: false,
@@ -43,9 +42,9 @@ var helper = {
         "What is your Decision ?",
         "Assess Decision"
     ],
-    choiceTemplate(id, index, classChoice) {
+    choiceTemplate(id, index, decisionChoiceCandidate) {
         var tempId = id + index;
-        $("#" + id + "s").append('<div class="main_block ' + classChoice + ' "  id="' + tempId + '"></div>');
+        $("#" + id + "s").append('<div class="main_block ' + decisionChoiceCandidate + ' "  id="' + tempId + '"></div>');
         tempId = "#" + tempId;
         $(tempId).append('<h1>' + storageUnit.userData[1][index] + '</h1><div class = "choice_content"></div>');
         $(tempId + " .choice_content").append('<h3>Consequences</h3><ul class = "cons"></ul><h3>Values</h3><ul class = "values"></ul><h3>Feelings</h3><ul class = "feelings"></ul>');
@@ -61,18 +60,13 @@ var helper = {
         for (var i = 0; i < tempFeelings.length; i++) {
             $(tempId + " .feelings").append('<li>' + tempFeelings[i] + '</li>');
         }
-        /*rChoices =>.main_block #rChoices0
-        #rChoices0 => h1 choice_content
-        #rChoices0 .choice_content => h3 tags +ul tags with their class
-        #rChoices0 respective class=>li tags
-    */
     },
     showView(viewName) {
         $(helper.viewMap[helper.lastVisibleView]).hide();
-        $(helper.viewButton[helper.lastVisibleView]).hide();
+        $(helper.viewButton(helper.lastVisibleView)).hide();
         helper.lastVisibleView = viewName;
         $(helper.viewMap[helper.lastVisibleView]).show();
-        $(helper.viewButton[helper.lastVisibleView]).show();
+        $(helper.viewButton(helper.lastVisibleView)).show();
     },
     getResponse() {
         var response = $.trim($("#i_response").val());
@@ -137,8 +131,6 @@ var helper = {
     finalSubmit() {
         helper.showView("preview");
         general.refresh();
-        $('#show_data_entry').hide();
-        $('#show_report').show();
     },
     saveResponse(i, j, response) {
         if (j != null)
@@ -161,8 +153,92 @@ var helper = {
     },
     editSubmitForRemainingEntries(response) {
         helper.saveResponse(helper.edit, null, response);
+    },
+    dataEntryToInitialState() {
+        $("#i_response").val("");
+        $(".i_btn").hide();
+        $("#i_response").show();
+        $("#i_choices").hide();
+        $("#decision_data").hide();
+    },
+    choiceCreationAndShowDecision() {
+        var decisionChoiceCandidate;
+        for (var i = 0; i < storageUnit.userData[1].length; i++) {
+            if (storageUnit.userData[1][i] == storageUnit.userData[7])
+                decisionChoiceCandidate = "selected";
+            else
+                decisionChoiceCandidate = "not_selected";
+            helper.choiceTemplate("r_choice", i, decisionChoiceCandidate);
+        }
+    },
+    reportView() {
+        $("#details").hide();
+        $('#show_report').hide();
+        $("#report").show();
+    },
+    getEmail() {
+        var emailGt = $.trim($("#mail_reportinp").val());
+        if (emailGt == "") {
+            alert("Please enter the Email");
+            return false;
+        }
+        var emailPattern = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+        if (!emailPattern.test(emailGt)) {
+            alert("You have entered an invalid email address!");
+            return false;
+        }
+        return emailGt;
+    },
+    createReportTemplate() {
+        $("#r_problem").text(storageUnit.userData[0]);
+        helper.choiceCreationAndShowDecision();
+        $("#r_more_info").text(storageUnit.userData[5]);
+        var tempHelp = storageUnit.userData[6].split("\n")
+        for (var i = 0; i < tempHelp.length; i++) {
+            $("#r_help").append('<li>' + tempHelp[i] + '</li>')
+        }
+        $("#r_assess").text(storageUnit.userData[8]);
+    },
+    showMailReport() {
+        $("#mail_report").css("display", "flex");
+    },
+    reportHTMLTemplate() {
+        var width = 75 / storageUnit.userData[1].length;
+        var Choices = '', cons = '', val = '', feel = '', help = '';
+        for (var c = 0; c < storageUnit.userData[1].length; c++) {
+            Choices += '<td style="border: 1px solid black; width:' + width + '%;">' + storageUnit.userData[1][c] + '</td>';
+        }
+        cons = helper.emailTemplateForDependentList(width, 2);
+        val = helper.emailTemplateForDependentList(width, 3);
+        feel = helper.emailTemplateForDependentList(width, 4);
+        help = helper.stringToList(6, null);
+        return '<!DOCTYPE html><html><body><table style="width:100%; border: 1px solid black;"><tr><th style="border: 1px solid black; width: 25%;">Problem</th><th style="border: 1px solid black; width: 75%;" colspan="' + storageUnit.userData[1].length + '">' + storageUnit.userData[0] + '</th></tr><tr><td style="border: 1px solid black; width: 25%;">Choices</td>' + Choices + '</tr><tr><td style="border: 1px solid black; width: 25%;">Consequences</td>' + cons + '</tr><tr><td style="border: 1px solid black; width: 25%;">Values</td>' + val + '</tr><tr><td style="border: 1px solid black; width: 25%;">Feelings</td>' + feel + '</tr><tr><td style="border: 1px solid black; width: 25%;">Additional Info</td><td style="border: 1px solid black; width: 75%;" colspan="' + storageUnit.userData[1].length + '">' + storageUnit.userData[5] + '</td></tr><tr><td style="border: 1px solid black; width: 25%;">Who Can Help</td><td style="border: 1px solid black; width: 75%;" colspan="' + storageUnit.userData[1].length + '"><ul>' + help + '</ul></td></tr><tr><td style="border: 1px solid black; width: 25%;">Decision</td><td style="border: 1px solid black; width: 75%;" colspan="' + storageUnit.userData[1].length + '">' + storageUnit.userData[7] + '</td></tr><tr><td style="border: 1px solid black; width: 25%;">Assessment</td><td style="border: 1px solid black; width: 75%;" colspan="' + storageUnit.userData[1].length + '">' + storageUnit.userData[8] + '</td></tr></table></body></html>'
+    },
+    emailTemplateForDependentList(width, reportStage) {
+        var dependList = '';
+        for (var c = 0; c < storageUnit.userData[1].length; c++) {
+            dependList += '<td style="border: 1px solid black; width:' + width + '%;"><ul>';
+            dependList += helper.stringToList(reportStage, c);
+            dependList += '</ul></td>';
+        }
+        return dependList;
+    },
+    stringToList(i, j) {
+        if (j != null)
+            var splittedStrings = storageUnit.userData[i][j].split("\n");
+        else
+            var splittedStrings = storageUnit.userData[i].split("\n");
+        var listHTML = '';
+        for (var k = 0; k < splittedStrings.length; k++) {
+            listHTML += '<li>' + splittedStrings[k] + '</li>';
+        }
+        return listHTML;
+    },
+    showThankYouPage() {
+        $("#report").hide();
+        $("#footer_area").hide();
+        $("#thank_you").show();
     }
-
 }
 
 var action = {
@@ -186,33 +262,12 @@ var action = {
             helper.inProgressLabel(false, (storageUnit.currentStage + 1));
         }
         helper.showView("preview");
-        $("#i_response").val("");
-        $(".i_btn").hide();
-        $("#i_response").show();
-        $("#i_choices").hide();
-        $("#decision_data").hide();
+        helper.dataEntryToInitialState();
     },
     showReport() {
-        $("#details").hide();
-        $('#show_report').hide();
-        $("#report").show();
-        $("#r_problem").text(storageUnit.userData[0]);
-        var classChoice;
-        for (var i = 0; i < storageUnit.userData[1].length; i++) {
-            if (storageUnit.userData[1][i] == storageUnit.userData[7])
-                classChoice = "selected";
-            else
-                classChoice = "not_selected";
-            helper.choiceTemplate("r_choice", i, classChoice);
-        }
-        $("#r_more_info").text(storageUnit.userData[5]);
-        var tempHelp = storageUnit.userData[6].split("\n")
-        for (var i = 0; i < tempHelp.length; i++) {
-            $("#r_help").append('<li>' + tempHelp[i] + '</li>')
-        }
-        $("#r_assess").text(storageUnit.userData[8]);
-        $("#send_report").css("display", "flex");
-
+        helper.reportView();
+        helper.createReportTemplate();
+        helper.showMailReport();
     },
     choice(choiceAction) {
         if (choiceAction == "forward") {
@@ -226,68 +281,25 @@ var action = {
         }
         general.refresh();
     },
-    /*
-    Start:-
-      -change view from preview to user_data_entry_box
-      -replace itself with preview button
-      -setup userdataentrybox based on storageUnit
-      -change name from start->resume->view report
-    Home:-
-      -change view from \user_data_entry_box to preview
-      -replace itself with start button
-      -preservence of user_data_entry_box
-    */
     sendEmail() {
-        var emailGt = $.trim($("#send_reportinp").val());
-        if (emailGt == "") {
-            alert("Please enter the Email");
-            return;
+        var email = helper.getEmail();
+        var data = {"problem": storageUnit.userData[0]};
+        var result = Mustache.render(template, data);
+        if (email != false) {
+            var templateParams = {
+                Problem: storageUnit.userData[0],
+                reply_to: email,
+                reportData: result
+            };
+            emailjs.send(siteConfiguration.email.service, siteConfiguration.email.templateId, templateParams)
+                .then(
+                    helper.showThankYouPage(),
+                    function (error) {
+                        alert("Sorry,We can't send your email currently, you can save report by downloading the webpage");
+                        console.log(error);
+                    }
+                );
         }
-        var width = 75 / storageUnit.userData[1].length;
-        var Choices = '', cons = '', val = '', feel = '', help = '';
-        for (var c = 0; c < storageUnit.userData[1].length; c++) {
-            Choices += '<td style="border: 1px solid black; width:' + width + '%;">' + storageUnit.userData[1][c] + '</td>';
-        }
-        for (var c = 0; c < storageUnit.userData[1].length; c++) {
-            cons += '<td style="border: 1px solid black; width:' + width + '%;"><ul>';
-            var tempcons = storageUnit.userData[2][c].split("\n");
-            for (var i = 0; i < tempcons.length; i++) {
-                cons += '<li>' + tempcons[i] + '</li>';
-            }
-            cons += '</ul></td>';
-        }
-        for (var c = 0; c < storageUnit.userData[1].length; c++) {
-            val += '<td style="border: 1px solid black; width:' + width + '%;"><ul>';
-            var tempvals = storageUnit.userData[3][c].split("\n");
-            for (var i = 0; i < tempvals.length; i++) {
-                val += '<li>' + tempvals[i] + '</li>';
-            }
-            val += '</ul></td>';
-        }
-        for (var c = 0; c < storageUnit.userData[1].length; c++) {
-            feel += '<td style="border: 1px solid black; width:' + width + '%;"><ul>';
-            var tempcons = storageUnit.userData[4][c].split("\n");
-            for (var i = 0; i < tempcons.length; i++) {
-                feel += '<li>' + tempcons[i] + '</li>';
-            }
-            feel += '</ul></td>';
-        }
-        var wcHelp = storageUnit.userData[6].split("\n");
-        for (var i = 0; i < wcHelp.length; i++) {
-            help += '<li>' + wcHelp[i] + '</li>';
-        }
-        var templateParams = {
-            Problem: storageUnit.userData[0],
-            reply_to: emailGt,
-            reportData: '<!DOCTYPE html><html><body><table style="width:100%; border: 1px solid black;"><tr><th style="border: 1px solid black; width: 25%;">Problem</th><th style="border: 1px solid black; width: 75%;" colspan="' + storageUnit.userData[1].length + '">' + storageUnit.userData[0] + '</th></tr><tr><td style="border: 1px solid black; width: 25%;">Choices</td>' + Choices + '</tr><tr><td style="border: 1px solid black; width: 25%;">Consequences</td>' + cons + '</tr><tr><td style="border: 1px solid black; width: 25%;">Values</td>' + val + '</tr><tr><td style="border: 1px solid black; width: 25%;">Feelings</td>' + feel + '</tr><tr><td style="border: 1px solid black; width: 25%;">Additional Info</td><td style="border: 1px solid black; width: 75%;" colspan="' + storageUnit.userData[1].length + '">' + storageUnit.userData[5] + '</td></tr><tr><td style="border: 1px solid black; width: 25%;">Who Can Help</td><td style="border: 1px solid black; width: 75%;" colspan="' + storageUnit.userData[1].length + '"><ul>' + help + '</ul></td></tr><tr><td style="border: 1px solid black; width: 25%;">Decision</td><td style="border: 1px solid black; width: 75%;" colspan="' + storageUnit.userData[1].length + '">' + storageUnit.userData[7] + '</td></tr><tr><td style="border: 1px solid black; width: 25%;">Assessment</td><td style="border: 1px solid black; width: 75%;" colspan="' + storageUnit.userData[1].length + '">' + storageUnit.userData[8] + '</td></tr></table></body></html>'
-        };
-        emailjs.send("default_service", "template_2rkf4re", templateParams)
-            .then(function () {
-                $("#finalReport").hide();
-                $("#thankYou").show();
-            }, function (error) {
-                alert("Sorry,We can't send your email currently, you can save report by downloading the webpage");
-            });
     },
     edit(viewEdit) {
         helper.showView("dataEntry");
@@ -295,6 +307,9 @@ var action = {
         dataInput.setupUserDataEntryBox(viewEdit);
         $('#show_preview').text("Cancel");
         helper.edit = viewEdit;
+    },
+    reloadPage() {
+        location.reload();
     }
 }
 
@@ -321,22 +336,7 @@ var general = {
 }
 
 var dataInput = {
-    /**
-     *  Submit
-     *    -store current value
-     *      -special case choice multiple
-     *    -call refresh
-     *    -blank text area
-     *    -move to next level
-     *    
-     *    -special use(for edit)
-     * Next 
-     *  - first of all store the data in current stage
-     *  - next i_choices print in consequences
-     *  - the next button show only (n-1) index of choices
-     *  - then after show submit button
-     * 
-     */
+
     setupUserDataEntryBox(setupStage) {
         if (setupStage == storageUnit.userData.length)
             return;
@@ -537,6 +537,4 @@ var TestSuite =
         $('#show_data_entry').hide();
         $('#show_report').show();
     }
-
 }
-//TestSuite.focusOnSubmit();

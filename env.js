@@ -2,6 +2,10 @@ var siteConfiguration = {
 	branding: {"name" : "Skill-Pill" },
 	title: "Decision Making Tool",
 	icon: "images/skillpill.png",
+    email: {
+        service: "default_service",
+        templateId: "template_2rkf4re"
+    }
 }
 var toolConfiguration = [
     { name: "Problem", question: "What is Problem ?", entry_type: "single-entry" },

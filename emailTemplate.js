@@ -1,0 +1,1 @@
+var template = '<!DOCTYPE html><html><body><table style="width:100%; border: 1px solid black;"><tr><th style="border: 1px solid black; width: 25%;">Problem</th><th style="border: 1px solid black; width: 75%;">{{problem}}</th></tr></table></body></html>';
