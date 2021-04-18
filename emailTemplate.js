@@ -24,3 +24,27 @@ var template =
 '</html>';
 
 {/* <tr><td style="border: 1px solid black; width: 25%;">Values</td>' + val + '</tr><tr><td style="border: 1px solid black; width: 25%;">Feelings</td>' + feel + '</tr><tr><td style="border: 1px solid black; width: 25%;">Additional Info</td><td style="border: 1px solid black; width: 75%;" colspan="' + storageUnit.userData[1].length + '">' + storageUnit.userData[5] + '</td></tr><tr><td style="border: 1px solid black; width: 25%;">Who Can Help</td><td style="border: 1px solid black; width: 75%;" colspan="' + storageUnit.userData[1].length + '"><ul>' + help + '</ul></td></tr><tr><td style="border: 1px solid black; width: 25%;">Decision</td><td style="border: 1px solid black; width: 75%;" colspan="' + storageUnit.userData[1].length + '">' + storageUnit.userData[7] + '</td></tr><tr><td style="border: 1px solid black; width: 25%;">Assessment</td><td style="border: 1px solid black; width: 75%;" colspan="' + storageUnit.userData[1].length + '">' + storageUnit.userData[8] + '</td></tr> */}
+
+
+
+
+// var data = {
+//     "choices": [
+//         {"choice":"choice1"},
+//         {"choice":"choice2"}
+//     ],
+//     "consequences": [
+//         {
+//             "multiConsequences":[
+//                 {"multiConsequence":"con1"},
+//                 {"multiConsequence":"con2"}
+//             ]
+//         },
+//         {
+//             "multiConsequences":[
+//                 {"multiConsequence":"con3"},
+//                 {"multiConsequence":"con4"}
+//             ]
+//         }
+//     ]
+// }
