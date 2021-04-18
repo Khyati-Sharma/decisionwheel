@@ -238,7 +238,7 @@ var helper = {
         $("#report").hide();
         $("#footer_area").hide();
         $("#thank_you").show();
-    }
+    },
 }
 
 var action = {
@@ -284,9 +284,9 @@ var action = {
     sendEmail() {
         var email = helper.getEmail();
         var width = 75 / storageUnit.userData[1].length;
-        var choices=[],consequences=[];
+        var choices=[], consequences=[], values=[], feelings=[], helps=[] ;
         for(var c=0;c<storageUnit.userData[1].length;c++){
-            choices[c]={"choice":storageUnit.userData[helper.pivot][c]};
+            choices[c]={"choice":storageUnit.userData[1][c]};
         }
         for(var c=0;c<storageUnit.userData[1].length;c++){
             var splitConsequences = storageUnit.userData[2][c].split("\n");
@@ -296,13 +296,40 @@ var action = {
             }
             consequences[c]={"multiConsequences":multiConsequence};
         }
+        for(var c=0;c<storageUnit.userData[1].length;c++){
+            var splitValues = storageUnit.userData[3][c].split("\n");
+            var multiValues=[];
+            for(var d=0;d< splitValues.length; d++){
+                multiValues[d]={"multiValue":splitValues[d]};
+            }
+            values[c]={"multiValues":multiValues};
+        }
+        for(var c=0;c<storageUnit.userData[1].length;c++){
+            var splitFeelings = storageUnit.userData[4][c].split("\n");
+            var multiFeelings=[];
+            for(var d=0;d< splitFeelings.length; d++){
+                multiFeelings[d]={"multiFeeling":splitFeelings[d]};
+            }
+            feelings[c]={"multiFeelings":multiFeelings};
+        }
+            var splitHelps = storageUnit.userData[6].split("\n");
+            for(var d=0;d< splitHelps.length; d++){
+                helps[d]={"help":splitHelps[d]};
+            }
+
         var data = 
         {
             "problem": storageUnit.userData[0],
             "totalChoices": storageUnit.userData[helper.pivot].length,
             "width":width,
             "choices":choices,
-            "consequences":consequences
+            "consequences":consequences,
+            "values":values,
+            "feelings":feelings,
+            "additionalInfo": storageUnit.userData[5],
+            "multiHelps":helps,
+            "decision": storageUnit.userData[7],
+            "assessment": storageUnit.userData[8]
         };
         var result = Mustache.render(template, data);
         if (email != false) {
