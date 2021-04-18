@@ -283,11 +283,33 @@ var action = {
     },
     sendEmail() {
         var email = helper.getEmail();
+        var width = 75 / storageUnit.userData[1].length;
+        var choices=[],consequences=[];
+        for(var c=0;c<storageUnit.userData[1].length;c++){
+            choices[c]={"choice":storageUnit.userData[helper.pivot][c]};
+        }
+        for(var c=0;c<storageUnit.userData[1].length;c++){
+            var splitConsequences = storageUnit.userData[2][c].split("\n");
+            var multiConsequence=[];
+            for(var d=0;d< splitConsequences.length; d++){
+                multiConsequence[d]={"multiConsequence":splitConsequences[d]};
+            }
+            consequences[c]={"multiConsequences":multiConsequence};
+        }
+        var data = 
+        {
+            "problem": storageUnit.userData[0],
+            "totalChoices": storageUnit.userData[helper.pivot].length,
+            "width":width,
+            "choices":choices,
+            "consequences":consequences
+        };
+        var result = Mustache.render(template, data);
         if (email != false) {
             var templateParams = {
                 Problem: storageUnit.userData[0],
                 reply_to: email,
-                reportData: helper.reportHTMLTemplate()
+                reportData: result
             };
             emailjs.send(siteConfiguration.email.service, siteConfiguration.email.templateId, templateParams)
                 .then(
