@@ -4,7 +4,7 @@ var template =
     '<body>'+
         '<table style="width:100%; border: 1px solid black;">'+
 
-            '<tr>'+
+            '<tr style="background: #ff2300c2">'+
                 '<th style="border: 1px solid black; width: 25%;">Problem</th>'+
                 '<th style="border: 1px solid black; width: 75%;" colspan="{{totalChoices}}">{{problem}}</th>'+
             '</tr>'+
@@ -55,7 +55,7 @@ var template =
                 '</td>'+
             '</tr>'+
 
-            '<tr>'+
+            '<tr style="background: #24ce24">'+
                 '<td style="border: 1px solid black; width: 25%;">Decision</td>'+
                 '<td style="border: 1px solid black; width: 75%;" colspan="{{totalChoices}}">{{decision}}</td>'+
             '</tr>'+

@@ -13,233 +13,6 @@ var storageUnit = {
     ],
     tempUserData: ""
 }
-var helper = {
-    pivot: 1,
-    dependentList: [false, false, true, true, true, false, false, false, false],
-    totalChoices: 0,
-    viewMap: { "preview": "#preview_area", "dataEntry": "#user_data_entry_box" },
-    viewButton(button) {
-        if (button == "dataEntry")
-            return "#show_preview";
-        if (storageUnit.currentStage == 9)
-            return "#show_report";
-        return "#show_data_entry";
-    },
-    viewSubmit: { true: "#submit_editted_response", false: "#submit_response" },
-    editMode: false,
-    edit: -1,
-    lastVisibleView: "preview",
-    incr: 0,
-    choicePosition: 0,
-    questions: [
-        "What is Problem ?",
-        "What are the choices?",
-        "What are the consequences ?",
-        "What are the values?",
-        "What are your feelings ?",
-        "Anything More you want to share ?",
-        "Who Can Help ?",
-        "What is your Decision ?",
-        "Assess Decision"
-    ],
-    choiceTemplate(id, index, decisionChoiceCandidate) {
-        var tempId = id + index;
-        $("#" + id + "s").append('<div class="main_block ' + decisionChoiceCandidate + ' "  id="' + tempId + '"></div>');
-        tempId = "#" + tempId;
-        $(tempId).append('<h1>' + storageUnit.userData[1][index] + '</h1><div class = "choice_content"></div>');
-        $(tempId + " .choice_content").append('<h3>Consequences</h3><ul class = "cons"></ul><h3>Values</h3><ul class = "values"></ul><h3>Feelings</h3><ul class = "feelings"></ul>');
-        var tempConsequences = storageUnit.userData[2][index].split("\n");
-        for (var i = 0; i < tempConsequences.length; i++) {
-            $(tempId + " .cons").append('<li>' + tempConsequences[i] + '</li>');
-        }
-        var tempValues = storageUnit.userData[3][index].split("\n");
-        for (var i = 0; i < tempValues.length; i++) {
-            $(tempId + " .values").append('<li>' + tempValues[i] + '</li>');
-        }
-        var tempFeelings = storageUnit.userData[4][index].split("\n");
-        for (var i = 0; i < tempFeelings.length; i++) {
-            $(tempId + " .feelings").append('<li>' + tempFeelings[i] + '</li>');
-        }
-    },
-    showView(viewName) {
-        $(helper.viewMap[helper.lastVisibleView]).hide();
-        $(helper.viewButton(helper.lastVisibleView)).hide();
-        helper.lastVisibleView = viewName;
-        $(helper.viewMap[helper.lastVisibleView]).show();
-        $(helper.viewButton(helper.lastVisibleView)).show();
-    },
-    getResponse() {
-        var response = $.trim($("#i_response").val());
-        if (response == "") {
-            alert("Give some response");
-            $("#i_response").focus();
-            return false;
-        }
-        return response;
-    },
-    createDecisionView() {
-        for (var i = 0; i < storageUnit.userData[helper.pivot].length; i++) {
-            helper.choiceTemplate("choice_list", i, "not_selected");
-            $('#choice_list' + i).attr('onclick', 'dataInput.decisionChoice(' + i + ')');
-        }
-        var addInfo = storageUnit.userData[5].split("\n");
-        for (var i = 0; i < addInfo.length; i++) {
-            $("#more_info").append('<li>' + addInfo[i] + '</li>');
-        }
-        var help = storageUnit.userData[6].split("\n");
-        for (var i = 0; i < help.length; i++) {
-            $("#help").append('<li>' + help[i] + '</li>');
-        }
-    },
-    inProgressLabel(show, labelNum) {
-        if (show)
-            $("#b" + (labelNum)).addClass("in_progress");
-        else
-            $("#b" + (labelNum)).removeClass("in_progress");
-
-    },
-
-    submitForBlankChoice() {
-        var tempresponse = $.trim($("#i_response").val());
-        if (helper.totalChoices > 1 && tempresponse == "") {
-            $("#add_more").hide();
-            helper.prepareForNextStage();
-            return true;
-        }
-        return false;
-    },
-    submitForChoice(response) {
-        helper.saveResponse(storageUnit.currentStage, helper.totalChoices, response);
-        $("#add_more").hide();
-        helper.totalChoices++;
-    },
-    submitForDependentlist(response) {
-        helper.saveResponse(storageUnit.currentStage, helper.incr, response);
-        helper.incr = 0;
-        $("#i_choices").hide();
-    },
-    submitForRemainingEntries(response) {
-        helper.saveResponse(storageUnit.currentStage, null, response);
-    },
-    prepareForNextStage() {
-        $("#submit_response").hide();
-        storageUnit.currentStage++;
-        dataInput.setupUserDataEntryBox(storageUnit.currentStage);
-        $("#i_response").val("");
-        general.progress();
-    },
-    finalSubmit() {
-        helper.showView("preview");
-        general.refresh();
-    },
-    saveResponse(i, j, response) {
-        if (j != null)
-            storageUnit.userData[i][j] = response;
-        else
-            storageUnit.userData[i] = response;
-    },
-    changeDecision(choice) {
-        $("#choice_lists .main_block").removeClass("selected");
-        $("#choice_list" + choice).addClass("selected");
-    },
-    editToInitialState() {
-        $("#submit_editted_response").hide();
-        $("#show_preview").text("Preview");
-    },
-    editSubmitForMultiInput(response) {
-        helper.saveResponse(helper.edit, helper.choicePosition, response);
-        $("#i_choices").hide();
-
-    },
-    editSubmitForRemainingEntries(response) {
-        helper.saveResponse(helper.edit, null, response);
-    },
-    dataEntryToInitialState() {
-        $("#i_response").val("");
-        $(".i_btn").hide();
-        $("#i_response").show();
-        $("#i_choices").hide();
-        $("#decision_data").hide();
-    },
-    choiceCreationAndShowDecision() {
-        var decisionChoiceCandidate;
-        for (var i = 0; i < storageUnit.userData[1].length; i++) {
-            if (storageUnit.userData[1][i] == storageUnit.userData[7])
-                decisionChoiceCandidate = "selected";
-            else
-                decisionChoiceCandidate = "not_selected";
-            helper.choiceTemplate("r_choice", i, decisionChoiceCandidate);
-        }
-    },
-    reportView() {
-        $("#details").hide();
-        $('#show_report').hide();
-        $("#report").show();
-    },
-    getEmail() {
-        var emailGt = $.trim($("#mail_reportinp").val());
-        if (emailGt == "") {
-            alert("Please enter the Email");
-            return false;
-        }
-        var emailPattern = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-        if (!emailPattern.test(emailGt)) {
-            alert("You have entered an invalid email address!");
-            return false;
-        }
-        return emailGt;
-    },
-    createReportTemplate() {
-        $("#r_problem").text(storageUnit.userData[0]);
-        helper.choiceCreationAndShowDecision();
-        $("#r_more_info").text(storageUnit.userData[5]);
-        var tempHelp = storageUnit.userData[6].split("\n")
-        for (var i = 0; i < tempHelp.length; i++) {
-            $("#r_help").append('<li>' + tempHelp[i] + '</li>')
-        }
-        $("#r_assess").text(storageUnit.userData[8]);
-    },
-    showMailReport() {
-        $("#mail_report").css("display", "flex");
-    },
-    reportHTMLTemplate() {
-        var width = 75 / storageUnit.userData[1].length;
-        var Choices = '', cons = '', val = '', feel = '', help = '';
-        for (var c = 0; c < storageUnit.userData[1].length; c++) {
-            Choices += '<td style="border: 1px solid black; width:' + width + '%;">' + storageUnit.userData[1][c] + '</td>';
-        }
-        cons = helper.emailTemplateForDependentList(width, 2);
-        val = helper.emailTemplateForDependentList(width, 3);
-        feel = helper.emailTemplateForDependentList(width, 4);
-        help = helper.stringToList(6, null);
-        return '<!DOCTYPE html><html><body><table style="width:100%; border: 1px solid black;"><tr><th style="border: 1px solid black; width: 25%;">Problem</th><th style="border: 1px solid black; width: 75%;" colspan="' + storageUnit.userData[1].length + '">' + storageUnit.userData[0] + '</th></tr><tr><td style="border: 1px solid black; width: 25%;">Choices</td>' + Choices + '</tr><tr><td style="border: 1px solid black; width: 25%;">Consequences</td>' + cons + '</tr><tr><td style="border: 1px solid black; width: 25%;">Values</td>' + val + '</tr><tr><td style="border: 1px solid black; width: 25%;">Feelings</td>' + feel + '</tr><tr><td style="border: 1px solid black; width: 25%;">Additional Info</td><td style="border: 1px solid black; width: 75%;" colspan="' + storageUnit.userData[1].length + '">' + storageUnit.userData[5] + '</td></tr><tr><td style="border: 1px solid black; width: 25%;">Who Can Help</td><td style="border: 1px solid black; width: 75%;" colspan="' + storageUnit.userData[1].length + '"><ul>' + help + '</ul></td></tr><tr><td style="border: 1px solid black; width: 25%;">Decision</td><td style="border: 1px solid black; width: 75%;" colspan="' + storageUnit.userData[1].length + '">' + storageUnit.userData[7] + '</td></tr><tr><td style="border: 1px solid black; width: 25%;">Assessment</td><td style="border: 1px solid black; width: 75%;" colspan="' + storageUnit.userData[1].length + '">' + storageUnit.userData[8] + '</td></tr></table></body></html>'
-    },
-    emailTemplateForDependentList(width, reportStage) {
-        var dependList = '';
-        for (var c = 0; c < storageUnit.userData[1].length; c++) {
-            dependList += '<td style="border: 1px solid black; width:' + width + '%;"><ul>';
-            dependList += helper.stringToList(reportStage, c);
-            dependList += '</ul></td>';
-        }
-        return dependList;
-    },
-    stringToList(i, j) {
-        if (j != null)
-            var splittedStrings = storageUnit.userData[i][j].split("\n");
-        else
-            var splittedStrings = storageUnit.userData[i].split("\n");
-        var listHTML = '';
-        for (var k = 0; k < splittedStrings.length; k++) {
-            listHTML += '<li>' + splittedStrings[k] + '</li>';
-        }
-        return listHTML;
-    },
-    showThankYouPage() {
-        $("#report").hide();
-        $("#footer_area").hide();
-        $("#thank_you").show();
-    },
-}
 
 var action = {
     showDataEntry() {
@@ -284,55 +57,56 @@ var action = {
     sendEmail() {
         var email = helper.getEmail();
         var width = 75 / storageUnit.userData[1].length;
-        var choices=[], consequences=[], values=[], feelings=[], helps=[] ;
-        for(var c=0;c<storageUnit.userData[1].length;c++){
-            choices[c]={"choice":storageUnit.userData[1][c]};
+        var choices = [], consequences = [], values = [], feelings = [], helps = [];
+        for (var c = 0; c < storageUnit.userData[1].length; c++) {
+            choices[c] = { "choice": storageUnit.userData[1][c] };
         }
-        for(var c=0;c<storageUnit.userData[1].length;c++){
+        for (var c = 0; c < storageUnit.userData[1].length; c++) {
             var splitConsequences = storageUnit.userData[2][c].split("\n");
-            var multiConsequence=[];
-            for(var d=0;d< splitConsequences.length; d++){
-                multiConsequence[d]={"multiConsequence":splitConsequences[d]};
+            var multiConsequence = [];
+            for (var d = 0; d < splitConsequences.length; d++) {
+                multiConsequence[d] = { "multiConsequence": splitConsequences[d] };
             }
-            consequences[c]={"multiConsequences":multiConsequence};
+            consequences[c] = { "multiConsequences": multiConsequence };
         }
-        for(var c=0;c<storageUnit.userData[1].length;c++){
+        for (var c = 0; c < storageUnit.userData[1].length; c++) {
             var splitValues = storageUnit.userData[3][c].split("\n");
-            var multiValues=[];
-            for(var d=0;d< splitValues.length; d++){
-                multiValues[d]={"multiValue":splitValues[d]};
+            var multiValues = [];
+            for (var d = 0; d < splitValues.length; d++) {
+                multiValues[d] = { "multiValue": splitValues[d] };
             }
-            values[c]={"multiValues":multiValues};
+            values[c] = { "multiValues": multiValues };
         }
-        for(var c=0;c<storageUnit.userData[1].length;c++){
+        for (var c = 0; c < storageUnit.userData[1].length; c++) {
             var splitFeelings = storageUnit.userData[4][c].split("\n");
-            var multiFeelings=[];
-            for(var d=0;d< splitFeelings.length; d++){
-                multiFeelings[d]={"multiFeeling":splitFeelings[d]};
+            var multiFeelings = [];
+            for (var d = 0; d < splitFeelings.length; d++) {
+                multiFeelings[d] = { "multiFeeling": splitFeelings[d] };
             }
-            feelings[c]={"multiFeelings":multiFeelings};
+            feelings[c] = { "multiFeelings": multiFeelings };
         }
-            var splitHelps = storageUnit.userData[6].split("\n");
-            for(var d=0;d< splitHelps.length; d++){
-                helps[d]={"help":splitHelps[d]};
-            }
+        var splitHelps = storageUnit.userData[6].split("\n");
+        for (var d = 0; d < splitHelps.length; d++) {
+            helps[d] = { "help": splitHelps[d] };
+        }
 
-        var data = 
+        var data =
         {
             "problem": storageUnit.userData[0],
             "totalChoices": storageUnit.userData[helper.pivot].length,
-            "width":width,
-            "choices":choices,
-            "consequences":consequences,
-            "values":values,
-            "feelings":feelings,
+            "width": width,
+            "choices": choices,
+            "consequences": consequences,
+            "values": values,
+            "feelings": feelings,
             "additionalInfo": storageUnit.userData[5],
-            "multiHelps":helps,
+            "multiHelps": helps,
             "decision": storageUnit.userData[7],
             "assessment": storageUnit.userData[8]
         };
         var result = Mustache.render(template, data);
         if (email != false) {
+            emailjs.init(siteConfiguration.email.userId);
             var templateParams = {
                 Problem: storageUnit.userData[0],
                 reply_to: email,
@@ -507,8 +281,7 @@ var dataInput = {
     }
 }
 
-var TestSuite =
-{
+var TestSuite = {
     focusOnDecision() {
         storageUnit.currentStage = 7;
         storageUnit.userData = [
