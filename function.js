@@ -16,6 +16,7 @@ var storageUnit = {
 
 var action = {
     showDataEntry() {
+        $("#view_area").css("background-image"," url('../images/choice7.png')");
         helper.showView("dataEntry");
         dataInput.setupUserDataEntryBox(storageUnit.currentStage);
         helper.inProgressLabel(true, (storageUnit.currentStage + 1));
@@ -27,6 +28,9 @@ var action = {
             $("#show_preview").text("Preview");
         }
         else {
+            if(storageUnit.currentStage == 0){
+                $("#view_area").css("background-image"," url('../images/choice9.png')");
+            }
             if (storageUnit.currentStage > 0) {
                 $("#show_data_entry").text("Resume");
             }
