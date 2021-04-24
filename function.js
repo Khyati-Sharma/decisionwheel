@@ -16,7 +16,7 @@ var storageUnit = {
 
 var action = {
     showDataEntry() {
-        $("#view_area").css("background-image"," url('../images/choice7.png')");
+        $("#view_area").css("background-image"," url('images/choice7.png')");
         helper.showView("dataEntry");
         dataInput.setupUserDataEntryBox(storageUnit.currentStage);
         helper.inProgressLabel(true, (storageUnit.currentStage + 1));
@@ -29,7 +29,7 @@ var action = {
         }
         else {
             if(storageUnit.currentStage == 0){
-                $("#view_area").css("background-image"," url('../images/choice9.png')");
+                $("#view_area").css("background-image"," url('images/choice9.png')");
             }
             if (storageUnit.currentStage > 0) {
                 $("#show_data_entry").text("Resume");
@@ -97,8 +97,8 @@ var action = {
         var data =
         {
             "problem": storageUnit.userData[0],
-            "totalChoices": storageUnit.userData[helper.pivot].length,
-            "width": width,
+            "width": width,            "totalChoices": storageUnit.userData[helper.pivot].length,
+
             "choices": choices,
             "consequences": consequences,
             "values": values,
